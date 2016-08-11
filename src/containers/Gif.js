@@ -8,7 +8,7 @@ const getGifsState = () => {
     return GifStore.getAll();
 };
 
-class GifApp extends React.Component {
+class Gif extends React.Component {
     constructor() {
         super();
 
@@ -40,4 +40,4 @@ class GifApp extends React.Component {
     }
 };
 
-export default GifApp;
+export default Gif;

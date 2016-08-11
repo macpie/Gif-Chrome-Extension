@@ -7,7 +7,8 @@ import {
     Route,
     hashHistory
 } from 'react-router'
-import GifApp from './containers/GifApp';
+import Gif from './containers/Gif';
+import Search from './containers/Search';
 import * as GifAPI from './apis/GifAPI';
 
 GifAPI.mock();
@@ -15,9 +16,8 @@ GifAPI.loadData();
 
 const router = (
     <Router history={hashHistory}>
-        <Route path="/" component={GifApp}>
-            <Route path="*" component={GifApp} />
-        </Route>
+        <Route path="/search" component={Search} />
+        <Route path="*" component={Gif} />
     </Router>
 );
 

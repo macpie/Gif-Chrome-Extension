@@ -1,7 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import * as GiphyAPI from '../apis/GiphyAPI';
+import * as GiphyAPI from '../../apis/GiphyAPI';
 
 class SearchView extends React.Component {
     componentWillMount() {

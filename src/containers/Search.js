@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchForm from '../components/SearchForm';
-import SearchView from '../components/SearchView';
+import SearchForm from '../components/search/SearchForm';
+import SearchView from '../components/search/SearchView';
 
 class Search extends React.Component {
     constructor() {

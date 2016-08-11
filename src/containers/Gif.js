@@ -1,8 +1,8 @@
 import React from 'react';
 import GifStore from '../stores/GifStore';
-import GifsView from '../components/GifsView';
-import GifAdd from '../components/GifAdd';
-import GifFilter from '../components/GifFilter';
+import GifsView from '../components/gif/GifsView';
+import GifAdd from '../components/gif/GifAdd';
+import GifFilter from '../components/gif/GifFilter';
 
 const getGifsState = () => {
     return GifStore.getAll();

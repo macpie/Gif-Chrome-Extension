@@ -1,5 +1,5 @@
 import React from 'react';
-import * as GifActions from '../actions/GifActions';
+import * as GifActions from '../../actions/GifActions';
 
 class GifAdd extends React.Component {
     constructor(props) {

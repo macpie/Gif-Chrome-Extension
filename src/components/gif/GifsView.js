@@ -1,7 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import * as GifActions from '../actions/GifActions';
+import * as GifActions from '../../actions/GifActions';
 
 class GifsView extends React.Component {
     handleDelte(id) {

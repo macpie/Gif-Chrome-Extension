@@ -1,23 +1,27 @@
 import {
     EventEmitter
 } from 'events'
-import * as _ from 'lodash'
+import Immutable from 'immutable'
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 
 const CHANGE_EVENT = 'change';
 
-var _gifs = [],
+var _gifs = new Immutable.List([]),
     _tmp = null;
 
-const getIndex = (id) => {
-    return _.findIndex(_gifs, (gif) => {
-        return gif.id === id;
+const findIndexById = (id) => {
+    return _gifs.findIndex((val) => {
+        if (val.id === id) {
+            return true;
+        } else {
+            return false;
+        }
     });
 };
 
 const create = (id, url, name = url) => {
-    _gifs.push({
+    _gifs = _gifs.push({
         id: id,
         name: name,
         url: url
@@ -25,15 +29,16 @@ const create = (id, url, name = url) => {
 };
 
 const update = (id, updates) => {
-    let index = getIndex(id);
+    let index = findIndexById(id),
+        obj = _gifs.get(index);
 
-    _gifs[index] = Object.assign({}, _gifs[index], updates);
+    _gifs = _gifs.set(index,  Object.assign({}, obj, updates));
 };
 
 const remove = (id) => {
-    let index = getIndex(id);
+    let index = findIndexById(id);
 
-    _gifs.splice(index, 1);
+    _gifs = _gifs.delete(index);
 };
 
 const filter = (text) => {
@@ -42,8 +47,8 @@ const filter = (text) => {
 
         let re = new RegExp(text, 'g');
 
-        _gifs = _.filter(_tmp, (gif) => {
-            return gif.name.match(re);
+        _gifs = _tmp.filter((val) => {
+            return val.name.match(re);
         });
     } else {
         _gifs = _tmp;
@@ -51,12 +56,12 @@ const filter = (text) => {
 };
 
 const loadGifs = (data) => {
-    _gifs = data;
+    _gifs = new Immutable.List(data);
 };
 
-var GifStore = Object.assign({}, EventEmitter.prototype, {
+const GifStore = Object.assign({}, EventEmitter.prototype, {
     getAll: () => {
-        return _gifs;
+        return _gifs.toArray();
     },
     emitChange: () => {
         GifStore.emit(CHANGE_EVENT);

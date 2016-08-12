@@ -1,7 +1,6 @@
 import React from 'react';
 import GifStore from '../stores/GifStore';
 import GifsView from '../components/gif/GifsView';
-import GifAdd from '../components/gif/GifAdd';
 import GifFilter from '../components/gif/GifFilter';
 
 const getGifsState = () => {
@@ -32,7 +31,6 @@ class Gif extends React.Component {
     render() {
         return (
             <div className="row">
-                <GifAdd />
                 <GifFilter />
                 <GifsView gifs={this.state.gifs} />
             </div>

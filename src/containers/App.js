@@ -2,6 +2,7 @@ import React from 'react';
 import {
     IndexLink
 } from 'react-router'
+import '../css/App.css'
 
 class App extends React.Component {
     render() {

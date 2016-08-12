@@ -4,13 +4,13 @@ import React, {
 import * as GifActions from '../../actions/GifActions';
 
 class GifsView extends React.Component {
-    handleDelte(id) {
+    handleDelete(id) {
         GifActions.remove(id);
     }
     handleCopy(name) {
         console.log(name);
 
-        $('#copy') // eslint-disable-line
+        $('#copy')
             .val(name)
             .select();
 
@@ -31,7 +31,7 @@ class GifsView extends React.Component {
                 <li key={gif.id}>
                     {gif.name}
                     <img src={gif.url} alt={gif.name} onClick={this.handleCopy.bind(this, gif.url)} />
-                    <button type="button" onClick={this.handleDelte.bind(this, gif.id)}>X</button>
+                    <button type="button" onClick={this.handleDelete.bind(this, gif.id)}>X</button>
                 </li>
 
             );

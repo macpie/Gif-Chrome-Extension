@@ -12,6 +12,7 @@ import {
 import App from './containers/App';
 import Gif from './containers/Gif';
 import Search from './containers/Search';
+import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 
 GifAPI.mock();
@@ -23,6 +24,7 @@ const router = (
             <IndexRedirect to='/gifs' />
             <Route path="gifs" component={Gif} />
             <Route path="search" component={Search} />
+            <Route path="options" component={Options} />
             <Redirect from="*" to="/gifs" />
         </Route>
     </Router>

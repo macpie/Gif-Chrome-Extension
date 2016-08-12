@@ -30,7 +30,7 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <div id="main">
+            <div className="row">
                 <SearchForm doSearch={this.doSearch} />
                 <SearchView gifs={this.state.gifs} />
             </div>

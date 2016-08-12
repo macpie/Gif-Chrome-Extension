@@ -21,12 +21,13 @@ class App extends React.Component {
                             <li role="presentation">
                                 <IndexLink activeStyle={activeStyle} to="/search">Search</IndexLink>
                             </li>
+                            <li role="presentation">
+                                <IndexLink activeStyle={activeStyle} to="/options">Options</IndexLink>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div className="row">
-                    {this.props.children}
-                </div>
+                {this.props.children}
             </div>
         );
     }

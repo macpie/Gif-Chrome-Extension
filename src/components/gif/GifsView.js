@@ -21,7 +21,7 @@ class GifsView extends React.Component {
             gifLis = [],
             copyStyle = {
                 position: 'absolute',
-                width: '1px',
+                width: '10px',
                 top: '-20px',
                 left: '-20px',
             };

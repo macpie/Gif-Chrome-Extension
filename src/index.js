@@ -5,7 +5,8 @@ import {
 import {
     Router,
     Route,
-    IndexRoute,
+    IndexRedirect,
+    Redirect,
     hashHistory
 } from 'react-router'
 import App from './containers/App';
@@ -19,10 +20,10 @@ GifAPI.loadData();
 const router = (
     <Router history={hashHistory}>
         <Route path="/" component={App}>
-            <IndexRoute component={Gif} />
-            <Route path="/gifs" component={Gif} />
-            <Route path="/search" component={Search} />
-            <Route path="*" component={Gif} />
+            <IndexRedirect to='/gifs' />
+            <Route path="gifs" component={Gif} />
+            <Route path="search" component={Search} />
+            <Redirect from="*" to="/gifs" />
         </Route>
     </Router>
 );

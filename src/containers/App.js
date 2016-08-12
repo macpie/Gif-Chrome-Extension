@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Link
+    IndexLink
 } from 'react-router'
 
 class App extends React.Component {
@@ -16,10 +16,10 @@ class App extends React.Component {
                     <div className="col-xs-12">
                         <ul className="nav nav-pills nav-justified">
                             <li role="presentation">
-                                <Link activeStyle={activeStyle} to="/gifs">Gifs</Link>
+                                <IndexLink activeStyle={activeStyle} to="/gifs">Gifs</IndexLink>
                             </li>
                             <li role="presentation">
-                                <Link activeStyle={activeStyle} to="/search">Search</Link>
+                                <IndexLink activeStyle={activeStyle} to="/search">Search</IndexLink>
                             </li>
                         </ul>
                     </div>

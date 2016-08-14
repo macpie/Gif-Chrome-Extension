@@ -28,9 +28,15 @@ class GifsView extends React.Component {
                         <div className="caption">
                             <h3>{gif.name}</h3>
                             <div className="btn-group btn-group-sm" role="group">
-                                <button type="button" className="btn btn-danger" onClick={this.handleDelete.bind(this, gif.id)}>X</button>
-                                <button type="button" className="btn btn-success" onClick={this.handleCopy.bind(this, gif.url)}>C</button>
-                                <button type="button" className="btn btn-warning">E</button>
+                                <button type="button" className="btn btn-danger" onClick={this.handleDelete.bind(this, gif.id)}>
+                                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" className="btn btn-success" onClick={this.handleCopy.bind(this, gif.url)}>
+                                    <i className="fa fa-files-o" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" className="btn btn-warning">
+                                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </button>
                             </div>
                         </div>
                         <img src={gif.url} alt={gif.name}  />

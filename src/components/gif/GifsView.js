@@ -1,16 +1,11 @@
 import React, {
     PropTypes
 } from 'react';
-import * as GifActions from '../../actions/GifActions';
+import GifView from './GifView';
 import '../../css/GifsView.css'
 
 class GifsView extends React.Component {
-    handleDelete(id, e) {
-        GifActions.remove(id);
-    }
     handleCopy(url) {
-        console.log(url);
-
         $('#copy')
             .val(url)
             .select();
@@ -22,28 +17,7 @@ class GifsView extends React.Component {
             gifLis = [];
 
         gifs.forEach((gif) => {
-            gifLis.push(
-                <div className="col-xs-4" key={gif.id}>
-                    <div className="thumbnail">
-                        <div className="caption">
-                            <h3>{gif.name}</h3>
-                            <div className="btn-group btn-group-sm" role="group">
-                                <button type="button" className="btn btn-danger" onClick={this.handleDelete.bind(this, gif.id)}>
-                                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" className="btn btn-success" onClick={this.handleCopy.bind(this, gif.url)}>
-                                    <i className="fa fa-files-o" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" className="btn btn-warning">
-                                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <img src={gif.url} alt={gif.name}  />
-                    </div>
-                </div>
-
-            );
+            gifLis.push(<GifView key={gif.id} gif={gif} copy={this.handleCopy}/>);
         });
 
         return (

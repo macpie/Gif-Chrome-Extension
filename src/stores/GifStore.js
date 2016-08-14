@@ -4,6 +4,7 @@ import {
 import Immutable from 'immutable'
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
+import * as GifAPI from '../apis/GifAPI';
 
 const CHANGE_EVENT = 'change';
 
@@ -20,7 +21,15 @@ const findIndexById = (id) => {
     });
 };
 
-const create = (id, url, name = url) => {
+const create = (url, name = url) => {
+    let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+
+    GifAPI.add({
+        id: id,
+        url: url,
+        name: name
+    });
+
     _gifs = _gifs.push({
         id: id,
         name: name,
@@ -37,6 +46,8 @@ const update = (id, updates) => {
 
 const remove = (id) => {
     let index = findIndexById(id);
+
+    GifAPI.remove(id);
 
     _gifs = _gifs.delete(index);
 };
@@ -77,7 +88,7 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register((action) => {
     switch (action.type) {
         case GifConstants.GIF_CREATE:
-            create(action.id, action.url, action.name);
+            create(action.url, action.name);
             GifStore.emitChange();
             break;
         case GifConstants.GIF_UPDATE:

@@ -1,6 +1,9 @@
 import React, {
     PropTypes
 } from 'react';
+import {
+    browserHistory
+} from 'react-router'
 import * as GifActions from '../../actions/GifActions';
 
 class GifAddModal extends React.Component {
@@ -38,6 +41,7 @@ class GifAddModal extends React.Component {
     handleSave(e) {
         GifActions.create(this.state.url, this.state.name);
         $('#GifAddModal').modal('hide');
+        browserHistory.push('/gifs');
     }
     render() {
         return (

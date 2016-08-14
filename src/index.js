@@ -7,7 +7,7 @@ import {
     Route,
     IndexRedirect,
     Redirect,
-    hashHistory
+    browserHistory
 } from 'react-router'
 import App from './containers/App';
 import Gif from './containers/Gif';
@@ -20,7 +20,7 @@ GifAPI.mock();
 GifActions.loadData();
 
 const router = (
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRedirect to='/gifs' />
             <Route path="gifs" component={Gif} />

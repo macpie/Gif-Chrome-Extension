@@ -37,6 +37,7 @@ class GifAddModal extends React.Component {
     }
     handleSave(e) {
         GifActions.create(this.state.url, this.state.name);
+        $('#GifAddModal').modal('hide');
     }
     render() {
         return (

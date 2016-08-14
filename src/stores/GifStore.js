@@ -39,18 +39,35 @@ const create = (url, name = url) => {
 };
 
 const update = (id, updates) => {
-    let index = findIndexById(id),
-        obj = _gifs.get(index);
+    return new Promise((resolve) => {
+        let index = findIndexById(id),
+            obj = _gifs.get(index);
 
-    _gifs = _gifs.set(index, Object.assign({}, obj, updates));
+        _gifs = _gifs.set(index, Object.assign({}, obj, updates));
+
+        resolve();
+    });
 };
 
 const remove = (id) => {
-    let index = findIndexById(id);
+    return new Promise((resolve) => {
+        let index = findIndexById(id);
 
-    GifAPI.remove(id);
+        GifAPI.remove(id);
+        _gifs = _gifs.delete(index);
 
-    _gifs = _gifs.delete(index);
+        resolve();
+    });
+};
+
+const loadGifs = () => {
+    return new Promise((resolve) => {
+        let data = GifAPI.loadData();
+
+        _gifs = new Immutable.List(data);
+
+        resolve();
+    });
 };
 
 const filter = (text) => {
@@ -65,10 +82,6 @@ const filter = (text) => {
     } else {
         _gifs = _tmp;
     }
-};
-
-const loadGifs = (data) => {
-    _gifs = new Immutable.List(data);
 };
 
 const GifStore = Object.assign({}, EventEmitter.prototype, {
@@ -98,19 +111,24 @@ AppDispatcher.register((action) => {
             update(action.id, {
                 name: action.name,
                 url: action.url
+            }).then(() => {
+                GifStore.emitChange();
             });
-            GifStore.emitChange();
             break;
         case GifConstants.GIF_REMOVE:
-            remove(action.id);
-            GifStore.emitChange();
+            remove(action.id)
+                .then(() => {
+                    GifStore.emitChange();
+                });
+            break;
+        case GifConstants.GIF_LOAD:
+            loadGifs()
+                .then(() => {
+                    GifStore.emitChange();
+                });
             break;
         case GifConstants.GIF_FILTER:
             filter(action.text);
-            GifStore.emitChange();
-            break;
-        case GifConstants.GIF_LOAD:
-            loadGifs(action.data);
             GifStore.emitChange();
             break;
         default:

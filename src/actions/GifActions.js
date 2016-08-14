@@ -32,9 +32,8 @@ export const filter = (text) => {
     });
 };
 
-export const loadData = (data) => {
+export const loadData = () => {
     AppDispatcher.dispatch({
-        type: GifConstants.GIF_LOAD,
-        data: data
+        type: GifConstants.GIF_LOAD
     });
 };

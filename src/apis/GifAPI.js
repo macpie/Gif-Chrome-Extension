@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import * as GifActions from '../actions/GifActions'
 
 const KEY = 'GIFS';
 
@@ -15,9 +14,9 @@ export const loadData = () => {
     let data = JSON.parse(localStorage.getItem(KEY));
 
     if (_.isEmpty(data)) {
-        GifActions.loadData({});
+        return {};
     } else {
-        GifActions.loadData(data);
+        return data;
     }
 };
 

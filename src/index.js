@@ -14,9 +14,10 @@ import Gif from './containers/Gif';
 import Search from './containers/Search';
 import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
+import * as GifActions from './actions/GifActions';
 
 GifAPI.mock();
-GifAPI.loadData();
+GifActions.loadData();
 
 const router = (
     <Router history={hashHistory}>

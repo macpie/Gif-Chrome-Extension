@@ -15,7 +15,7 @@ class App extends React.Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xs-12">
-                        <ul className="nav nav-pills nav-justified">
+                        <ul className="nav nav-pills">
                             <li role="presentation">
                                 <IndexLink activeStyle={activeStyle} to="/gifs">Gifs</IndexLink>
                             </li>

@@ -14,9 +14,9 @@ class GifFilter extends React.Component {
     render() {
         return (
             <div id="filter" className="row">
-                <form>
-                    <input type="text" name="filter" placeholder="Filter by name" onChange={this.handleFilterChange} />
-                </form>
+                <div className="col-xs-6 col-xs-offset-3">
+                    <input type="text" name="filter" className="form-control" placeholder="Filter by name" onChange={this.handleFilterChange} />
+                </div>
             </div>
         );
     }

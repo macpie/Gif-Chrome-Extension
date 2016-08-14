@@ -2,45 +2,48 @@ import React, {
     PropTypes
 } from 'react';
 import * as GifActions from '../../actions/GifActions';
+import '../../css/GifsView.css'
 
 class GifsView extends React.Component {
-    handleDelete(id) {
+    handleDelete(id, e) {
         GifActions.remove(id);
     }
-    handleCopy(name) {
-        console.log(name);
+    handleCopy(url) {
+        console.log(url);
 
         $('#copy')
-            .val(name)
+            .val(url)
             .select();
 
         document.execCommand('copy');
     }
     render() {
         let gifs = this.props.gifs,
-            gifLis = [],
-            copyStyle = {
-                position: 'absolute',
-                width: '10px',
-                top: '-20px',
-                left: '-20px',
-            };
+            gifLis = [];
 
         gifs.forEach((gif) => {
             gifLis.push(
-                <li key={gif.id}>
-                    {gif.name}
-                    <img src={gif.url} alt={gif.name} onClick={this.handleCopy.bind(this, gif.url)} />
-                    <button type="button" onClick={this.handleDelete.bind(this, gif.id)}>X</button>
-                </li>
+                <div className="col-xs-4" key={gif.id}>
+                    <div className="thumbnail">
+                        <div className="caption">
+                            <h3>{gif.name}</h3>
+                            <div className="btn-group btn-group-sm" role="group">
+                                <button type="button" className="btn btn-danger" onClick={this.handleDelete.bind(this, gif.id)}>X</button>
+                                <button type="button" className="btn btn-success" onClick={this.handleCopy.bind(this, gif.url)}>C</button>
+                                <button type="button" className="btn btn-warning">E</button>
+                            </div>
+                        </div>
+                        <img src={gif.url} alt={gif.name}  />
+                    </div>
+                </div>
 
             );
         });
 
         return (
-            <div id="main">
-                <input id="copy" type="text" name="copy" style={copyStyle} />
-                <ul>{gifLis}</ul>
+            <div id="gifs">
+                <input id="copy" type="text" name="copy" />
+                <div className="row">{gifLis}</div>
             </div>
         );
     }

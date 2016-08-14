@@ -1,0 +1,65 @@
+#copy {
+    position: absolute;
+    width: 10px;
+    top: -20px;
+    left: -20px;
+}
+
+#gifs img {
+    width: 100%;
+    height: 120px;
+    border-radius: 4px;
+}
+
+#gifs .thumbnail:hover .caption {
+    opacity: 0.75;
+}
+
+#gifs .thumbnail .caption {
+    position: absolute;
+    width: 80%;
+    height: 120px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    text-align: center;
+    color: #fff;
+}
+
+#gifs .thumbnail .caption h3 {
+    margin-top: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (min-width: 800px) {
+    #gifs img {
+        height: 180px;
+    }
+    #gifs .thumbnail .caption {
+        width: 85%;
+        height: 180px;
+    }
+}
+
+@media (min-width: 1000px) {
+    #gifs img {
+        height: 200px;
+    }
+    #gifs .thumbnail .caption {
+        width: 90%;
+        height: 200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #gifs img {
+        height: 280px;
+    }
+    #gifs .thumbnail .caption {
+        width: 90%;
+        height: 280px;
+    }
+}

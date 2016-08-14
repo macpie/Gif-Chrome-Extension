@@ -3,6 +3,7 @@ import {
 } from 'events'
 import Immutable from 'immutable'
 import Promise from 'promise';
+import UUID from 'node-uuid';
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 import * as GifAPI from '../apis/GifAPI';
@@ -24,9 +25,8 @@ const findIndexById = (id) => {
 
 const create = (url, name = url) => {
     return new Promise((resolve) => {
-        let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
-            gif = {
-                id: id,
+        let gif = {
+                id: UUID.v4(),
                 url: url,
                 name: name
             };

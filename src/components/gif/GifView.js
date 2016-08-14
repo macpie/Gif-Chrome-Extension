@@ -2,6 +2,7 @@ import React, {
     PropTypes
 } from 'react';
 import * as GifActions from '../../actions/GifActions';
+import DownloadLink from '../common/DownloadLink';
 import '../../css/GifView.css'
 
 class GifView extends React.Component {
@@ -26,9 +27,7 @@ class GifView extends React.Component {
                             <button type="button" className="btn btn-success" onClick={this.handleCopy.bind(this, gif.url)}>
                                 <i className="fa fa-files-o" aria-hidden="true"></i>
                             </button>
-                            <button type="button" className="btn btn-warning">
-                                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
+                            <DownloadLink url={gif.url} />
                         </div>
                     </div>
                     <img src={gif.url} alt={gif.name} />

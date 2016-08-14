@@ -9,14 +9,22 @@ class DownloadLink extends React.Component {
         this.handleDownload = this.handleDownload.bind(this);
     }
     handleDownload(e) {
-        $(e.target).attr({
+        var $target = $(e.target);
+
+        if($target.is('i')) {
+            $target = $(e.target).parent();
+        }
+
+        $target.attr({
             href: this.props.url,
             download: 'test.gif'
         });
     }
     render() {
         return (
-            <a onClick={this.handleDownload}>Download</a>
+            <a className="btn btn-primary" onClick={this.handleDownload}>
+                <i className="fa fa-cloud-download" aria-hidden="true"></i>
+            </a>
         );
     }
 };

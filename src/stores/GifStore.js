@@ -2,6 +2,7 @@ import {
     EventEmitter
 } from 'events'
 import Immutable from 'immutable'
+import Promise from 'promise';
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 import * as GifAPI from '../apis/GifAPI';
@@ -22,18 +23,18 @@ const findIndexById = (id) => {
 };
 
 const create = (url, name = url) => {
-    let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+    return new Promise((resolve) => {
+        let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+            gif = {
+                id: id,
+                url: url,
+                name: name
+            };
 
-    GifAPI.add({
-        id: id,
-        url: url,
-        name: name
-    });
+        GifAPI.add(gif);
+        _gifs = _gifs.push(gif);
 
-    _gifs = _gifs.push({
-        id: id,
-        name: name,
-        url: url
+        resolve();
     });
 };
 
@@ -41,7 +42,7 @@ const update = (id, updates) => {
     let index = findIndexById(id),
         obj = _gifs.get(index);
 
-    _gifs = _gifs.set(index,  Object.assign({}, obj, updates));
+    _gifs = _gifs.set(index, Object.assign({}, obj, updates));
 };
 
 const remove = (id) => {
@@ -88,8 +89,10 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register((action) => {
     switch (action.type) {
         case GifConstants.GIF_CREATE:
-            create(action.url, action.name);
-            GifStore.emitChange();
+            create(action.url, action.name)
+                .then(() => {
+                    GifStore.emitChange();
+                });
             break;
         case GifConstants.GIF_UPDATE:
             update(action.id, {

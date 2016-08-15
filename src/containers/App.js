@@ -13,6 +13,7 @@ class App extends React.Component {
 
         return (
             <div className="container-fluid">
+                <input id="copy" type="text" name="copy" />
                 <div className="row">
                     <div className="col-xs-12">
                         <ul className="nav nav-pills">

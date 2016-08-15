@@ -2,7 +2,6 @@ import React, {
     PropTypes
 } from 'react';
 import GifView from './GifView';
-import '../../css/GifsView.css'
 
 class GifsView extends React.Component {
     handleCopy(url) {
@@ -21,10 +20,7 @@ class GifsView extends React.Component {
         });
 
         return (
-            <div id="gifs">
-                <input id="copy" type="text" name="copy" />
-                <div className="row">{gifLis}</div>
-            </div>
+            <div id="gifs" className="row">{gifLis}</div>
         );
     }
 };

@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import UUID from 'node-uuid';
 
 const KEY = 'GIFS';
 
@@ -16,31 +17,18 @@ export const update = (update) => {
     localStorage.setItem(KEY, JSON.stringify(update));
 };
 
-export const mock = () => {
+export const mock = (max = 10) => {
     localStorage.clear();
 
-    let data = [
-        {
-            id: '1',
-            name: 'Test 1',
+    let data = [];
+
+    for(let i = 0; i < max; i++) {
+        data.push({
+            id: UUID.v4(),
+            name: 'Test ' + i,
             url: 'http://i.imgur.com/y5x7n4m.gif'
-        },
-        {
-            id: '2',
-            name: 'Test 22222222222222222222',
-            url: 'http://i.imgur.com/BjJyQIc.gif'
-        },
-        {
-            id: '3',
-            name: 'Test 3',
-            url: 'http://i.imgur.com/AKUf1yY.gif'
-        },
-        {
-            id: '5',
-            name: 'Test 5',
-            url: 'http://i.imgur.com/y5x7n4m.gif'
-        }
-    ];
+        });
+    }
 
     localStorage.setItem(KEY, JSON.stringify(data))
 };

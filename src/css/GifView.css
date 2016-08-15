@@ -12,10 +12,6 @@
     border-radius: 4px;
 }
 
-.gif .thumbnail:hover .caption {
-    opacity: 0.75;
-}
-
 .gif .thumbnail .caption {
     position: absolute;
     width: 80%;
@@ -23,7 +19,6 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    opacity: 0;
     text-align: center;
     color: #fff;
 }
@@ -33,6 +28,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    text-shadow: 3px -2px 1px rgba(0, 0, 0, 1);
+}
+
+.gif .thumbnail .caption .btn-group {
+    opacity: 0;
+}
+
+.gif .thumbnail:hover .caption .btn-group {
+    opacity: 0.80;
 }
 
 .gif .thumbnail .caption .btn-group button:nth-child(2) {

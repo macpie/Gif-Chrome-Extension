@@ -5,6 +5,7 @@ import {
     browserHistory
 } from 'react-router'
 import * as GifActions from '../../actions/GifActions';
+import '../../css/GifAddModal.css';
 
 class GifAddModal extends React.Component {
     constructor(props) {
@@ -59,11 +60,15 @@ class GifAddModal extends React.Component {
                             </h4>
                         </div>
                         <div className="modal-body">
-                            <form id="add">
-                                <input type="text" name="name" placeholder="Name" onChange={this.handleNameChange}/>
-                                <input type="text" name="url" placeholder="Url" onChange={this.handleUrlChange} value={this.state.url} />
-                                 <img src={this.state.url} role="presentation" />
+                            <form >
+                                <div className="form-group">
+                                    <input type="text" className="form-control" name="name" placeholder="Name" onChange={this.handleNameChange}/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" className="form-control" name="url" placeholder="Url" onChange={this.handleUrlChange} value={this.state.url} />
+                                </div>
                             </form>
+                            <img src={this.state.url} className="img-thumbnail center-block" role="presentation" />
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-danger" data-dismiss="modal">

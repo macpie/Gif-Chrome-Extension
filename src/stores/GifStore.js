@@ -31,8 +31,8 @@ const create = (url, name = url) => {
                 name: name
             };
 
-        GifAPI.add(gif);
         _gifs = _gifs.push(gif);
+        GifAPI.update(_gifs)
 
         resolve();
     });
@@ -54,8 +54,8 @@ const remove = (id) => {
     return new Promise((resolve) => {
         let index = findIndexById(id);
 
-        GifAPI.remove(id);
         _gifs = _gifs.delete(index);
+        GifAPI.update(_gifs)
 
         resolve();
     });

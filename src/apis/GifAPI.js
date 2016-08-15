@@ -2,14 +2,6 @@ import * as _ from 'lodash'
 
 const KEY = 'GIFS';
 
-const getIndex = (id) => {
-    let data = JSON.parse(localStorage.getItem(KEY));
-
-    return _.findIndex(data, (gif) => {
-        return gif.id === id;
-    });
-};
-
 export const loadData = () => {
     let data = JSON.parse(localStorage.getItem(KEY));
 
@@ -18,24 +10,6 @@ export const loadData = () => {
     } else {
         return data;
     }
-};
-
-
-export const add = (gif) => {
-    let data = JSON.parse(localStorage.getItem(KEY));
-
-    data.push(gif);
-
-    localStorage.setItem(KEY, JSON.stringify(data));
-};
-
-export const remove = (id) => {
-    let data = JSON.parse(localStorage.getItem(KEY)),
-        index = getIndex(id);
-
-    data.splice(index, 1);
-
-    localStorage.setItem(KEY, JSON.stringify(data));
 };
 
 export const update = (update) => {

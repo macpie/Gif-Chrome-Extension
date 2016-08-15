@@ -44,6 +44,7 @@ const update = (id, updates) => {
             obj = _gifs.get(index);
 
         _gifs = _gifs.set(index, Object.assign({}, obj, updates));
+        GifAPI.update(_gifs);
 
         resolve();
     });

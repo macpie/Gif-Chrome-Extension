@@ -2,6 +2,10 @@
     padding: 2px;
 }
 
+.gif .gif-name {
+    cursor: pointer;
+}
+
 .gif .thumbnail img {
     width: 100%;
     height: 120px;

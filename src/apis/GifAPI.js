@@ -38,6 +38,10 @@ export const remove = (id) => {
     localStorage.setItem(KEY, JSON.stringify(data));
 };
 
+export const update = (update) => {
+    localStorage.setItem(KEY, JSON.stringify(update));
+};
+
 export const mock = () => {
     localStorage.clear();
 

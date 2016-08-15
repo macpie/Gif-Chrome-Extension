@@ -6,6 +6,20 @@ import DownloadLink from '../common/DownloadLink';
 import '../../css/GifView.css'
 
 class GifView extends React.Component {
+    componentDidMount() {
+        var gif = this.props.gif;
+
+        $('#' + gif.id).editable({
+            selector: '.gif-name',
+            container: 'body',
+            type: 'text',
+            mode: 'inline',
+            showbuttons: false,
+            success: function(resp, name) {
+                GifActions.update(gif.id, gif.url, name)
+            }
+        });
+    }
     handleDelete(id, e) {
         GifActions.remove(id);
     }
@@ -16,10 +30,10 @@ class GifView extends React.Component {
         let gif = this.props.gif;
 
         return (
-            <div className="col-xs-4 gif">
+            <div className="col-xs-4 gif" id={gif.id}>
                 <div className="thumbnail">
                     <div className="caption">
-                        <h3>{gif.name}</h3>
+                        <h3 className="gif-name">{gif.name}</h3>
                         <div className="btn-group btn-group-sm" role="group">
                             <button type="button" className="btn btn-danger" onClick={this.handleDelete.bind(this, gif.id)}>
                                 <i className="fa fa-trash-o" aria-hidden="true"></i>

@@ -75,7 +75,7 @@ const filter = (text) => {
     if (text !== '') {
         if (!_tmp) _tmp = _gifs;
 
-        let re = new RegExp(text, 'g');
+        let re = new RegExp(text, 'gi');
 
         _gifs = _tmp.filter((val) => {
             return val.name.match(re);

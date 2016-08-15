@@ -14,8 +14,14 @@ class GifFilter extends React.Component {
     componentDidMount() {
         $('.typeahead').typeahead({
             source: this.props.gifs,
-            afterSelect: function(item) {
-                GifActions.filter(item.name);
+            afterSelect: function(gif) {
+                GifActions.filter(gif.name);
+
+                $('#copy')
+                    .val(gif.url)
+                    .select();
+
+                document.execCommand('copy');
             }
         });
     }

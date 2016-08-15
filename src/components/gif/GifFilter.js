@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import GifAddModal from '../common/GifAddModal'
 import * as GifActions from '../../actions/GifActions';
+import '../../css/GifFilter.css';
 
 class GifFilter extends React.Component {
     constructor(props) {

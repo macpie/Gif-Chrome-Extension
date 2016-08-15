@@ -31,7 +31,7 @@ class Gif extends React.Component {
     render() {
         return (
             <div className="row">
-                <GifFilter />
+                <GifFilter gifs={this.state.gifs} />
                 <GifsView gifs={this.state.gifs} />
             </div>
         );

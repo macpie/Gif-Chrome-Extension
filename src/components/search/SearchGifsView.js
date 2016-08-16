@@ -9,6 +9,7 @@ class SearchGifsView extends React.Component {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleMore = this.handleMore.bind(this);
 
         this.state = {
             selected_url: ''
@@ -20,6 +21,15 @@ class SearchGifsView extends React.Component {
         });
 
         $('#GifAddModal').modal('show');
+    }
+    handleMore() {
+        let pagination = this.props.pagination;
+
+        if(pagination.total_count > pagination.offset) {
+            this.props.handleMore();
+        } else {
+            console.log('no more');
+        }
     }
     render() {
         let gifLis = [],
@@ -33,6 +43,10 @@ class SearchGifsView extends React.Component {
 
         return (
             <div>
+                <div className="row">
+                    <p onClick={this.handleMore}>Total count: {this.props.pagination.total_count}</p>
+                    <p>Offset: {this.props.pagination.offset}</p>
+                </div>
                 <div id="searchGifsView" className="row">{gifLis}</div>
                 <GifAddModal url={this.state.selected_url}/>
             </div>
@@ -41,7 +55,8 @@ class SearchGifsView extends React.Component {
 };
 
 SearchGifsView.propTypes = {
-    gifs: PropTypes.array
+    gifs: PropTypes.array,
+    pagination: PropTypes.object
 };
 
 export default SearchGifsView;

@@ -9,12 +9,14 @@ class Search extends React.Component {
         super();
 
         this.state = {
-            gifs: []
+            gifs: [],
+            pagination: {}
         };
 
-        this.doSearch = this.doSearch.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleMore = this.handleMore.bind(this);
     }
-    doSearch(val) {
+    handleSearch(val) {
         GiphyAPI
             .search({
                 query: val,
@@ -22,20 +24,37 @@ class Search extends React.Component {
             })
             .then((body) => {
                 this.setState({
-                    gifs: body.data
+                    searching: val,
+                    gifs: body.data,
+                    pagination: body.pagination
                 });
             })
             .catch((error) => {
                 console.log(error);
             });
-
+    }
+    handleMore() {
+        GiphyAPI
+            .search({
+                query: this.state.searching,
+                limit: 9,
+                offset: this.state.pagination.offset + 9
+            })
+            .then((body) => {
+                this.setState({
+                    gifs: this.state.gifs.concat(body.data),
+                    pagination: body.pagination
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     render() {
         return (
             <div>
-                <SearchForm doSearch={this.doSearch} />
-                <SearchGifsView gifs={this.state.gifs} />
-
+                <SearchForm handleSearch={this.handleSearch} />
+                <SearchGifsView handleMore={this.handleMore} gifs={this.state.gifs} pagination={this.state.pagination} />
                 <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
             </div>
         );

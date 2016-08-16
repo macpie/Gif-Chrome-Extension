@@ -19,7 +19,7 @@ class SearchForm extends React.Component {
         });
     }
     handleSearch(e) {
-        this.props.doSearch(this.state.search);
+        this.props.handleSearch(this.state.search);
     }
     render() {
         return (
@@ -40,7 +40,7 @@ class SearchForm extends React.Component {
 };
 
 SearchForm.propTypes = {
-    doSearch: PropTypes.func.isRequired
+    handleSearch: PropTypes.func.isRequired
 };
 
 export default SearchForm;

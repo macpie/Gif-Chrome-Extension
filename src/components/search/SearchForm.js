@@ -23,10 +23,18 @@ class SearchForm extends React.Component {
     }
     render() {
         return (
-            <form id="filter">
-                <input type="text" name="search" placeholder="Search gif" onChange={this.handleSearchChange} />
-                <button type="button" onClick={this.handleSearch}>Search</button>
-            </form>
+            <div id="searchForm" className="row">
+                <div className="col-xs-6 col-xs-offset-3">
+                    <div className="input-group">
+                        <input type="text" name="search" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} />
+                        <div className="input-group-btn">
+                            <button className="btn btn-default" onClick={this.handleSearch}>
+                                <i className="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 };

@@ -32,7 +32,7 @@ const create = (url, name = url) => {
             };
 
         _gifs = _gifs.push(gif);
-        GifAPI.update(_gifs)
+        GifAPI.update(_gifs);
 
         resolve();
     });

@@ -34,7 +34,7 @@ class GifFilter extends React.Component {
     }
     render() {
         return (
-            <div id="filter" className="row">
+            <div id="gifFilter" className="row">
                 <div className="col-xs-6 col-xs-offset-3">
                     <div className="input-group">
                         <input type="text" name="filter" className="form-control typeahead" placeholder="Filter by name" onChange={this.handleFilterChange} />

@@ -1,0 +1,8 @@
+#Search > img {
+    position: fixed;
+    left: 0;
+    right: 0;
+    opacity: 0.75;
+    z-index: 10;
+    bottom: 5px;
+}

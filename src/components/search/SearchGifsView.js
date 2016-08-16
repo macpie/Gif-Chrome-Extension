@@ -29,7 +29,7 @@ class SearchGifsView extends React.Component {
 
         let pagination = this.props.pagination;
 
-        if(pagination.offset < pagination.total_count) {
+        if (pagination.offset < pagination.total_count) {
             this.props.handleOffSet('next');
         }
     }
@@ -38,7 +38,7 @@ class SearchGifsView extends React.Component {
 
         let pagination = this.props.pagination;
 
-        if(pagination.offset >= 9) {
+        if (pagination.offset >= 9) {
             this.props.handleOffSet('prev');
         }
     }
@@ -46,14 +46,14 @@ class SearchGifsView extends React.Component {
         let classes = '',
             p = this.props.pagination;
 
-        if(type === 'next') {
+        if (type === 'next') {
             classes += 'next ';
 
-            if(p.offset + 12 >= p.total_count) classes += 'disabled';
+            if (p.offset + 12 >= p.total_count) classes += 'disabled';
         } else {
             classes += 'previous ';
 
-            if(p.offset <= 0) classes += 'disabled';
+            if (p.offset <= 0) classes += 'disabled';
         }
 
         return classes;
@@ -61,7 +61,10 @@ class SearchGifsView extends React.Component {
     hide() {
         let style = {};
 
-        if(this.props.gifs.length === 0) style.display = 'none';
+        if (this.props.gifs.length === 0
+            && !this.props.searching) {
+            style.display = 'none';
+        }
 
         return style;
     }

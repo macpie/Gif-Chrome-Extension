@@ -4,3 +4,22 @@
     height: 120px;
     borderRadius: 4px;
 }
+
+@media (min-width: 800px) {
+    .search-gif-view img {
+        height: 180px;
+    }
+
+}
+
+@media (min-width: 1000px) {
+    .search-gif-view img {
+        height: 200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .search-gif-view img {
+        height: 280px;
+    }
+}

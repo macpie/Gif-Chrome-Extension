@@ -1,7 +1,7 @@
 import React from 'react';
 import * as GiphyAPI from '../apis/GiphyAPI';
 import SearchForm from '../components/search/SearchForm';
-import SearchView from '../components/search/SearchView';
+import SearchGifsView from '../components/search/SearchGifsView';
 
 class Search extends React.Component {
     constructor() {
@@ -16,7 +16,8 @@ class Search extends React.Component {
     doSearch(val) {
         GiphyAPI
             .search({
-                query: val
+                query: val,
+                limit: 9
             })
             .then((body) => {
                 this.setState({
@@ -30,9 +31,9 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <div className="row">
+            <div>
                 <SearchForm doSearch={this.doSearch} />
-                <SearchView gifs={this.state.gifs} />
+                <SearchGifsView gifs={this.state.gifs} />
             </div>
         );
     }

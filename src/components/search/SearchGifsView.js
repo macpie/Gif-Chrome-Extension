@@ -9,9 +9,17 @@ class SearchGifsView extends React.Component {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
+
+        this.state = {
+            selected_url: ''
+        };
     }
     handleClick(gif) {
-        console.log(gif);
+        this.setState({
+            selected_url: gif.images.downsized_medium.url
+        });
+
+        $('#GifAddModal').modal('show');
     }
     render() {
         let gifLis = [],
@@ -26,7 +34,7 @@ class SearchGifsView extends React.Component {
         return (
             <div className="row">
                 <div id="searchGifsView" className="row">{gifLis}</div>
-                <GifAddModal />
+                <GifAddModal url={this.state.selected_url}/>
             </div>
         );
     }

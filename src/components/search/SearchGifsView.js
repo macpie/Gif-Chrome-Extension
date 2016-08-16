@@ -32,7 +32,7 @@ class SearchGifsView extends React.Component {
         });
 
         return (
-            <div className="row">
+            <div>
                 <div id="searchGifsView" className="row">{gifLis}</div>
                 <GifAddModal url={this.state.selected_url}/>
             </div>

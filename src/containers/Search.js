@@ -2,6 +2,7 @@ import React from 'react';
 import * as GiphyAPI from '../apis/GiphyAPI';
 import SearchForm from '../components/search/SearchForm';
 import SearchGifsView from '../components/search/SearchGifsView';
+import PowerByImg from '../img/powered_by.png'
 
 class Search extends React.Component {
     constructor() {
@@ -34,6 +35,8 @@ class Search extends React.Component {
             <div>
                 <SearchForm doSearch={this.doSearch} />
                 <SearchGifsView gifs={this.state.gifs} />
+
+                <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
             </div>
         );
     }

@@ -1,18 +1,18 @@
-.gif .thumbnail  {
+.gif-view .thumbnail  {
     padding: 2px;
 }
 
-.gif .gif-name {
+.gif-view .gif-name {
     cursor: pointer;
 }
 
-.gif .thumbnail img {
+.gif-view .thumbnail img {
     width: 100%;
     height: 120px;
     border-radius: 4px;
 }
 
-.gif .thumbnail .caption {
+.gif-view .thumbnail .caption {
     position: absolute;
     width: 80%;
     height: 120px;
@@ -23,7 +23,7 @@
     color: #fff;
 }
 
-.gif .thumbnail .caption h3 {
+.gif-view .thumbnail .caption h3 {
     margin-top: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -31,43 +31,43 @@
     text-shadow: 3px -2px 1px rgba(0, 0, 0, 1);
 }
 
-.gif .thumbnail .caption .btn-group {
+.gif-view .thumbnail .caption .btn-group {
     opacity: 0;
 }
 
-.gif .thumbnail:hover .caption .btn-group {
+.gif-view .thumbnail:hover .caption .btn-group {
     opacity: 0.80;
 }
 
-.gif .thumbnail .caption .btn-group button:nth-child(2) {
+.gif-view .thumbnail .caption .btn-group button:nth-child(2) {
     width: 50px;
 }
 
 @media (min-width: 800px) {
-    .gif .thumbnail img {
+    .gif-view .thumbnail img {
         height: 180px;
     }
-    .gif .thumbnail .caption {
+    .gif-view .thumbnail .caption {
         width: 85%;
         height: 180px;
     }
 }
 
 @media (min-width: 1000px) {
-    .gif .thumbnail img {
+    .gif-view .thumbnail img {
         height: 200px;
     }
-    .gif .thumbnail .caption {
+    .gif-view .thumbnail .caption {
         width: 90%;
         height: 200px;
     }
 }
 
 @media (min-width: 1200px) {
-    .gif .thumbnail img {
+    .gif-view .thumbnail img {
         height: 280px;
     }
-    .gif .thumbnail .caption {
+    .gif-view .thumbnail .caption {
         width: 90%;
         height: 280px;
     }

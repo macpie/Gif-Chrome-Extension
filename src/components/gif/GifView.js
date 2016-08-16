@@ -30,7 +30,7 @@ class GifView extends React.Component {
         let gif = this.props.gif;
 
         return (
-            <div className="col-xs-4 gif" id={gif.id}>
+            <div className="col-xs-4 gif-view" id={gif.id}>
                 <div className="thumbnail">
                     <div className="caption">
                         <h3 className="gif-name">{gif.name}</h3>

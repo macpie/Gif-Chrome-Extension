@@ -18,15 +18,23 @@ class SearchForm extends React.Component {
             search: e.target.value
         });
     }
-    handleSearch(e) {
-        this.props.handleSearch(this.state.search);
+    handleSearch() {
+        if(this.state.search === '') {
+            this.props.handleSearch('nothing');
+        } else {
+            this.props.handleSearch(this.state.search);
+        }
+
+        this.setState({
+            search: ''
+        });
     }
     render() {
         return (
             <div id="searchForm" className="row">
                 <div className="col-xs-6 col-xs-offset-3">
                     <div className="input-group">
-                        <input type="text" name="search" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} />
+                        <input type="text" name="search" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.search} />
                         <div className="input-group-btn">
                             <button className="btn btn-default" onClick={this.handleSearch}>
                                 <i className="fa fa-search" aria-hidden="true"></i>

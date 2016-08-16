@@ -3,13 +3,15 @@ import React, {
 } from 'react';
 import GifAddModal from '../common/GifAddModal';
 import SearchGifView from './SearchGifView';
+import '../../css/SearchGifsView.css'
 
 class SearchGifsView extends React.Component {
     constructor(props) {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
-        this.handleMore = this.handleMore.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+        this.handlePrev = this.handlePrev.bind(this);
 
         this.state = {
             selected_url: ''
@@ -22,14 +24,46 @@ class SearchGifsView extends React.Component {
 
         $('#GifAddModal').modal('show');
     }
-    handleMore() {
+    handleNext(e) {
+        e.preventDefault();
+
         let pagination = this.props.pagination;
 
-        if(pagination.total_count > pagination.offset) {
-            this.props.handleMore();
-        } else {
-            console.log('no more');
+        if(pagination.offset < pagination.total_count) {
+            this.props.handleOffSet('next');
         }
+    }
+    handlePrev(e) {
+        e.preventDefault();
+
+        let pagination = this.props.pagination;
+
+        if(pagination.offset >= 9) {
+            this.props.handleOffSet('prev');
+        }
+    }
+    isDisabled(type) {
+        let classes = '',
+            p = this.props.pagination;
+
+        if(type === 'next') {
+            classes += 'next ';
+
+            if(p.offset + 12 >= p.total_count) classes += 'disabled';
+        } else {
+            classes += 'previous ';
+
+            if(p.offset <= 0) classes += 'disabled';
+        }
+
+        return classes;
+    }
+    hide() {
+        let style = {};
+
+        if(this.props.gifs.length === 0) style.display = 'none';
+
+        return style;
     }
     render() {
         let gifLis = [],
@@ -42,12 +76,27 @@ class SearchGifsView extends React.Component {
         });
 
         return (
-            <div>
-                <div className="row">
-                    <p onClick={this.handleMore}>Total count: {this.props.pagination.total_count}</p>
-                    <p>Offset: {this.props.pagination.offset}</p>
+            <div id="SearchGifsView">
+                <div className="row" style={this.hide.bind(this)()}>
+                    <div className="page-header">
+                        <h1>Search for "{this.props.searching}"
+                            <small> {this.props.pagination.total_count} result(s)</small>
+                        </h1>
+                    </div>
                 </div>
-                <div id="searchGifsView" className="row">{gifLis}</div>
+                <div className="row" style={this.hide.bind(this)()}>
+                    <nav aria-label="...">
+                        <ul className="pager">
+                            <li className={this.isDisabled.bind(this)('previous')}>
+                                <a href="#" onClick={this.handlePrev}>Previous</a>
+                            </li>
+                            <li className={this.isDisabled.bind(this)('next')}>
+                                <a href="#"  onClick={this.handleNext}>Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div className="row">{gifLis}</div>
                 <GifAddModal url={this.state.selected_url}/>
             </div>
         );
@@ -55,6 +104,7 @@ class SearchGifsView extends React.Component {
 };
 
 SearchGifsView.propTypes = {
+    searching: PropTypes.string,
     gifs: PropTypes.array,
     pagination: PropTypes.object
 };

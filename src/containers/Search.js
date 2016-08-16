@@ -11,17 +11,18 @@ class Search extends React.Component {
 
         this.state = {
             gifs: [],
-            pagination: {}
+            pagination: {},
+            limit: 12
         };
 
         this.handleSearch = this.handleSearch.bind(this);
-        this.handleMore = this.handleMore.bind(this);
+        this.handleOffSet = this.handleOffSet.bind(this);
     }
     handleSearch(val) {
         GiphyAPI
             .search({
                 query: val,
-                limit: 9
+                limit: this.state.limit
             })
             .then((body) => {
                 this.setState({
@@ -34,16 +35,22 @@ class Search extends React.Component {
                 console.log(error);
             });
     }
-    handleMore() {
+    handleOffSet(type = 'next') {
+        let offset = this.state.pagination.offset + this.state.limit;
+
+        if(type !== 'next') {
+            offset = this.state.pagination.offset - this.state.limit;
+        }
+
         GiphyAPI
             .search({
                 query: this.state.searching,
-                limit: 9,
-                offset: this.state.pagination.offset + 9
+                limit: this.state.limit,
+                offset: offset
             })
             .then((body) => {
                 this.setState({
-                    gifs: this.state.gifs.concat(body.data),
+                    gifs: body.data,
                     pagination: body.pagination
                 });
             })
@@ -55,7 +62,7 @@ class Search extends React.Component {
         return (
             <div id="Search">
                 <SearchForm handleSearch={this.handleSearch} />
-                <SearchGifsView handleMore={this.handleMore} gifs={this.state.gifs} pagination={this.state.pagination} />
+                <SearchGifsView searching={this.state.searching} handleOffSet={this.handleOffSet} gifs={this.state.gifs} pagination={this.state.pagination} />
                 <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
             </div>
         );

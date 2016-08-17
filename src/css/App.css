@@ -6,13 +6,6 @@ body {
     margin-bottom: 10px;
 }
 
-#copy {
-    position: absolute;
-    width: 10px;
-    top: -20px;
-    left: -20px;
-}
-
 a.active {
     color: #fff;
     background-color: #337ab7;

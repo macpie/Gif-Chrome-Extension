@@ -4,19 +4,12 @@ import React, {
 import GifView from './GifView';
 
 class GifsView extends React.Component {
-    handleCopy(url) {
-        $('#copy')
-            .val(url)
-            .select();
-
-        document.execCommand('copy');
-    }
     render() {
         let gifs = this.props.gifs,
             gifLis = [];
 
         gifs.forEach((gif) => {
-            gifLis.push(<GifView key={gif.id} gif={gif} copy={this.handleCopy}/>);
+            gifLis.push(<GifView key={gif.id} gif={gif} />);
         });
 
         return (

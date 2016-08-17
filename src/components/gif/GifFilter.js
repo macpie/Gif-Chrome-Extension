@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import GifAddModal from '../common/GifAddModal'
 import * as GifActions from '../../actions/GifActions';
+import * as Clipboard from '../../utils/Clipboard';
 import '../../css/GifFilter.css';
 
 class GifFilter extends React.Component {
@@ -17,12 +18,7 @@ class GifFilter extends React.Component {
             source: this.props.gifs,
             afterSelect: function(gif) {
                 GifActions.filter(gif.name);
-
-                $('#copy')
-                    .val(gif.url)
-                    .select();
-
-                document.execCommand('copy');
+                Clipboard.copy(gif.url);
             }
         });
     }

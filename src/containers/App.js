@@ -2,12 +2,14 @@ import React from 'react';
 import {
     IndexLink
 } from 'react-router'
+import Copy from '../components/common/Copy'
 import '../css/App.css'
 
 class App extends React.Component {
     render() {
         return (
             <div className="container-fluid">
+                <Copy />
                 <div className="row">
                     <div className="col-xs-12">
                         <ul className="nav nav-pills">

@@ -1,6 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
+import * as Clipboard from '../../utils/Clipboard';
 import * as GifActions from '../../actions/GifActions';
 import DownloadLink from '../common/DownloadLink';
 import '../../css/GifView.css'
@@ -41,7 +42,7 @@ class GifView extends React.Component {
         GifActions.remove(this.state.id);
     }
     handleCopy() {
-        this.props.copy(this.state.url);
+        Clipboard.copy(this.state.url);
     }
     handleMouseOver() {
         let gif = this.state;
@@ -83,8 +84,7 @@ class GifView extends React.Component {
 };
 
 GifView.propTypes = {
-    gif: PropTypes.object.isRequired,
-    copy: PropTypes.func.isRequired
+    gif: PropTypes.object.isRequired
 };
 
 export default GifView;

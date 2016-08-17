@@ -26,7 +26,8 @@ export const mock = (max = 10) => {
         data.push({
             id: UUID.v4(),
             name: 'Test ' + i,
-            url: 'http://media2.giphy.com/media/geozuBY5Y6cXm/giphy.gif'
+            url: 'http://media2.giphy.com/media/geozuBY5Y6cXm/giphy.gif',
+            still_url: 'https://media2.giphy.com/media/geozuBY5Y6cXm/giphy_s.gif'
         });
     }
 

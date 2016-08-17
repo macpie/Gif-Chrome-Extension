@@ -12,7 +12,8 @@ class Search extends React.Component {
         this.state = {
             gifs: [],
             pagination: {},
-            limit: 12
+            limit: 12,
+            query: null
         };
 
         this.handleSearch = this.handleSearch.bind(this);
@@ -26,7 +27,7 @@ class Search extends React.Component {
             })
             .then((body) => {
                 this.setState({
-                    searching: val,
+                    query: val,
                     gifs: body.data,
                     pagination: body.pagination
                 });
@@ -44,7 +45,7 @@ class Search extends React.Component {
 
         GiphyAPI
             .search({
-                query: this.state.searching,
+                query: this.state.query,
                 limit: this.state.limit,
                 offset: offset
             })
@@ -62,7 +63,7 @@ class Search extends React.Component {
         return (
             <div id="Search">
                 <SearchForm handleSearch={this.handleSearch} />
-                <SearchGifsView searching={this.state.searching} handleOffSet={this.handleOffSet} gifs={this.state.gifs} pagination={this.state.pagination} />
+                <SearchGifsView query={this.state.query} gifs={this.state.gifs} pagination={this.state.pagination} handleOffSet={this.handleOffSet} />
                 <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
             </div>
         );

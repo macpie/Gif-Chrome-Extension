@@ -62,7 +62,7 @@ class SearchGifsView extends React.Component {
         let style = {};
 
         if (this.props.gifs.length === 0
-            && !this.props.searching) {
+            && !this.props.query) {
             style.display = 'none';
         }
 
@@ -82,7 +82,7 @@ class SearchGifsView extends React.Component {
             <div id="SearchGifsView">
                 <div className="row" style={this.hide.bind(this)()}>
                     <div className="page-header">
-                        <h1>Search for "{this.props.searching}"
+                        <h1>Search for "{this.props.query}"
                             <small> {this.props.pagination.total_count} result(s)</small>
                         </h1>
                     </div>
@@ -107,7 +107,7 @@ class SearchGifsView extends React.Component {
 };
 
 SearchGifsView.propTypes = {
-    searching: PropTypes.string,
+    query: PropTypes.string,
     gifs: PropTypes.array,
     pagination: PropTypes.object
 };

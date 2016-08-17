@@ -19,13 +19,12 @@ class GifView extends React.Component {
     componentWillMount() {
         var gif = this.props.gif;
 
-        gif.download_url = gif.url;
-        gif.url = gif.still_url || gif.download_url;
-
-        this.setState(gif);
+        this.setState(Object.assign({}, gif, {
+            img_url: gif.still_url || gif.download_url
+        }));
     }
     componentDidMount() {
-        var gif = this.state
+        var gif = this.state;
 
         $('#' + gif.id).editable({
             selector: '.gif-name',
@@ -48,14 +47,14 @@ class GifView extends React.Component {
         let gif = this.state;
 
         this.setState({
-            url: gif.download_url
+            img_url: gif.url
         });
     }
     handleMouseOut() {
         let gif = this.state;
 
         this.setState({
-            url: gif.still_url || gif.download_url
+            img_url: gif.still_url || gif.url
         });
     }
     render() {
@@ -73,10 +72,10 @@ class GifView extends React.Component {
                             <button type="button" className="btn btn-success" onClick={this.handleCopy}>
                                 <i className="fa fa-files-o" aria-hidden="true"></i>
                             </button>
-                            <DownloadLink url={gif.download_url} />
+                            <DownloadLink url={gif.url} />
                         </div>
                     </div>
-                    <img src={gif.url} alt={gif.name} />
+                    <img src={gif.img_url} alt={gif.name} />
                 </div>
             </div>
         );

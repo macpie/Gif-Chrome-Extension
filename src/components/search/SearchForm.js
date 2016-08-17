@@ -7,7 +7,7 @@ class SearchForm extends React.Component {
         super(props);
 
         this.state = {
-            search: ''
+            query: ''
         };
 
         this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -16,18 +16,18 @@ class SearchForm extends React.Component {
     }
     handleSearchChange(e) {
         this.setState({
-            search: e.target.value
+            query: e.target.value
         });
     }
     handleSearch() {
-        if(this.state.search === '') {
+        if(this.state.query === '') {
             this.props.handleSearch('nothing');
         } else {
-            this.props.handleSearch(this.state.search);
+            this.props.handleSearch(this.state.query);
         }
 
         this.setState({
-            search: ''
+            query: ''
         });
     }
     handleKeyPress(e) {
@@ -40,7 +40,7 @@ class SearchForm extends React.Component {
             <div id="searchForm" className="row">
                 <div className="col-xs-6 col-xs-offset-3">
                     <div className="input-group">
-                        <input type="text" name="search" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.search} onKeyPress={this.handleKeyPress} />
+                        <input type="text" name="query" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
                         <div className="input-group-btn">
                             <button className="btn btn-default" onClick={this.handleSearch}>
                                 <i className="fa fa-search" aria-hidden="true"></i>

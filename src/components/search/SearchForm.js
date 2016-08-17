@@ -12,6 +12,7 @@ class SearchForm extends React.Component {
 
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
     handleSearchChange(e) {
         this.setState({
@@ -29,12 +30,17 @@ class SearchForm extends React.Component {
             search: ''
         });
     }
+    handleKeyPress(e) {
+        if(e.which === 13) {
+            this.handleSearch();
+        }
+    }
     render() {
         return (
             <div id="searchForm" className="row">
                 <div className="col-xs-6 col-xs-offset-3">
                     <div className="input-group">
-                        <input type="text" name="search" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.search} />
+                        <input type="text" name="search" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.search} onKeyPress={this.handleKeyPress} />
                         <div className="input-group-btn">
                             <button className="btn btn-default" onClick={this.handleSearch}>
                                 <i className="fa fa-search" aria-hidden="true"></i>

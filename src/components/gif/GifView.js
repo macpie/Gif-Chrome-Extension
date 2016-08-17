@@ -11,11 +11,16 @@ class GifView extends React.Component {
 
         this.handleDelete = this.handleDelete.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
+        this.handleMouseOver = this.handleMouseOver.bind(this);
+        this.handleMouseOut = this.handleMouseOut.bind(this);
 
         this.state = {};
     }
     componentWillMount() {
         var gif = this.props.gif;
+
+        gif.download_url = gif.url;
+        gif.url = gif.still_url || gif.download_url;
 
         this.setState(gif);
     }
@@ -39,11 +44,25 @@ class GifView extends React.Component {
     handleCopy() {
         this.props.copy(this.state.url);
     }
+    handleMouseOver() {
+        let gif = this.state;
+
+        this.setState({
+            url: gif.download_url
+        });
+    }
+    handleMouseOut() {
+        let gif = this.state;
+
+        this.setState({
+            url: gif.still_url || gif.download_url
+        });
+    }
     render() {
         let gif = this.state;
 
         return (
-            <div className="col-xs-4 gif-view" id={gif.id}>
+            <div className="col-xs-4 gif-view" id={gif.id} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
                 <div className="thumbnail">
                     <div className="caption">
                         <h3 className="gif-name">{gif.name}</h3>
@@ -54,7 +73,7 @@ class GifView extends React.Component {
                             <button type="button" className="btn btn-success" onClick={this.handleCopy}>
                                 <i className="fa fa-files-o" aria-hidden="true"></i>
                             </button>
-                            <DownloadLink url={gif.url} />
+                            <DownloadLink url={gif.download_url} />
                         </div>
                     </div>
                     <img src={gif.url} alt={gif.name} />

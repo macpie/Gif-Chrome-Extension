@@ -8,6 +8,12 @@ import * as GifActions from '../../actions/GifActions';
 import '../../css/GifAddModal.css';
 
 class GifAddModal extends React.Component {
+    static show() {
+        $('#GifAddModal').modal('show');
+    }
+    static hide() {
+        $('#GifAddModal').modal('hide');
+    }
     constructor(props) {
         super(props);
 
@@ -41,7 +47,7 @@ class GifAddModal extends React.Component {
     }
     handleSave(e) {
         GifActions.create(this.state.url, this.state.name);
-        $('#GifAddModal').modal('hide');
+        GifAddModal.hide();
         browserHistory.push('/gifs');
     }
     render() {

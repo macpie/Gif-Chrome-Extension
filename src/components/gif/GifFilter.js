@@ -1,7 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import GifAddModal from '../common/GifAddModal'
+import GifAddModal from '../common/GifAddModal';
 import * as GifActions from '../../actions/GifActions';
 import * as Clipboard from '../../utils/Clipboard';
 import '../../css/GifFilter.css';
@@ -26,7 +26,7 @@ class GifFilter extends React.Component {
         GifActions.filter(e.target.value);
     }
     handleAdd() {
-        $('#GifAddModal').modal('show');
+        GifAddModal.show();
     }
     render() {
         return (

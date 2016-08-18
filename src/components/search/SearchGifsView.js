@@ -22,7 +22,7 @@ class SearchGifsView extends React.Component {
             selected_url: gif.images.downsized_medium.url
         });
 
-        $('#GifAddModal').modal('show');
+        GifAddModal.show();
     }
     handleNext(e) {
         e.preventDefault();
@@ -61,8 +61,8 @@ class SearchGifsView extends React.Component {
     hide() {
         let style = {};
 
-        if (this.props.gifs.length === 0
-            && !this.props.query) {
+        if (this.props.gifs.length === 0 &&
+            !this.props.query) {
             style.display = 'none';
         }
 

@@ -1,20 +1,22 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 
-export const create = (url, name) => {
+export const create = (url, name, still_url) => {
     AppDispatcher.dispatch({
         type: GifConstants.GIF_CREATE,
         url: url,
-        name: name
+        name: name,
+        still_url: still_url
     });
 };
 
-export const update = (id, url, name) => {
+export const update = (id, url, name, still_url) => {
     AppDispatcher.dispatch({
         type: GifConstants.GIF_UPDATE,
         id: id,
         url: url,
-        name: name
+        name: name,
+        still_url: still_url
     });
 };
 

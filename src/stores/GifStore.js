@@ -23,12 +23,13 @@ const findIndexById = (id) => {
     });
 };
 
-const create = (url, name = url) => {
+const create = (url, name = url, still_url = url) => {
     return new Promise((resolve) => {
         let gif = {
                 id: UUID.v4(),
+                name: name,
                 url: url,
-                name: name
+                still_url: still_url
             };
 
         _gifs = _gifs.push(gif);
@@ -103,7 +104,7 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register((action) => {
     switch (action.type) {
         case GifConstants.GIF_CREATE:
-            create(action.url, action.name)
+            create(action.url, action.name, action.still_url)
                 .then(() => {
                     GifStore.emitChange();
                 });
@@ -111,7 +112,8 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_UPDATE:
             update(action.id, {
                 name: action.name,
-                url: action.url
+                url: action.url,
+                still_url: action.still_url,
             }).then(() => {
                 GifStore.emitChange();
             });

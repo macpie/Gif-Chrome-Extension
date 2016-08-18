@@ -8,32 +8,26 @@ import PowerByImg from '../img/powered_by.png'
 import '../css/Search.css'
 
 const LIMIT = 30;
+const DEFAULT_STATE = {
+    gifs: [],
+    pagination: {
+        offset: 0,
+        total_count: 1
+    },
+    query: ''
+};
 
 class Search extends React.Component {
     constructor() {
         super();
 
-        this.state = {
-            gifs: [],
-            pagination: {
-                offset: 0,
-                total_count: 1
-            },
-            query: ''
-        };
+        this.state = DEFAULT_STATE;
 
         this.handleSearch = this.handleSearch.bind(this);
         this.loadMore = this.loadMore.bind(this);
     }
     handleSearch(val = 'nothing') {
-        this.setState({
-            gifs: [],
-            pagination: {
-                offset: 0,
-                total_count: 1
-            },
-            query: ''
-        });
+        this.setState(DEFAULT_STATE);
 
         GiphyAPI
             .search({

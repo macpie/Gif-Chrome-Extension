@@ -4,6 +4,7 @@ import {
 import Immutable from 'immutable'
 import Promise from 'promise';
 import UUID from 'node-uuid';
+import * as _ from 'lodash';
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 import * as GifAPI from '../apis/GifAPI';
@@ -88,7 +89,7 @@ const filter = (text) => {
 
 const GifStore = Object.assign({}, EventEmitter.prototype, {
     getAll: () => {
-        return _gifs.toArray();
+        return _.sortBy(_gifs.toArray(), 'name');
     },
     emitChange: () => {
         GifStore.emit(CHANGE_EVENT);

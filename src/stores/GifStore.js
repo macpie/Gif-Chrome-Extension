@@ -32,7 +32,7 @@ const create = (url, name = url, still_url = url) => {
                 still_url: still_url
             };
 
-        _gifs = _gifs.push(gif);
+        _gifs = _gifs.unshift(gif);
         GifAPI.update(_gifs.toArray());
 
         resolve();

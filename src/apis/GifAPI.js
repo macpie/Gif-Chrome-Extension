@@ -31,5 +31,5 @@ export const mock = (max = 10) => {
         });
     }
 
-    localStorage.setItem(KEY, JSON.stringify(data))
+    localStorage.setItem(KEY, JSON.stringify(_.shuffle(data)));
 };

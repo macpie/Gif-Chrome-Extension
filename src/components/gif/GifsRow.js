@@ -1,7 +1,7 @@
 import React from 'react';
 import GifView from './GifView';
 
-class Row extends React.Component {
+class GifsRow extends React.Component {
     render() {
         let children = this.props.children.map((obj, i) => {
             return (<GifView key={i} gif={obj} />);
@@ -15,4 +15,4 @@ class Row extends React.Component {
     }
 };
 
-export default Row;
+export default GifsRow;

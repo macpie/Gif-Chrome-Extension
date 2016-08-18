@@ -1,9 +1,13 @@
 import React from 'react';
+import * as _ from 'lodash';
 import * as GiphyAPI from '../apis/GiphyAPI';
 import SearchForm from '../components/search/SearchForm';
 import SearchGifsView from '../components/search/SearchGifsView';
+import BackToTop from '../components/common/BackToTop';
 import PowerByImg from '../img/powered_by.png'
 import '../css/Search.css'
+
+const LIMIT = 30;
 
 class Search extends React.Component {
     constructor() {
@@ -11,19 +15,21 @@ class Search extends React.Component {
 
         this.state = {
             gifs: [],
-            pagination: {},
-            limit: 12,
-            query: null
+            pagination: {
+                offset: 0,
+                total_count: 1
+            },
+            query: ''
         };
 
         this.handleSearch = this.handleSearch.bind(this);
-        this.handleOffSet = this.handleOffSet.bind(this);
+        this.loadMore = this.loadMore.bind(this);
     }
-    handleSearch(val) {
+    handleSearch(val = 'nothing') {
         GiphyAPI
             .search({
                 query: val,
-                limit: this.state.limit
+                limit: LIMIT
             })
             .then((body) => {
                 this.setState({
@@ -36,30 +42,32 @@ class Search extends React.Component {
                 console.log(error);
             });
     }
-    handleOffSet(type = 'next') {
-        let offset = this.state.pagination.offset + this.state.limit;
+    loadMore(val) {
+        let pagination = this.state.pagination,
+            query = val || this.state.query;
 
-        if(type !== 'next') {
-            offset = this.state.pagination.offset - this.state.limit;
-        }
-
-        GiphyAPI
-            .search({
-                query: this.state.query,
-                limit: this.state.limit,
-                offset: offset
-            })
-            .then((body) => {
-                this.setState({
-                    gifs: body.data,
-                    pagination: body.pagination
+        if (pagination.offset < pagination.total_count && query !== '') {
+            GiphyAPI
+                .search({
+                    query: query,
+                    limit: LIMIT,
+                    offset: pagination.offset + LIMIT
+                })
+                .then((body) => {
+                    this.setState({
+                        query: query,
+                        gifs: this.state.gifs.concat(body.data),
+                        pagination: body.pagination
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        }
     }
     render() {
+        let gifs = _.chunk(this.state.gifs, 3);
+
         return (
             <div id="Search" className="col-xs-12">
                 <div className="row">
@@ -68,10 +76,12 @@ class Search extends React.Component {
                 <div className="row">
                     <SearchGifsView
                         query={this.state.query}
-                        gifs={this.state.gifs}
                         pagination={this.state.pagination}
-                        handleOffSet={this.handleOffSet} />
+                        loadMore={this.loadMore}>
+                        {gifs}
+                    </SearchGifsView>
                 </div>
+                <BackToTop />
                 <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
             </div>
         );

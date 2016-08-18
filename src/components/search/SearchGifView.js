@@ -23,9 +23,7 @@ class SearchGifView extends React.Component {
         });
     }
     handleClick() {
-        if (typeof this.props.click === 'function') {
-            this.props.click(this.props.gif);
-        }
+        this.props.click(this.props.gif);
     }
     handleMouseOver() {
         let gif = this.props.gif;

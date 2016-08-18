@@ -1,11 +1,25 @@
 import React from 'react';
 import {
-    IndexLink
+    IndexLink,
+    browserHistory
 } from 'react-router'
 import Copy from '../components/common/Copy'
 import '../css/App.css'
 
 class App extends React.Component {
+    componentDidMount() {
+        Mousetrap.bind('command+1', function(e) { //eslint-disable-line no-undef
+            browserHistory.push('/gifs');
+        });
+
+        Mousetrap.bind('command+2', function(e) { //eslint-disable-line no-undef
+            browserHistory.push('/search');
+        });
+
+        Mousetrap.bind('command+3', function(e) { //eslint-disable-line no-undef
+            browserHistory.push('/options');
+        });
+    }
     render() {
         return (
             <div className="container-fluid">

@@ -1,0 +1,11 @@
+#BackToTop {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    color: #fff;
+    padding: 5px;
+}

@@ -66,7 +66,11 @@ class Search extends React.Component {
                     <SearchForm handleSearch={this.handleSearch} />
                 </div>
                 <div className="row">
-                    <SearchGifsView query={this.state.query} gifs={this.state.gifs} pagination={this.state.pagination} handleOffSet={this.handleOffSet} />
+                    <SearchGifsView
+                        query={this.state.query}
+                        gifs={this.state.gifs}
+                        pagination={this.state.pagination}
+                        handleOffSet={this.handleOffSet} />
                 </div>
                 <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
             </div>

@@ -3,8 +3,9 @@ import * as _ from 'lodash';
 import GifStore from '../stores/GifStore';
 import GifsView from '../components/gif/GifsView';
 import GifFilter from '../components/gif/GifFilter';
+import BackToTop from '../components/common/BackToTop';
 
-const OFFSET = 24;
+const OFFSET = 30;
 
 class Gif extends React.Component {
     static getAll() {
@@ -65,6 +66,7 @@ class Gif extends React.Component {
                         {gifs}
                     </GifsView>
                 </div>
+                <BackToTop />
             </div>
         );
     }

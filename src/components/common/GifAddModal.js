@@ -32,7 +32,8 @@ class GifAddModal extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            url: nextProps.url || ''
+            url: nextProps.url || '',
+            still_url: nextProps.still_url
         });
     }
     handleNameChange(e) {
@@ -46,7 +47,7 @@ class GifAddModal extends React.Component {
         });
     }
     handleSave(e) {
-        GifActions.create(this.state.url, this.state.name);
+        GifActions.create(this.state.url, this.state.name, this.state.still_url);
         GifAddModal.hide();
         browserHistory.push('/gifs');
     }
@@ -92,7 +93,8 @@ class GifAddModal extends React.Component {
 };
 
 GifAddModal.propTypes = {
-    url: PropTypes.string
+    url: PropTypes.string,
+    still_url: PropTypes.string
 };
 
 export default GifAddModal;

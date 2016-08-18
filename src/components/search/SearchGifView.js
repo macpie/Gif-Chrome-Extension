@@ -29,7 +29,7 @@ class SearchGifView extends React.Component {
         let gif = this.props.gif;
 
         this.setState({
-            url: gif.images.downsized_medium.url
+            url: gif.images.downsized.url
         });
     }
     handleMouseOut() {

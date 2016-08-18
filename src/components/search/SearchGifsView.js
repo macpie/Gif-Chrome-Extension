@@ -12,12 +12,15 @@ class SearchGifsView extends React.Component {
 
         this.handleClick = this.handleClick.bind(this);
         this.state = {
-            selected_url: ''
+            selected: {}
         };
     }
     handleClick(gif) {
         this.setState({
-            selected_url: gif.images.downsized_medium.url
+            selected: {
+                url: gif.images.downsized.url,
+                still_url: gif.images.downsized_still.url
+            }
         });
 
         GifAddModal.show();
@@ -73,7 +76,7 @@ class SearchGifsView extends React.Component {
                     onInfiniteLoad={this.props.loadMore}>
                     {children}
                 </Infinite>
-                <GifAddModal url={this.state.selected_url}/>
+                <GifAddModal url={this.state.selected.url} still_url={this.state.selected.still_url} />
             </div>
         );
     }

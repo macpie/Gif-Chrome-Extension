@@ -91,6 +91,9 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
     getAll: () => {
         return _.sortBy(_gifs.toArray(), 'name');
     },
+    size: () => {
+        return _gifs.size;
+    },
     emitChange: () => {
         GifStore.emit(CHANGE_EVENT);
     },

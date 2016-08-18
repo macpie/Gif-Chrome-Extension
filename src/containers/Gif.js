@@ -23,16 +23,16 @@ class Gif extends React.Component {
             offset: OFFSET
         };
 
-        this._onChange = this._onChange.bind(this);
+        this.onStoreChange = this.onStoreChange.bind(this);
         this.loadMoreGifs = this.loadMoreGifs.bind(this);
     }
     componentDidMount() {
-        GifStore.addChangeListener(this._onChange);
+        GifStore.addChangeListener(this.onStoreChange);
     }
     componentWillUnmount() {
-        GifStore.removeChangeListener(this._onChange);
+        GifStore.removeChangeListener(this.onStoreChange);
     }
-    _onChange() {
+    onStoreChange() {
         let gifs = Gif.getAll();
 
         this.setState({

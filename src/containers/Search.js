@@ -26,6 +26,15 @@ class Search extends React.Component {
         this.loadMore = this.loadMore.bind(this);
     }
     handleSearch(val = 'nothing') {
+        this.setState({
+            gifs: [],
+            pagination: {
+                offset: 0,
+                total_count: 1
+            },
+            query: ''
+        });
+
         GiphyAPI
             .search({
                 query: val,
@@ -42,9 +51,9 @@ class Search extends React.Component {
                 console.log(error);
             });
     }
-    loadMore(val) {
+    loadMore() {
         let pagination = this.state.pagination,
-            query = val || this.state.query;
+            query = this.state.query;
 
         if (pagination.offset < pagination.total_count && query !== '') {
             GiphyAPI

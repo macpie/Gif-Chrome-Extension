@@ -21,6 +21,7 @@ class GifFilter extends React.Component {
                 Clipboard.copy(gif.url);
             }
         });
+        $('#GifFilterInput').focus();
     }
     handleFilterChange(e) {
         GifActions.filter(e.target.value);
@@ -30,9 +31,9 @@ class GifFilter extends React.Component {
     }
     render() {
         return (
-            <div id="gifFilter" className="col-xs-6 col-xs-offset-3">
+            <div id="GifFilter" className="col-xs-6 col-xs-offset-3">
                 <div className="input-group">
-                    <input type="text" name="filter" className="form-control typeahead" placeholder="Filter by name" onChange={this.handleFilterChange} />
+                    <input id="GifFilterInput" type="text" name="filter" className="form-control typeahead" placeholder="Filter by name" onChange={this.handleFilterChange} />
                     <div className="input-group-btn">
                         <button className="btn btn-default" onClick={this.handleAdd}>
                             <i className="fa fa-plus" aria-hidden="true"></i>

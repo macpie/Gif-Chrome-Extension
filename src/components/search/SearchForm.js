@@ -14,9 +14,6 @@ class SearchForm extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
-    componentDidMount() {
-        $('#SearchFormInput').focus();
-    }
     handleSearchChange(e) {
         this.setState({
             query: e.target.value
@@ -42,7 +39,7 @@ class SearchForm extends React.Component {
         return (
             <div id="SearchForm" className="col-xs-6 col-xs-offset-3">
                 <div className="input-group">
-                    <input id="SearchFormInput" type="text" name="query" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
+                    <input type="text" name="query" className="form-control ctrl-f" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
                     <div className="input-group-btn">
                         <button className="btn btn-default" onClick={this.handleSearch}>
                             <i className="fa fa-search" aria-hidden="true"></i>

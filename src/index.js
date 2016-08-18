@@ -16,7 +16,7 @@ import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 import * as GifActions from './actions/GifActions';
 
-GifAPI.mock();
+GifAPI.mock(100);
 GifActions.loadData();
 
 const router = (

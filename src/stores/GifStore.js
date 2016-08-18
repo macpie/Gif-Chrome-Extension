@@ -33,7 +33,7 @@ const create = (url, name = url, still_url = url) => {
             };
 
         _gifs = _gifs.push(gif);
-        GifAPI.update(_gifs);
+        GifAPI.update(_gifs.toArray());
 
         resolve();
     });
@@ -45,7 +45,7 @@ const update = (id, updates) => {
             obj = _gifs.get(index);
 
         _gifs = _gifs.set(index, Object.assign({}, obj, updates));
-        GifAPI.update(_gifs);
+        GifAPI.update(_gifs.toArray());
 
         resolve();
     });
@@ -56,7 +56,7 @@ const remove = (id) => {
         let index = findIndexById(id);
 
         _gifs = _gifs.delete(index);
-        GifAPI.update(_gifs)
+        GifAPI.update(_gifs.toArray())
 
         resolve();
     });

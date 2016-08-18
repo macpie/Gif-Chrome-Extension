@@ -6,6 +6,19 @@ import GifsRow from './GifsRow';
 
 class GifsView extends React.Component {
     render() {
+        let width = $(window).width(),
+            height = 150;
+
+        if (width < 800) {
+            height = 150;
+        } else if (width < 1000) {
+            height = 180;
+        } else if (width < 1000) {
+            height = 200;
+        } else {
+            height = 290;
+        }
+
         let children = this.props.children.map((child, i) => {
             return (<GifsRow key={i}>{child}</GifsRow>);
         });
@@ -15,8 +28,8 @@ class GifsView extends React.Component {
                 id="GifsView"
                 className="col-xs-12"
                 useWindowAsScrollContainer={true}
-                elementHeight={220}
-                infiniteLoadBeginEdgeOffset={600}
+                elementHeight={height}
+                infiniteLoadBeginEdgeOffset={height*3}
                 onInfiniteLoad={this.props.loadMoreGifs}>
                 {children}
             </Infinite>

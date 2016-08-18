@@ -3,7 +3,7 @@ import React from 'react';
 class Options extends React.Component {
     render() {
         return (
-            <div></div>
+            <div className="col-xs-12"></div>
         );
     }
 };

@@ -79,7 +79,7 @@ class SearchGifsView extends React.Component {
         });
 
         return (
-            <div id="SearchGifsView">
+            <div id="SearchGifsView" className="col-xs-12">
                 <div className="row" style={this.hide.bind(this)()}>
                     <div className="page-header">
                         <h1>Search for "{this.props.query}"

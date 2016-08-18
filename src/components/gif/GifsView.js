@@ -13,7 +13,7 @@ class GifsView extends React.Component {
         });
 
         return (
-            <div id="gifsView" className="row">{gifLis}</div>
+            <div id="gifsView">{gifLis}</div>
         );
     }
 };

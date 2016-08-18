@@ -37,15 +37,13 @@ class SearchForm extends React.Component {
     }
     render() {
         return (
-            <div id="searchForm" className="row">
-                <div className="col-xs-6 col-xs-offset-3">
-                    <div className="input-group">
-                        <input type="text" name="query" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
-                        <div className="input-group-btn">
-                            <button className="btn btn-default" onClick={this.handleSearch}>
-                                <i className="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </div>
+            <div id="searchForm" className="col-xs-6 col-xs-offset-3">
+                <div className="input-group">
+                    <input type="text" name="query" className="form-control" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
+                    <div className="input-group-btn">
+                        <button className="btn btn-default" onClick={this.handleSearch}>
+                            <i className="fa fa-search" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
             </div>

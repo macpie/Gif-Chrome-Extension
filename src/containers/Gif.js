@@ -41,6 +41,8 @@ class Gif extends React.Component {
             gifs: gifs.slice(0, OFFSET),
             offset: OFFSET
         });
+
+        console.log(this.state.gifs);
     }
     loadMoreGifs() {
         if (this.state.offset < this.state.total_count) {

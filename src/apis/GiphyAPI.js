@@ -1,6 +1,20 @@
 import request from 'superagent';
 import Promise from 'promise';
-import {GIPHY_API_KEY} from '../config';
+import {
+    GIPHY_API_KEY
+} from '../config';
+
+export const isGiphyUrl = (url) => {
+    return url.search('giphy.com') !== -1;
+};
+
+export const getStillFromUrl = (url) => {
+    let a = url.split('.');
+
+    a.splice(a.length - 2, 1, a[a.length - 2] + '_s');
+
+    return a.join('.');
+};
 
 export const search = (req) => {
     return new Promise((resolve, reject) => {

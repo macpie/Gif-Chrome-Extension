@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 import * as GifAPI from '../apis/GifAPI';
+import * as GiphyAPI from '../apis/GiphyAPI';
 
 const CHANGE_EVENT = 'change';
 
@@ -24,19 +25,32 @@ const findIndexById = (id) => {
     });
 };
 
-const create = (url, name = url, still_url = url) => {
+const create = (url, name = url, still_url) => {
     return new Promise((resolve) => {
         let gif = {
-                id: UUID.v4(),
-                name: name,
-                url: url,
-                still_url: still_url
-            };
+            id: UUID.v4(),
+            name: name,
+            url: url,
+            still_url: still_url
+        };
 
-        _gifs = _gifs.unshift(gif);
-        GifAPI.update(_gifs.toArray());
+        if (!still_url && !GiphyAPI.isGiphyUrl(url)) {
+            console.log('do upload');
 
-        resolve();
+            resolve();
+        } else if (!still_url && GiphyAPI.isGiphyUrl(url)) {
+            gif.still_url = GiphyAPI.getStillFromUrl(url)
+
+            _gifs = _gifs.push(gif);
+            GifAPI.update(_gifs.toArray());
+
+            resolve();
+        } else {
+            _gifs = _gifs.push(gif);
+            GifAPI.update(_gifs.toArray());
+
+            resolve();
+        }
     });
 };
 

@@ -31,7 +31,7 @@ class GifView extends React.Component {
             mode: 'inline',
             showbuttons: false,
             success: function(resp, name) {
-                GifActions.update(gif.id, gif.url, name)
+                GifActions.update(gif.id, name)
             }
         });
     }
@@ -58,7 +58,7 @@ class GifView extends React.Component {
     render() {
         let gif = this.state;
 
-        console.log(gif.img_url);
+        console.log(gif.id);
 
         return (
             <div className="col-xs-4 gif-view" id={gif.id} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>

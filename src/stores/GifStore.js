@@ -92,6 +92,8 @@ const update = (id, updates) => {
         let index = findIndexById(id),
             obj = _gifs.get(index);
 
+        console.log(updates);
+
         _gifs = _gifs.set(index, Object.assign({}, obj, updates));
         GifAPI.update(_gifs.toArray());
 
@@ -169,9 +171,7 @@ AppDispatcher.register((action) => {
             break;
         case GifConstants.GIF_UPDATE:
             update(action.id, {
-                name: action.name,
-                url: action.url,
-                still_url: action.still_url,
+                name: action.name
             }).then(() => {
                 toastr.success('GIF successfully updated!'); //eslint-disable-line no-undef
                 GifStore.emitChange();

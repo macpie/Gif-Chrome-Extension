@@ -10,13 +10,11 @@ export const create = (url, name, still_url) => {
     });
 };
 
-export const update = (id, url, name, still_url) => {
+export const update = (id, name) => {
     AppDispatcher.dispatch({
         type: GifConstants.GIF_UPDATE,
         id: id,
-        url: url,
-        name: name,
-        still_url: still_url
+        name: name
     });
 };
 

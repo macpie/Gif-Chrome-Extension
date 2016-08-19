@@ -41,11 +41,19 @@ const upload = (name, url) => {
                         });
                     })
                     .catch((error) => {
-                        reject(error);
+                        reject({
+                            name: 'Giphy',
+                            status: error.status,
+                            msg: error.msg
+                        });
                     });
             })
             .catch((error) => {
-                reject(error);
+                reject({
+                    name: 'Giphy',
+                    status: error.status,
+                    msg: error.msg
+                });
             });
     });
 };
@@ -154,8 +162,8 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
     }
 });
 
-const handleReject = (error) => {
-    toastr.error(error.msg || error); //eslint-disable-line no-undef
+const handleReject = (error, title) => {
+    toastr.error(error.msg || error, error.name); //eslint-disable-line no-undef
     console.error(error);
 };
 

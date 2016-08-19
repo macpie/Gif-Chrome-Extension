@@ -31,7 +31,7 @@ class App extends React.Component {
         });
 
         Mousetrap.bind('ctrl+f', function(e) { //eslint-disable-line no-undef
-            console.log($('input.ctrl-f').focus());
+            $('input.ctrl-f').focus();
         });
 
         GifStore.addChangeListener(this.onStoreChange);

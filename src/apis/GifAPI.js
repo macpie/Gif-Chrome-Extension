@@ -1,7 +1,11 @@
 import * as _ from 'lodash'
 import UUID from 'node-uuid';
 
-const KEY = 'GIFS';
+let KEY = 'GIFS';
+
+if(process.env.NODE_ENV === 'development') {
+    KEY = 'GIFS_TEST';
+}
 
 export const loadData = () => {
     let data = JSON.parse(localStorage.getItem(KEY));
@@ -18,11 +22,11 @@ export const update = (update) => {
 };
 
 export const mock = (max = 10) => {
-    localStorage.clear();
+    localStorage.removeItem(KEY);
 
     let data = [];
 
-    for(let i = 0; i < max; i++) {
+    for (let i = 0; i < max; i++) {
         data.push({
             id: UUID.v4(),
             name: 'Test ' + i,

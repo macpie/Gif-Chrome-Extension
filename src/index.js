@@ -15,12 +15,9 @@ import Search from './containers/Search';
 import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 import * as GifActions from './actions/GifActions';
-import {
-    MOCK
-} from './config';
 
-if(MOCK && MOCK.enabled) {
-    GifAPI.mock(MOCK.size || 100);
+if(process.env.NODE_ENV === 'development') {
+    GifAPI.mock(100);
 }
 
 GifActions.loadData();

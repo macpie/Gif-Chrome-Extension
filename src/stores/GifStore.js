@@ -25,8 +25,33 @@ const findIndexById = (id) => {
     });
 };
 
+const upload = (name, url) => {
+    return new Promise((resolve, reject) => {
+        GiphyAPI.upload(name, url)
+            .then((body) => {
+                var id = body.data.id;
+
+                GiphyAPI.get(id)
+                    .then((body) => {
+                        let data = body.data;
+
+                        resolve({
+                            url: data.images.downsized.url,
+                            still_url: data.images.downsized_still.url
+                        });
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+};
+
 const create = (url, name = url, still_url) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         let gif = {
             id: UUID.v4(),
             name: name,
@@ -35,9 +60,17 @@ const create = (url, name = url, still_url) => {
         };
 
         if (!still_url && !GiphyAPI.isGiphyUrl(url)) {
-            console.log('do upload');
+            upload(name, url)
+                .then((data) => {
+                    gif = Object.assign({}, gif, data);
 
-            resolve();
+                    _gifs = _gifs.push(gif);
+                    GifAPI.update(_gifs.toArray());
+
+                    resolve();
+                })
+                .catch(reject);
+
         } else if (!still_url && GiphyAPI.isGiphyUrl(url)) {
             gif.still_url = GiphyAPI.getStillFromUrl(url)
 
@@ -119,13 +152,18 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
     }
 });
 
+const handleReject = (error) => {
+    console.error(error);
+};
+
 AppDispatcher.register((action) => {
     switch (action.type) {
         case GifConstants.GIF_CREATE:
             create(action.url, action.name, action.still_url)
                 .then(() => {
                     GifStore.emitChange();
-                });
+                })
+                .catch(handleReject);
             break;
         case GifConstants.GIF_UPDATE:
             update(action.id, {
@@ -140,13 +178,15 @@ AppDispatcher.register((action) => {
             remove(action.id)
                 .then(() => {
                     GifStore.emitChange();
-                });
+                })
+                .catch(handleReject);
             break;
         case GifConstants.GIF_LOAD:
             loadGifs()
                 .then(() => {
                     GifStore.emitChange();
-                });
+                })
+                .catch(handleReject);
             break;
         case GifConstants.GIF_FILTER:
             filter(action.text);

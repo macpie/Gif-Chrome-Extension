@@ -5,6 +5,7 @@ import {
     GIPHY_UPLOAD_API_KEY
 } from '../config';
 
+
 export const isGiphyUrl = (url) => {
     return url.search('giphy.com') !== -1;
 };
@@ -15,6 +16,25 @@ export const getStillFromUrl = (url) => {
     a.splice(a.length - 2, 1, a[a.length - 2] + '_s');
 
     return a.join('.');
+};
+
+export const get = (id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .get('http://api.giphy.com/v1/gifs/' + id)
+            .query({
+                api_key: GIPHY_SEARCH_API_KEY
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else if (res.body.meta && res.body.meta.status !== 200) {
+                    reject(res.body.meta);
+                } else {
+                    resolve(res.body);
+                }
+            });
+    });
 };
 
 export const search = (req) => {
@@ -28,8 +48,13 @@ export const search = (req) => {
                 offset: req.offset || 0
             })
             .end((err, res) => {
-                if (err) reject(err);
-                else resolve(res.body);
+                if (err) {
+                    reject(err);
+                } else if (res.body.meta && res.body.meta.status !== 200) {
+                    reject(res.body.meta);
+                } else {
+                    resolve(res.body);
+                }
             });
     });
 };
@@ -40,12 +65,17 @@ export const upload = (name, url) => {
             .post('http://api.giphy.com/v1/gifs')
             .query({
                 api_key: GIPHY_UPLOAD_API_KEY,
-                source_image_url: url,
+                source_image_url: encodeURI(url),
                 tags: name.split(' ').join(',')
             })
             .end((err, res) => {
-                if (err) reject(err);
-                else resolve(res.body);
+                if (err) {
+                    reject(err);
+                } else if (res.body.meta && res.body.meta.status !== 200) {
+                    reject(res.body.meta);
+                } else {
+                    resolve(res.body);
+                }
             });
     });
 };

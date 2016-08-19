@@ -7,7 +7,7 @@ import GifsRow from './GifsRow';
 class GifsView extends React.Component {
     render() {
         let width = $(window).width(),
-            key = 0,
+            key = new Date(),
             height = 150,
             children = [];
 
@@ -22,7 +22,6 @@ class GifsView extends React.Component {
         }
 
         if(this.props.children.length) {
-            key = this.props.children[0][0].id;
             children = this.props.children.map((child, i) => {
                 return (<GifsRow key={i}>{child}</GifsRow>);
             });

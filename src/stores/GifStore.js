@@ -104,7 +104,7 @@ const remove = (id) => {
         let index = findIndexById(id);
 
         _gifs = _gifs.delete(index);
-        GifAPI.update(_gifs.toArray())
+        GifAPI.update(_gifs.toArray());
 
         resolve();
     });

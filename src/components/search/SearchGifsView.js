@@ -38,6 +38,7 @@ class SearchGifsView extends React.Component {
     render() {
         let width = $(window).width(),
             height = 150,
+            key = 0,
             children;
 
         if (width < 800) {
@@ -51,6 +52,8 @@ class SearchGifsView extends React.Component {
         }
 
         if (this.props.children.length) {
+            key = this.props.children[0][0].id;
+
             children = this.props.children.map((child, i) => {
                 return (<SearchGifsRows key={i} click={this.handleClick}>{child}</SearchGifsRows>);
             });
@@ -68,6 +71,7 @@ class SearchGifsView extends React.Component {
                     </div>
                 </div>
                 <Infinite
+                    key={key}
                     id="GifsView"
                     className="col-xs-12"
                     useWindowAsScrollContainer={true}

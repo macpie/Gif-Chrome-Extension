@@ -155,7 +155,7 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 const handleReject = (error) => {
-    toastr.error(error.msg); //eslint-disable-line no-undef
+    toastr.error(error.msg || error); //eslint-disable-line no-undef
     console.error(error);
 };
 

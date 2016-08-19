@@ -164,7 +164,7 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_CREATE:
             create(action.url, action.name, action.still_url)
                 .then(() => {
-                    toastr.success('GIF successfully added!'); //eslint-disable-line no-undef
+                    toastr.success('GIF added!'); //eslint-disable-line no-undef
                     GifStore.emitChange();
                 })
                 .catch(handleReject);
@@ -173,14 +173,14 @@ AppDispatcher.register((action) => {
             update(action.id, {
                 name: action.name
             }).then(() => {
-                toastr.success('GIF successfully updated!'); //eslint-disable-line no-undef
+                toastr.success('GIF updated!'); //eslint-disable-line no-undef
                 GifStore.emitChange();
             });
             break;
         case GifConstants.GIF_REMOVE:
             remove(action.id)
                 .then(() => {
-                    toastr.success('GIF successfully removed!'); //eslint-disable-line no-undef
+                    toastr.success('GIF removed!'); //eslint-disable-line no-undef
                     GifStore.emitChange();
                 })
                 .catch(handleReject);

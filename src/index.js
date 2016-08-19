@@ -15,8 +15,14 @@ import Search from './containers/Search';
 import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 import * as GifActions from './actions/GifActions';
+import {
+    MOCK
+} from './config';
 
-GifAPI.mock(100);
+if(MOCK && MOCK.enabled) {
+    GifAPI.mock(MOCK.size || 100);
+}
+
 GifActions.loadData();
 
 // toastr setup

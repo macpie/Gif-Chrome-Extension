@@ -69,10 +69,10 @@ class GifAddModal extends React.Component {
                         <div className="modal-body">
                             <form >
                                 <div className="form-group">
-                                    <input type="text" className="form-control" name="name" placeholder="Name" onChange={this.handleNameChange}/>
+                                    <input type="text" className="form-control" name="name" placeholder="Name" autoComplete="off" onChange={this.handleNameChange}/>
                                 </div>
                                 <div className="form-group">
-                                    <input type="text" className="form-control" name="url" placeholder="Url" onChange={this.handleUrlChange} value={this.state.url} />
+                                    <input type="text" className="form-control" name="url" placeholder="Url" autoComplete="off" onChange={this.handleUrlChange} value={this.state.url} />
                                 </div>
                             </form>
                             <img src={this.state.url} className="img-thumbnail center-block" role="presentation" />

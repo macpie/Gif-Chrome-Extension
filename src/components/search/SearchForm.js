@@ -39,7 +39,7 @@ class SearchForm extends React.Component {
         return (
             <div id="SearchForm" className="col-xs-6 col-xs-offset-3">
                 <div className="input-group">
-                    <input type="text" name="query" className="form-control ctrl-f" placeholder="Search gif" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
+                    <input type="text" name="query" className="form-control ctrl-f" placeholder="Search gif" autoComplete="off" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
                     <div className="input-group-btn">
                         <button className="btn btn-default" onClick={this.handleSearch}>
                             <i className="fa fa-search" aria-hidden="true"></i>

@@ -12,15 +12,8 @@ class SearchGifView extends React.Component {
         this.handleMouseOut = this.handleMouseOut.bind(this);
 
         this.state = {
-            url: null
+            url: props.gif.images.original_still.url
         };
-    }
-    componentDidMount() {
-        let gif = this.props.gif;
-
-        this.setState({
-            url: gif.images.original_still.url
-        });
     }
     handleClick() {
         this.props.click(this.props.gif);

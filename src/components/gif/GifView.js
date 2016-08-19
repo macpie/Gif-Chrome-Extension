@@ -15,14 +15,11 @@ class GifView extends React.Component {
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
 
-        this.state = {};
-    }
-    componentWillMount() {
-        var gif = this.props.gif;
+        let gif = props.gif;
 
-        this.setState(Object.assign({}, gif, {
-            img_url: gif.still_url || gif.download_url
-        }));
+        this.state = Object.assign({}, gif, {
+            img_url: gif.still_url || gif.url
+        });
     }
     componentDidMount() {
         var gif = this.state;
@@ -60,6 +57,8 @@ class GifView extends React.Component {
     }
     render() {
         let gif = this.state;
+
+        console.log(gif.img_url);
 
         return (
             <div className="col-xs-4 gif-view" id={gif.id} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>

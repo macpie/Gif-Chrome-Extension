@@ -7,7 +7,7 @@ export const loadData = () => {
     let data = JSON.parse(localStorage.getItem(KEY));
 
     if (_.isEmpty(data)) {
-        return {};
+        return [];
     } else {
         return data;
     }

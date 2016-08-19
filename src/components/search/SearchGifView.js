@@ -34,8 +34,8 @@ class SearchGifView extends React.Component {
     }
     render() {
         return (
-            <div className="col-xs-4 search-gif-view" onClick={this.handleClick} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
-                <div className="thumbnail">
+            <div className="col-xs-4 search-gif-view">
+                <div className="thumbnail" onClick={this.handleClick} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
                     <img role="presentation" src={this.state.url} />
                 </div>
             </div>

@@ -4,7 +4,7 @@ import * as GiphyAPI from '../apis/GiphyAPI';
 import SearchForm from '../components/search/SearchForm';
 import SearchGifsView from '../components/search/SearchGifsView';
 import BackToTop from '../components/common/BackToTop';
-import PowerByImg from '../img/powered_by.png'
+import PowerByImg from '../media/powered_by.png'
 import '../css/Search.css'
 
 const LIMIT = 30;

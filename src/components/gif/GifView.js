@@ -1,6 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
+import * as _ from 'lodash';
 import * as Clipboard from '../../utils/Clipboard';
 import * as GifActions from '../../actions/GifActions';
 import DownloadLink from '../common/DownloadLink';
@@ -35,6 +36,9 @@ class GifView extends React.Component {
             }
         });
     }
+    shouldComponentUpdate(props, state) {
+        return !_.isEqual(this.state, state);
+    }
     handleDelete() {
         GifActions.remove(this.state.id);
     }
@@ -58,11 +62,9 @@ class GifView extends React.Component {
     render() {
         let gif = this.state;
 
-        console.log(gif.id);
-
         return (
-            <div className="col-xs-4 gif-view" id={gif.id} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
-                <div className="thumbnail">
+            <div className="col-xs-4 gif-view" id={gif.id} >
+                <div className="thumbnail" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
                     <div className="caption">
                         <h3 className="gif-name">{gif.name}</h3>
                         <div className="btn-group btn-group-sm" role="group">

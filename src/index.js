@@ -19,6 +19,10 @@ import * as GifActions from './actions/GifActions';
 GifAPI.mock(100);
 GifActions.loadData();
 
+// toastr setup
+toastr.options.preventDuplicates = true; //eslint-disable-line no-undef
+toastr.options.progressBar = true; //eslint-disable-line no-undef
+
 const router = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>

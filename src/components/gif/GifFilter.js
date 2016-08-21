@@ -19,6 +19,7 @@ class GifFilter extends React.Component {
             afterSelect: function(gif) {
                 GifActions.filter(gif.name);
                 Clipboard.copy(gif.url);
+                toastr.success(gif.name + ' copied to clipboard!'); //eslint-disable-line no-undef
             }
         });
     }

@@ -44,6 +44,7 @@ class GifView extends React.Component {
     }
     handleCopy() {
         Clipboard.copy(this.state.url);
+        toastr.success(this.state.name  + ' copied to clipboard!'); //eslint-disable-line no-undef
     }
     handleMouseOver() {
         let gif = this.state;

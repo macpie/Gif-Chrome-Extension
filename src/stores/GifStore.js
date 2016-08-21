@@ -77,7 +77,16 @@ const create = (url, name = url, still_url) => {
 
                     resolve();
                 })
-                .catch(reject);
+                .catch((error) => {
+                    console.error(error);
+
+                    toastr.warning('Failed to upload to Giphy'); //eslint-disable-line no-undef
+
+                    _gifs = _gifs.push(gif);
+                    GifAPI.update(_gifs.toArray());
+
+                    resolve();
+                });
 
         } else if (!still_url && GiphyAPI.isGiphyUrl(url)) {
             gif.still_url = GiphyAPI.getStillFromUrl(url)

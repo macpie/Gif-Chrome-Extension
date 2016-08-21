@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 import {
     browserHistory
-} from 'react-router'
+} from 'react-router';
+import * as _ from 'lodash';
 import * as GifActions from '../../actions/GifActions';
 import '../../css/GifAddModal.css';
 
@@ -47,9 +48,21 @@ class GifAddModal extends React.Component {
         });
     }
     handleSave(e) {
-        GifActions.create(this.state.url, this.state.name, this.state.still_url);
-        GifAddModal.hide();
-        browserHistory.push('/gifs');
+        let state = this.state,
+            url = state.url,
+            name = state.name,
+            still_url = state.still_url;
+
+        console.log(name, url);
+
+        if (!_.isEmpty(url) && !_.isEmpty(name)) {
+            GifActions.create(url, name, still_url);
+            GifAddModal.hide();
+            browserHistory.push('/gifs');
+        } else {
+            toastr.warning('Please provide a name and URL'); //eslint-disable-line no-undef
+        }
+
     }
     render() {
         return (

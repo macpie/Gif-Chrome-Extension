@@ -53,8 +53,6 @@ class GifAddModal extends React.Component {
             name = state.name,
             still_url = state.still_url;
 
-        console.log(name, url);
-
         if (!_.isEmpty(url) && !_.isEmpty(name)) {
             GifActions.create(url, name, still_url);
             GifAddModal.hide();

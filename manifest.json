@@ -15,7 +15,7 @@
         "page": "background.html"
     },
     "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "permissions": [],
+    "permissions": ["contextMenus"],
     "short_name": "gifs",
     "web_accessible_resources": ["index.html"]
 }

@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "GIFs Saver",
+    "version": "4.0.0",
+    "description": "Chrome extension to save your GIFs.",
+    "icons": {
+        "128": "static/media/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": "static/media/icon.png",
+        "default_popup": "index.html"
+    },
+    "author": "Macpie",
+    "background": {},
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "permissions": [],
+    "short_name": "gifs",
+    "web_accessible_resources": ["index.html"]
+}

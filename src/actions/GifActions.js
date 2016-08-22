@@ -37,3 +37,10 @@ export const loadData = () => {
         type: GifConstants.GIF_LOAD
     });
 };
+
+export const importGifs = (data) => {
+    AppDispatcher.dispatch({
+        type: GifConstants.GIF_IMPORT,
+        data: data
+    });
+};

@@ -139,6 +139,14 @@ const loadGifs = () => {
     });
 };
 
+const importGifs = (data) => {
+    return new Promise((resolve) => {
+        _gifs = new Immutable.List(data);
+        GifAPI.update(_gifs.toArray());
+        resolve();
+    });
+};
+
 const filter = (text) => {
     if (text !== '') {
         if (!_tmp) _tmp = _gifs;
@@ -204,6 +212,13 @@ AppDispatcher.register((action) => {
             break;
         case GifConstants.GIF_LOAD:
             loadGifs()
+                .then(() => {
+                    GifStore.emitChange();
+                })
+                .catch(handleReject);
+            break;
+        case GifConstants.GIF_IMPORT:
+            importGifs(action.data)
                 .then(() => {
                     GifStore.emitChange();
                 })

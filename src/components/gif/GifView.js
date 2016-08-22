@@ -4,19 +4,22 @@ import React, {
 import * as _ from 'lodash';
 import * as Clipboard from '../../utils/Clipboard';
 import * as GifActions from '../../actions/GifActions';
+import * as GiphyAPI from '../../apis/GiphyAPI';
 import DownloadLink from '../common/DownloadLink';
+import UploadBtn from '../common/UploadBtn';
 import '../../css/GifView.css'
 
 class GifView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleCopy = this.handleCopy.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleCopy = this.handleCopy.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
 
-        let gif = props.gif;
+        let gif = props.gif
 
         this.state = Object.assign({}, gif, {
             img_url: gif.still_url || gif.url
@@ -32,19 +35,12 @@ class GifView extends React.Component {
             mode: 'inline',
             showbuttons: false,
             success: function(resp, name) {
-                GifActions.update(gif.id, name)
+                GifActions.update(gif.id, name);
             }
         });
     }
     shouldComponentUpdate(props, state) {
         return !_.isEqual(this.state, state);
-    }
-    handleDelete() {
-        GifActions.remove(this.state.id);
-    }
-    handleCopy() {
-        Clipboard.copy(this.state.url);
-        toastr.success(this.state.name  + ' copied to clipboard!'); //eslint-disable-line no-undef
     }
     handleMouseOver() {
         let gif = this.state;
@@ -60,8 +56,26 @@ class GifView extends React.Component {
             img_url: gif.still_url || gif.url
         });
     }
+    handleDelete() {
+        GifActions.remove(this.state.id);
+    }
+    handleCopy() {
+        Clipboard.copy(this.state.url);
+        toastr.success(this.state.name + ' copied to clipboard!'); //eslint-disable-line no-undef
+    }
+    handleUpload() {
+        GifActions.upload(this.state.id);
+    }
     render() {
         let gif = this.state;
+
+        const maybeAddUploadBtn = () => {
+            if (!GiphyAPI.isGiphyUrl(gif.url)) {
+                return (
+                    <UploadBtn click={this.handleUpload} />
+                );
+            }
+        };
 
         return (
             <div className="col-xs-4 gif-view" id={gif.id} >
@@ -76,6 +90,7 @@ class GifView extends React.Component {
                                 <i className="fa fa-files-o" aria-hidden="true"></i>
                             </button>
                             <DownloadLink url={gif.url} />
+                            {maybeAddUploadBtn()}
                         </div>
                     </div>
                     <img src={gif.img_url} alt={gif.name} />

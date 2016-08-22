@@ -40,7 +40,7 @@
 }
 
 .gif-view .thumbnail .caption .btn-group button:nth-child(2) {
-    width: 50px;
+    // width: 50px;
 }
 
 @media (min-width: 800px) {

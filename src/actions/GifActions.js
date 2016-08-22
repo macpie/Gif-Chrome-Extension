@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 
@@ -10,11 +11,22 @@ export const create = (url, name, still_url) => {
     });
 };
 
-export const update = (id, name) => {
+export const update = (id, name, url, still_url) => {
     AppDispatcher.dispatch({
         type: GifConstants.GIF_UPDATE,
         id: id,
-        name: name
+        updates: _.omitBy({
+            name: name,
+            url: url,
+            still_url: still_url
+        }, _.isUndefined)
+    });
+};
+
+export const upload = (id) => {
+    AppDispatcher.dispatch({
+        type: GifConstants.GIF_UPLOAD,
+        id: id
     });
 };
 

@@ -25,7 +25,7 @@ const findIndexById = (id) => {
     });
 };
 
-const upload = (name, url) => {
+const uploadToGiphy = (name, url) => {
     return new Promise((resolve, reject) => {
         GiphyAPI.upload(name, url)
             .then((body) => {
@@ -68,7 +68,7 @@ const create = (url, name = url, still_url) => {
         };
 
         if (!still_url && !GiphyAPI.isGiphyUrl(url)) {
-            upload(name, url)
+            uploadToGiphy(name, url)
                 .then((data) => {
                     gif = Object.assign({}, gif, data);
 
@@ -107,14 +107,41 @@ const create = (url, name = url, still_url) => {
 const update = (id, updates) => {
     return new Promise((resolve) => {
         let index = findIndexById(id),
-            obj = _gifs.get(index);
+            gif = _gifs.get(index);
 
-        console.log(updates);
-
-        _gifs = _gifs.set(index, Object.assign({}, obj, updates));
+        _gifs = _gifs.set(index, Object.assign({}, gif, updates));
         GifAPI.update(_gifs.toArray());
 
         resolve();
+    });
+};
+
+const upload = (id) => {
+    return new Promise((resolve, reject) => {
+        let index = findIndexById(id),
+            gif = _gifs.get(index);
+
+        if (!gif.still_url && !GiphyAPI.isGiphyUrl(gif.url)) {
+            uploadToGiphy(gif.name, gif.url)
+                .then((data) => {
+
+                    _gifs = _gifs.set(index, Object.assign({}, gif, data));
+                    GifAPI.update(_gifs.toArray());
+
+                    resolve();
+                })
+                .catch(reject);
+
+        } else if (!gif.still_url && GiphyAPI.isGiphyUrl(gif.url)) {
+            _gifs = _gifs.set(index, Object.assign({}, gif, {
+                still_url:  GiphyAPI.getStillFromUrl(gif.url)
+            }));
+            GifAPI.update(_gifs.toArray());
+
+            resolve();
+        } else {
+            resolve();
+        }
     });
 };
 
@@ -195,12 +222,20 @@ AppDispatcher.register((action) => {
                 .catch(handleReject);
             break;
         case GifConstants.GIF_UPDATE:
-            update(action.id, {
-                name: action.name
-            }).then(() => {
-                toastr.success('GIF updated!'); //eslint-disable-line no-undef
-                GifStore.emitChange();
-            });
+            update(action.id, action.updates)
+                .then(() => {
+                    toastr.success('GIF updated!'); //eslint-disable-line no-undef
+                    GifStore.emitChange();
+                })
+                .catch(handleReject);
+            break;
+        case GifConstants.GIF_UPLOAD:
+            upload(action.id)
+                .then(() => {
+                    toastr.success('GIF uploaded!'); //eslint-disable-line no-undef
+                    GifStore.emitChange();
+                })
+                .catch(handleReject);
             break;
         case GifConstants.GIF_REMOVE:
             remove(action.id)

@@ -19,7 +19,7 @@ class Export extends React.Component {
     }
     render() {
         return (
-            <a onClick={this.handleExport}>Download as JSON</a>
+            <a className="btn btn-primary" onClick={this.handleExport}>Download as JSON</a>
         );
     }
 };

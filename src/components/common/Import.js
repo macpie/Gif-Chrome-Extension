@@ -24,7 +24,9 @@ class Export extends React.Component {
     }
     render() {
         return (
-            <input type="file" id="input" onChange={this.handleImport} />
+            <label className="btn btn-primary btn-file">
+                Import <input type="file" onChange={this.handleImport} style={{display: 'none'}} />
+            </label>
         );
     }
 };

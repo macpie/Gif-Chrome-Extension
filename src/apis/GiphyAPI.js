@@ -62,7 +62,7 @@ export const search = (req) => {
 export const upload = (name, url) => {
     return new Promise((resolve, reject) => {
         request
-            .post('http://api.giphy.com/v1/gifs')
+            .post('http://upload.giphy.com/v1/gifs')
             .query({
                 api_key: GIPHY_UPLOAD_API_KEY,
                 source_image_url: encodeURI(url),

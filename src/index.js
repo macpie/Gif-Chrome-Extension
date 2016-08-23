@@ -17,7 +17,7 @@ import * as GifAPI from './apis/GifAPI';
 import * as GifActions from './actions/GifActions';
 
 if(process.env.NODE_ENV === 'development') {
-    GifAPI.mock(1);
+    GifAPI.mock(100);
 }
 
 GifActions.loadData();

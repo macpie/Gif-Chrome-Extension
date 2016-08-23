@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+    PropTypes
+} from 'react';
 import '../../css/BackToTop.css'
 
 class BackToTop extends React.Component {
@@ -6,9 +8,15 @@ class BackToTop extends React.Component {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
+
+        this.state = {
+            container: this.props.container || window
+        };
     }
     componentDidMount() {
-        $(window).on('scroll', function() {
+        let container = this.state.container;
+
+        $(container).on('scroll', function() {
             if ($(this).scrollTop() >= 50) {
                 $('#BackToTop').fadeIn(200);
             } else {
@@ -17,12 +25,23 @@ class BackToTop extends React.Component {
         });
     }
     componentWillUnmount() {
-        $(window).off('scroll');
+        let container = this.state.container;
+
+        $(container).off('scroll');
     }
     handleClick() {
-        $('body,html').animate({
-            scrollTop: 0
-        }, 500);
+        let container = this.state.container;
+
+        if (typeof container === 'string') {
+            $(container).animate({
+                scrollTop: 0
+            }, 500);
+        } else {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 500);
+        }
+
     }
     render() {
         return (
@@ -32,6 +51,10 @@ class BackToTop extends React.Component {
                 onClick={this.handleClick} />
         );
     }
+};
+
+BackToTop.propTypes = {
+    container: PropTypes.string
 };
 
 export default BackToTop;

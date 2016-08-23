@@ -66,7 +66,7 @@ class Gif extends React.Component {
                         {gifs}
                     </GifsView>
                 </div>
-                <BackToTop />
+                <BackToTop container=".gifs-view"/>
             </div>
         );
     }

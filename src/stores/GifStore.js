@@ -121,7 +121,7 @@ const upload = (id) => {
         let index = findIndexById(id),
             gif = _gifs.get(index);
 
-        if (!gif.still_url && !GiphyAPI.isGiphyUrl(gif.url)) {
+        if (!GiphyAPI.isGiphyUrl(gif.url)) {
             uploadToGiphy(gif.name, gif.url)
                 .then((data) => {
 

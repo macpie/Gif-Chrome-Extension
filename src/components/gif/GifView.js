@@ -1,7 +1,6 @@
 import React, {
     PropTypes
 } from 'react';
-import * as _ from 'lodash';
 import * as Clipboard from '../../utils/Clipboard';
 import * as GifActions from '../../actions/GifActions';
 import * as GiphyAPI from '../../apis/GiphyAPI';
@@ -39,8 +38,13 @@ class GifView extends React.Component {
             }
         });
     }
-    shouldComponentUpdate(props, state) {
-        return !_.isEqual(this.state, state);
+    componentWillReceiveProps(nextProps) {
+        let nextGif = nextProps.gif,
+            newState = Object.assign({}, this.state, nextGif, {
+                img_url: nextGif.still_url || nextGif.url
+            });
+
+        this.setState(newState);
     }
     handleMouseOver() {
         let gif = this.state;

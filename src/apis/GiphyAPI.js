@@ -5,7 +5,6 @@ import {
     GIPHY_UPLOAD_API_KEY
 } from '../config';
 
-
 export const isGiphyUrl = (url) => {
     return url.search('giphy.com') !== -1;
 };
@@ -19,6 +18,8 @@ export const getStillFromUrl = (url) => {
 };
 
 export const get = (id) => {
+    NProgress.start(); //eslint-disable-line no-undef
+
     return new Promise((resolve, reject) => {
         request
             .get('http://api.giphy.com/v1/gifs/' + id)
@@ -26,6 +27,8 @@ export const get = (id) => {
                 api_key: GIPHY_SEARCH_API_KEY
             })
             .end((err, res) => {
+                NProgress.done(); //eslint-disable-line no-undef
+
                 if (err) {
                     reject(err);
                 } else if (res.body.meta && res.body.meta.status !== 200) {
@@ -38,6 +41,8 @@ export const get = (id) => {
 };
 
 export const search = (req) => {
+    NProgress.start(); //eslint-disable-line no-undef
+
     return new Promise((resolve, reject) => {
         request
             .get('http://api.giphy.com/v1/gifs/search')
@@ -48,6 +53,8 @@ export const search = (req) => {
                 offset: req.offset || 0
             })
             .end((err, res) => {
+                NProgress.done(); //eslint-disable-line no-undef
+
                 if (err) {
                     reject(err);
                 } else if (res.body.meta && res.body.meta.status !== 200) {
@@ -60,6 +67,8 @@ export const search = (req) => {
 };
 
 export const upload = (name, url) => {
+    NProgress.start(); //eslint-disable-line no-undef
+
     return new Promise((resolve, reject) => {
         request
             .post('http://upload.giphy.com/v1/gifs')
@@ -69,6 +78,8 @@ export const upload = (name, url) => {
                 tags: name.split(' ').join(',')
             })
             .end((err, res) => {
+                NProgress.done(); //eslint-disable-line no-undef
+
                 if (err) {
                     reject(err);
                 } else if (res.body.meta && res.body.meta.status !== 200) {

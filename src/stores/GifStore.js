@@ -132,7 +132,7 @@ const upload = (id) => {
 
         } else if (!gif.still_url && GiphyAPI.isGiphyUrl(gif.url)) {
             _gifs = _gifs.set(index, Object.assign({}, gif, {
-                still_url:  GiphyAPI.getStillFromUrl(gif.url)
+                still_url: GiphyAPI.getStillFromUrl(gif.url)
             }));
             GifAPI.update(_gifs.toArray());
 
@@ -140,6 +140,22 @@ const upload = (id) => {
         } else {
             resolve();
         }
+    });
+};
+
+const priority = (id, inc) => {
+    return new Promise((resolve, reject) => {
+        let index = findIndexById(id),
+            gif = _gifs.get(index),
+            value = gif.priority || 0,
+            update = {
+                priority: value += inc
+            };
+
+        _gifs = _gifs.set(index, Object.assign({}, gif, update));
+        GifAPI.update(_gifs.toArray());
+
+        resolve();
     });
 };
 
@@ -188,7 +204,7 @@ const filter = (text) => {
 
 const GifStore = Object.assign({}, EventEmitter.prototype, {
     getAll: () => {
-        return _.sortBy(_gifs.toArray(), 'name');
+        return _.orderBy(_gifs.toArray(), ['priority', 'name'], ['desc', 'asc']);
     },
     size: () => {
         return _gifs.size;
@@ -235,6 +251,13 @@ AppDispatcher.register((action) => {
                 })
                 .catch(handleReject);
             break;
+        case GifConstants.GIF_PRIORITY:
+            priority(action.id, action.inc)
+                .then(() => {
+                    GifStore.emitChange();
+                })
+                .catch(handleReject);
+            break;
         case GifConstants.GIF_REMOVE:
             remove(action.id)
                 .then(() => {
@@ -242,6 +265,10 @@ AppDispatcher.register((action) => {
                     GifStore.emitChange();
                 })
                 .catch(handleReject);
+            break;
+        case GifConstants.GIF_FILTER:
+            filter(action.text);
+            GifStore.emitChange();
             break;
         case GifConstants.GIF_LOAD:
             loadGifs()
@@ -256,10 +283,6 @@ AppDispatcher.register((action) => {
                     GifStore.emitChange();
                 })
                 .catch(handleReject);
-            break;
-        case GifConstants.GIF_FILTER:
-            filter(action.text);
-            GifStore.emitChange();
             break;
         default:
             return true;

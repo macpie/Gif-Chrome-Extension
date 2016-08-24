@@ -71,6 +71,7 @@ class Gif extends React.Component {
     handleCopy(gif) {
         Clipboard.copy(gif.url);
         toastr.success(gif.name + ' copied to clipboard!'); //eslint-disable-line no-undef
+        GifActions.priority(gif.id);
     }
     handleDelete(gif) {
         GifActions.remove(gif.id);

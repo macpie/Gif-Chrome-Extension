@@ -1,6 +1,10 @@
 (function() {
     var KEY = 'GIFS';
 
+    function getData() {
+        return JSON.parse(localStorage.getItem(KEY)) || [];
+    }
+
     // TO REMOVE @ SOME POINT
     if (!localStorage.getItem('gifs_v2')) {
         console.log('running migration');
@@ -21,9 +25,20 @@
         });
     }
 
-    function getData() {
-        return JSON.parse(localStorage.getItem(KEY)) || [];
-    }
+    // Priority Migration
+    (function() {
+        var data = getData(),
+            transformed = data.map(function(o) {
+                if (o.priority >= 0) {
+                    return o;
+                } else {
+                    o.priority = 0;
+                    return o;
+                }
+            });
+
+        localStorage.setItem(KEY, JSON.stringify(transformed));
+    })();
 
     function clickHandler(info) {
         var name = prompt("Name? "),

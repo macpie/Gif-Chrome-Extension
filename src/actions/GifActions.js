@@ -23,6 +23,14 @@ export const update = (id, name, url, still_url) => {
     });
 };
 
+export const priority = (id, inc = 1) => {
+    AppDispatcher.dispatch({
+        type: GifConstants.GIF_PRIORITY,
+        id: id,
+        inc: inc
+    });
+};
+
 export const upload = (id) => {
     AppDispatcher.dispatch({
         type: GifConstants.GIF_UPLOAD,

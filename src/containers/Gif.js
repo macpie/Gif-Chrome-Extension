@@ -100,7 +100,7 @@ class Gif extends React.Component {
                         upload={this.handleUpload}
                         edit={this.handleEdit} />
                 </div>
-                <BackToTop container=".gifs-view"/>
+                <BackToTop />
                 <GifAddModal />
             </div>
         );

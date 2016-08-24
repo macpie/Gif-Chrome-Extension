@@ -45,8 +45,7 @@ class GifsView extends React.Component {
         return (
             <Infinite
                 className="col-xs-12 gifs-view"
-                useWindowAsScrollContainer={false}
-                containerHeight={440}
+                useWindowAsScrollContainer={true}
                 elementHeight={height}
                 infiniteLoadBeginEdgeOffset={height*3}
                 onInfiniteLoad={this.props.loadMoreGifs}>

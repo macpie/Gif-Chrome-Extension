@@ -89,7 +89,12 @@ class GifView extends React.Component {
 };
 
 GifView.propTypes = {
-    gif: PropTypes.object.isRequired
+    gif: PropTypes.object.isRequired,
+    copy: PropTypes.func.isRequired,
+    delete: PropTypes.func.isRequired,
+    upload: PropTypes.func.isRequired,
+    edit: PropTypes.func.isRequired,
+    download: PropTypes.func.isRequired
 };
 
 export default GifView;

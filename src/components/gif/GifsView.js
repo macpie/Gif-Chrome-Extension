@@ -18,15 +18,17 @@ class GifsView extends React.Component {
                     key += o.id.substring(0, 5)
                 });
 
-                let Row = <GifsRow key={key} gifs={gifsChunk} />;
-
-                return React.cloneElement(Row, {
-                    copy: this.props.copy,
-                    delete: this.props.delete,
-                    upload: this.props.upload,
-                    edit: this.props.edit,
-                    download: this.props.download
-                });
+                return (
+                    <GifsRow
+                        key={key}
+                        gifs={gifsChunk}
+                        copy={this.props.copy}
+                        delete={this.props.delete}
+                        upload={this.props.upload}
+                        edit={this.props.edit}
+                        download={this.props.download}
+                    />
+                );
             });
         }
 
@@ -58,7 +60,12 @@ class GifsView extends React.Component {
 
 GifsView.propTypes = {
     gifs: PropTypes.array.isRequired,
-    loadMoreGifs: PropTypes.func.isRequired
+    loadMoreGifs: PropTypes.func.isRequired,
+    copy: PropTypes.func.isRequired,
+    delete: PropTypes.func.isRequired,
+    upload: PropTypes.func.isRequired,
+    edit: PropTypes.func.isRequired,
+    download: PropTypes.func.isRequired
 };
 
 export default GifsView;

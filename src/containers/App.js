@@ -5,7 +5,7 @@ import {
 } from 'react-router'
 import GifStore from '../stores/GifStore';
 import Copy from '../components/common/Copy'
-import '../css/App.css'
+import './css/App.css'
 
 class App extends React.Component {
     constructor(props) {

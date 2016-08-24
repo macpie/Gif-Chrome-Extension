@@ -1,7 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import '../../css/BackToTop.css'
+import './css/BackToTop.css'
 
 class BackToTop extends React.Component {
     constructor(props) {

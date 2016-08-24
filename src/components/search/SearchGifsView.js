@@ -4,7 +4,7 @@ import React, {
 import * as _ from 'lodash';
 import Infinite from 'react-infinite';
 import SearchGifsRows from './SearchGifsRows';
-import '../../css/SearchGifsView.css'
+import './css/SearchGifsView.css'
 
 class SearchGifsView extends React.Component {
     render() {

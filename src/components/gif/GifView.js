@@ -4,7 +4,7 @@ import React, {
 import * as GiphyAPI from '../../apis/GiphyAPI';
 import DownloadLink from '../common/DownloadLink';
 import UploadBtn from '../common/UploadBtn';
-import '../../css/GifView.css'
+import './css/GifView.css'
 
 class GifView extends React.Component {
     constructor(props) {

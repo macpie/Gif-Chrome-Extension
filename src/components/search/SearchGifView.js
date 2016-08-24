@@ -1,7 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import '../../css/SearchGifView.css'
+import './css/SearchGifView.css'
 
 class SearchGifView extends React.Component {
     constructor(props) {

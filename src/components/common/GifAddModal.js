@@ -6,7 +6,7 @@ import {
 } from 'react-router';
 import * as _ from 'lodash';
 import * as GifActions from '../../actions/GifActions';
-import '../../css/GifAddModal.css';
+import './css/GifAddModal.css';
 
 class GifAddModal extends React.Component {
     static show() {

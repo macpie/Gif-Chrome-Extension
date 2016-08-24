@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/Copy.css'
+import './css/Copy.css'
 
 class Copy extends React.Component {
     render() {

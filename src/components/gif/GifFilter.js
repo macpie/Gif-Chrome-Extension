@@ -1,7 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import '../../css/GifFilter.css';
+import './css/GifFilter.css';
 
 class GifFilter extends React.Component {
     componentDidMount() {

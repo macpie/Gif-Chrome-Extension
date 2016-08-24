@@ -20,11 +20,7 @@ class SearchForm extends React.Component {
         });
     }
     handleSearch() {
-        if(this.state.query === '') {
-            this.props.handleSearch('nothing');
-        } else {
-            this.props.handleSearch(this.state.query);
-        }
+        this.props.handleSearch(this.state.query);
 
         this.setState({
             query: ''
@@ -32,7 +28,7 @@ class SearchForm extends React.Component {
     }
     handleKeyPress(e) {
         if(e.which === 13) {
-            this.handleSearch();
+            this.props.handleSearch(this.state.query);
         }
     }
     render() {

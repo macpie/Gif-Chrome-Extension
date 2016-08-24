@@ -13,6 +13,9 @@ class Search extends React.Component {
     constructor() {
         super();
 
+        this.handleSearch = this.handleSearch.bind(this);
+        this.loadMore = this.loadMore.bind(this);
+
         this.state = {
             gifs: [],
             pagination: {
@@ -21,9 +24,6 @@ class Search extends React.Component {
             },
             query: ''
         };
-
-        this.handleSearch = this.handleSearch.bind(this);
-        this.loadMore = this.loadMore.bind(this);
     }
     handleSearch(val = 'nothing') {
         GiphyAPI

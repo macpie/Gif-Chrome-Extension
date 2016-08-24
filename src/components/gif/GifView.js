@@ -34,7 +34,7 @@ class GifView extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         let nextGif = nextProps.gif,
-            newState = Object.assign({}, this.state, nextGif, {
+            newState = Object.assign({}, nextGif, {
                 img_url: nextGif.still_url || nextGif.url
             });
 

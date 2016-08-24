@@ -75,7 +75,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-json-replace');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('build-extension', '', function(version) {
+    grunt.registerTask('build-extension', '', function(v) {
+        var version = process.env.npm_config_newV || v;
+
         if (version) {
             grunt.config.set('pkg.version', version);
             grunt.task.run('json-replace:version');

@@ -84,7 +84,7 @@ class Gif extends React.Component {
         GifActions.update(gif.id, name);
     }
     handleDownload(gif) {
-        GifActions.priority(gif.id, 5);
+        GifActions.priority(gif.id, 3);
     }
     render() {
         return (

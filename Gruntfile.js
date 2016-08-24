@@ -27,6 +27,37 @@ module.exports = function(grunt) {
                 command: './node_modules/.bin/react-scripts build'
             }
         },
+        compress: {
+            package: {
+                options: {
+                    archive: 'packages/<%= pkg.name %>-<%= pkg.version %>.zip'
+                },
+                files: [{
+                    expand: false,
+                    src: ['build/**'],
+                    dest: '/'
+                }]
+            }
+        },
+        'json-replace': {
+            options: {
+                space: '  '
+            },
+            version: {
+                options: {
+                    replace: {
+                        version: '<%= pkg.version %>'
+                    }
+                },
+                files: [{
+                    src: 'package.json',
+                    dest: 'package.json'
+                }, {
+                    src: 'manifest.json',
+                    dest: 'manifest.json'
+                }]
+            },
+        },
         watch: {
             scripts: {
                 files: 'src/**',
@@ -40,7 +71,23 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-json-replace');
     grunt.loadNpmTasks('grunt-contrib-watch');
+
+    grunt.registerTask('build-extension', '', function(version) {
+        if (version) {
+            grunt.config.set('pkg.version', version);
+            grunt.task.run('json-replace:version');
+        } else {
+            grunt.log.writeln('WARNING: did not update version!');
+        }
+        grunt.task.run([
+            'exec:build',
+            'copy',
+            'compress'
+        ]);
+    });
 
     grunt.registerTask('default', ['copy']);
 };

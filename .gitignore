@@ -5,6 +5,7 @@ node_modules
 
 # production
 build
+packages
 
 # config
 src/config.js

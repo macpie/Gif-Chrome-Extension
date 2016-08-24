@@ -1,5 +1,5 @@
 import React from 'react';
-import PowerByImg from '../../media/powered_by.png'
+import PowerByImg from './media/powered_by.png'
 import './css/PowerByGiphy.css'
 
 class PowerByGiphy extends React.Component {

@@ -6,7 +6,14 @@ import GifView from './GifView';
 class GifsRow extends React.Component {
     render() {
         let children = this.props.gifs.map((gif, i) => {
-            return (<GifView key={gif.id} gif={gif} />);
+            let Gif = <GifView key={gif.id} gif={gif} />;
+
+            return React.cloneElement(Gif, {
+                copy: this.props.copy,
+                delete: this.props.delete,
+                upload: this.props.upload,
+                edit: this.props.edit
+            });
         });
 
         return (

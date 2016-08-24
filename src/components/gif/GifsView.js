@@ -18,7 +18,14 @@ class GifsView extends React.Component {
                     key += o.id.substring(0, 5)
                 });
 
-                return (<GifsRow key={key} gifs={gifsChunk} />);
+                let Row = <GifsRow key={key} gifs={gifsChunk} />;
+
+                return React.cloneElement(Row, {
+                    copy: this.props.copy,
+                    delete: this.props.delete,
+                    upload: this.props.upload,
+                    edit: this.props.edit
+                });
             });
         }
 

@@ -27,6 +27,10 @@ class Gif extends React.Component {
         this.handleAdd = this.handleAdd.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.handleCopy = this.handleCopy.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
     componentDidMount() {
         GifStore.addChangeListener(this.onStoreChange);
@@ -62,8 +66,20 @@ class Gif extends React.Component {
     }
     handleSelect(gif) {
         GifActions.filter(gif.name);
+        this.handleCopy(gif);
+    }
+    handleCopy(gif) {
         Clipboard.copy(gif.url);
         toastr.success(gif.name + ' copied to clipboard!'); //eslint-disable-line no-undef
+    }
+    handleDelete(gif) {
+        GifActions.remove(gif.id);
+    }
+    handleUpload(gif) {
+        GifActions.upload(gif.id);
+    }
+    handleEdit(gif, name) {
+        GifActions.update(gif.id, name);
     }
     render() {
         return (
@@ -78,7 +94,11 @@ class Gif extends React.Component {
                 <div className="row">
                     <GifsView
                         gifs={this.state.gifs}
-                        loadMoreGifs={this.loadMoreGifs} />
+                        loadMoreGifs={this.loadMoreGifs}
+                        copy={this.handleCopy}
+                        delete={this.handleDelete}
+                        upload={this.handleUpload}
+                        edit={this.handleEdit} />
                 </div>
                 <BackToTop container=".gifs-view"/>
                 <GifAddModal />

@@ -1,8 +1,6 @@
 import React, {
     PropTypes
 } from 'react';
-import * as Clipboard from '../../utils/Clipboard';
-import * as GifActions from '../../actions/GifActions';
 import * as GiphyAPI from '../../apis/GiphyAPI';
 import DownloadLink from '../common/DownloadLink';
 import UploadBtn from '../common/UploadBtn';
@@ -14,18 +12,14 @@ class GifView extends React.Component {
 
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleCopy = this.handleCopy.bind(this);
-        this.handleUpload = this.handleUpload.bind(this);
 
-        let gif = props.gif
-
-        this.state = Object.assign({}, gif, {
-            img_url: gif.still_url || gif.url
+        this.state = Object.assign({}, props.gif, {
+            img_url: props.gif.still_url || props.gif.url
         });
     }
     componentDidMount() {
-        var gif = this.state;
+        var self = this,
+            gif = this.state;
 
         $('#' + gif.id).editable({
             selector: '.gif-name',
@@ -34,7 +28,7 @@ class GifView extends React.Component {
             mode: 'inline',
             showbuttons: false,
             success: function(resp, name) {
-                GifActions.update(gif.id, name);
+                self.props.edit(gif, name);
             }
         });
     }
@@ -60,23 +54,13 @@ class GifView extends React.Component {
             img_url: gif.still_url || gif.url
         });
     }
-    handleDelete() {
-        GifActions.remove(this.state.id);
-    }
-    handleCopy() {
-        Clipboard.copy(this.state.url);
-        toastr.success(this.state.name + ' copied to clipboard!'); //eslint-disable-line no-undef
-    }
-    handleUpload() {
-        GifActions.upload(this.state.id);
-    }
     render() {
         let gif = this.state;
 
         const maybeAddUploadBtn = () => {
             if (!GiphyAPI.isGiphyUrl(gif.url)) {
                 return (
-                    <UploadBtn click={this.handleUpload} />
+                    <UploadBtn onClick={()=>{this.props.upload(gif)}} />
                 );
             }
         };
@@ -87,10 +71,10 @@ class GifView extends React.Component {
                     <div className="caption">
                         <h3 className="gif-name">{gif.name}</h3>
                         <div className="btn-group btn-group-sm" role="group">
-                            <button type="button" className="btn btn-danger" onClick={this.handleDelete}>
+                            <button type="button" className="btn btn-danger" onClick={()=>{this.props.delete(gif)}}>
                                 <i className="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
-                            <button type="button" className="btn btn-success" onClick={this.handleCopy}>
+                            <button type="button" className="btn btn-success" onClick={()=>{this.props.copy(gif)}}>
                                 <i className="fa fa-files-o" aria-hidden="true"></i>
                             </button>
                             <DownloadLink url={gif.url} />

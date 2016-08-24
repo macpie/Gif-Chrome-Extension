@@ -1,44 +1,24 @@
 import React, {
     PropTypes
 } from 'react';
+import * as _ from 'lodash';
 import Infinite from 'react-infinite';
-import GifAddModal from '../common/GifAddModal';
 import SearchGifsRows from './SearchGifsRows';
 import '../../css/SearchGifsView.css'
 
 class SearchGifsView extends React.Component {
-    constructor(props) {
-        super(props);
+    render() {
+        let gifs = _.chunk(this.props.gifs, 3),
+            children = [];
 
-        this.handleClick = this.handleClick.bind(this);
-        this.state = {
-            selected: {}
-        };
-    }
-    handleClick(gif) {
-        this.setState({
-            selected: {
-                url: gif.images.downsized.url,
-                still_url: gif.images.downsized_still.url
-            }
-        });
-
-        GifAddModal.show();
-    }
-    hide() {
-        let style = {};
-
-        if (this.props.children.length === 0 &&
-            !this.props.query) {
-            style.display = 'none';
+        if (gifs.length) {
+            children = gifs.map((gifsChunk, i) => {
+                return <SearchGifsRows key={i} gifs={gifsChunk} click={this.props.click}/>;
+            });
         }
 
-        return style;
-    }
-    render() {
         let width = $(window).width(),
-            height = 150,
-            children = [];
+            height = 150
 
         if (width < 800) {
             height = 150;
@@ -50,16 +30,16 @@ class SearchGifsView extends React.Component {
             height = 290;
         }
 
-        if (this.props.children.length) {
+        let style = {};
 
-            children = this.props.children.map((child, i) => {
-                return (<SearchGifsRows key={i} click={this.handleClick}>{child}</SearchGifsRows>);
-            });
+        if (this.props.gifs.length === 0 &&
+            !this.props.query) {
+            style.display = 'none';
         }
 
         return (
             <div id="SearchGifsView" className="col-xs-12">
-                <div className="row" style={this.hide.bind(this)()}>
+                <div className="row" style={style}>
                     <div className="page-header">
                         <h1>Search for "{this.props.query}"
                             <small>{this.props.pagination.total_count} result(s)</small>
@@ -76,16 +56,17 @@ class SearchGifsView extends React.Component {
                     onInfiniteLoad={this.props.loadMore}>
                     {children}
                 </Infinite>
-                <GifAddModal url={this.state.selected.url} still_url={this.state.selected.still_url} />
             </div>
         );
     }
 };
 
 SearchGifsView.propTypes = {
+    gifs: PropTypes.array.isRequired,
     query: PropTypes.string.isRequired,
     pagination: PropTypes.object.isRequired,
     loadMore: PropTypes.func.isRequired,
+    click: PropTypes.func.isRequired
 };
 
 export default SearchGifsView;

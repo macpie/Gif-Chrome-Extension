@@ -1,10 +1,10 @@
 import React from 'react';
-import * as _ from 'lodash';
 import * as GiphyAPI from '../apis/GiphyAPI';
 import SearchForm from '../components/search/SearchForm';
 import SearchGifsView from '../components/search/SearchGifsView';
 import BackToTop from '../components/common/BackToTop';
 import PowerByGiphy from '../components/common/PowerByGiphy';
+import GifAddModal from '../components/common/GifAddModal';
 
 const LIMIT = 30;
 
@@ -13,7 +13,8 @@ class Search extends React.Component {
         super();
 
         this.handleSearch = this.handleSearch.bind(this);
-        this.loadMore = this.loadMore.bind(this);
+        this.handleMore = this.handleMore.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
         this.state = {
             gifs: [],
@@ -21,7 +22,8 @@ class Search extends React.Component {
                 offset: 0,
                 total_count: 1
             },
-            query: ''
+            query: '',
+            selected: {}
         };
     }
     handleSearch(val = 'nothing') {
@@ -41,7 +43,7 @@ class Search extends React.Component {
                 console.log(error);
             });
     }
-    loadMore() {
+    handleMore() {
         let pagination = this.state.pagination,
             query = this.state.query;
 
@@ -64,9 +66,16 @@ class Search extends React.Component {
                 });
         }
     }
+    handleClick(gif) {
+        this.setState({
+            selected: {
+                url: gif.images.downsized.url,
+                still_url: gif.images.downsized_still.url
+            }
+        });
+        GifAddModal.show();
+    }
     render() {
-        let gifs = _.chunk(this.state.gifs, 3);
-
         return (
             <div id="Search" className="col-xs-12">
                 <div className="row">
@@ -74,14 +83,17 @@ class Search extends React.Component {
                 </div>
                 <div className="row">
                     <SearchGifsView
+                        gifs={this.state.gifs}
                         query={this.state.query}
                         pagination={this.state.pagination}
-                        loadMore={this.loadMore}>
-                        {gifs}
-                    </SearchGifsView>
+                        loadMore={this.handleMore}
+                        click={this.handleClick} />
                 </div>
                 <BackToTop />
                 <PowerByGiphy />
+                <GifAddModal
+                    url={this.state.selected.url}
+                    still_url={this.state.selected.still_url} />
             </div>
         );
     }

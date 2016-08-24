@@ -16,15 +16,20 @@ import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 import * as GifActions from './actions/GifActions';
 
-if(process.env.NODE_ENV === 'development') {
+// toastr setup
+toastr.options.preventDuplicates = true; //eslint-disable-line no-undef
+toastr.options.progressBar = true; //eslint-disable-line no-undef
+
+// NProgress setup
+NProgress.configure({ //eslint-disable-line no-undef
+    showSpinner: false
+});
+
+if (process.env.NODE_ENV === 'development') {
     GifAPI.mock(100);
 }
 
 GifActions.loadData();
-
-// toastr setup
-toastr.options.preventDuplicates = true; //eslint-disable-line no-undef
-toastr.options.progressBar = true; //eslint-disable-line no-undef
 
 const router = (
     <Router history={browserHistory}>

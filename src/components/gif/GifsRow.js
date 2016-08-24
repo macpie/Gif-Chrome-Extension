@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {
+    PropTypes
+} from 'react';
 import GifView from './GifView';
 
 class GifsRow extends React.Component {
     render() {
-        let children = this.props.children.map((obj, i) => {
-            return (<GifView key={i} gif={obj} />);
+        let children = this.props.gifs.map((gif, i) => {
+            return (<GifView key={gif.id} gif={gif} />);
         });
 
         return (
@@ -13,6 +15,10 @@ class GifsRow extends React.Component {
             </div>
         );
     }
+};
+
+GifsRow.propTypes = {
+    gifs: PropTypes.array.isRequired
 };
 
 export default GifsRow;

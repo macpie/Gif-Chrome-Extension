@@ -1,5 +1,4 @@
 import React from 'react';
-import * as _ from 'lodash';
 import GifStore from '../stores/GifStore';
 import * as GifActions from '../actions/GifActions';
 import * as Clipboard from '../utils/Clipboard';
@@ -67,8 +66,6 @@ class Gif extends React.Component {
         toastr.success(gif.name + ' copied to clipboard!'); //eslint-disable-line no-undef
     }
     render() {
-        let gifs = _.chunk(this.state.gifs, 3);
-
         return (
             <div id="Gif" className="col-xs-12">
                 <div className="row">
@@ -79,9 +76,9 @@ class Gif extends React.Component {
                         add={this.handleAdd} />
                 </div>
                 <div className="row">
-                    <GifsView loadMoreGifs={this.loadMoreGifs}>
-                        {gifs}
-                    </GifsView>
+                    <GifsView
+                        gifs={this.state.gifs}
+                        loadMoreGifs={this.loadMoreGifs} />
                 </div>
                 <BackToTop container=".gifs-view"/>
                 <GifAddModal />

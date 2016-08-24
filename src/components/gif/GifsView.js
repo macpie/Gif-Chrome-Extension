@@ -1,14 +1,29 @@
 import React, {
     PropTypes
 } from 'react';
+import * as _ from 'lodash';
 import Infinite from 'react-infinite';
 import GifsRow from './GifsRow';
 
 class GifsView extends React.Component {
     render() {
+        let children = [],
+            gifs = _.chunk(this.props.gifs, 3)
+
+        if (gifs.length) {
+            children = gifs.map((gifsChunk) => {
+                let key = '';
+
+                gifsChunk.forEach((o) => {
+                    key += o.id.substring(0, 5)
+                });
+
+                return (<GifsRow key={key} gifs={gifsChunk} />);
+            });
+        }
+
         let width = $(window).width(),
-            height = 150,
-            children = [];
+            height;
 
         if (width < 800) {
             height = 150;
@@ -18,18 +33,6 @@ class GifsView extends React.Component {
             height = 200;
         } else {
             height = 290;
-        }
-
-        if (this.props.children.length) {
-            children = this.props.children.map((child, i) => {
-                let key = '';
-
-                child.forEach((o) => {
-                    key += o.id.substring(0, 5)
-                });
-
-                return (<GifsRow key={key}>{child}</GifsRow>);
-            });
         }
 
         return (
@@ -47,6 +50,7 @@ class GifsView extends React.Component {
 };
 
 GifsView.propTypes = {
+    gifs: PropTypes.array.isRequired,
     loadMoreGifs: PropTypes.func.isRequired
 };
 

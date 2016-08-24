@@ -4,8 +4,7 @@ import * as GiphyAPI from '../apis/GiphyAPI';
 import SearchForm from '../components/search/SearchForm';
 import SearchGifsView from '../components/search/SearchGifsView';
 import BackToTop from '../components/common/BackToTop';
-import PowerByImg from '../media/powered_by.png'
-import '../css/Search.css'
+import PowerByGiphy from '../components/common/PowerByGiphy';
 
 const LIMIT = 30;
 
@@ -82,7 +81,7 @@ class Search extends React.Component {
                     </SearchGifsView>
                 </div>
                 <BackToTop />
-                <img src={PowerByImg} className="img-thumbnail center-block" role="presentation" />
+                <PowerByGiphy />
             </div>
         );
     }

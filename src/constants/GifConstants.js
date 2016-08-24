@@ -1,6 +1,7 @@
 export const GIF_CREATE = 'GIF_CREATE';
 export const GIF_UPDATE = 'GIF_UPDATE';
 export const GIF_PRIORITY = 'GIF_PRIORITY';
+export const GIF_RESET_PRIORITY = 'GIF_RESET_PRIORITY';
 export const GIF_UPLOAD = 'GIF_UPLOAD';
 export const GIF_REMOVE = 'GIF_REMOVE';
 export const GIF_FILTER = 'GIF_FILTER';

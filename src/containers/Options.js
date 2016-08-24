@@ -2,6 +2,7 @@ import React from 'react';
 import * as GifActions from '../actions/GifActions';
 import Import from '../components/common/Import';
 import Export from '../components/common/Export';
+import ResetPriority from '../components/common/ResetPriority';
 
 class Options extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class Options extends React.Component {
                 <div className="btn-group-vertical" role="group" aria-label="...">
                     <Import onSuccess={this.importSuccess} onFailure={this.importFailure}/>
                     <Export />
+                    <ResetPriority />
                 </div>
             </div>
         );

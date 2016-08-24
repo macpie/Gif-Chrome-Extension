@@ -31,6 +31,12 @@ export const priority = (id, inc = 1) => {
     });
 };
 
+export const resetPriority = () => {
+    AppDispatcher.dispatch({
+        type: GifConstants.GIF_RESET_PRIORITY
+    });
+};
+
 export const upload = (id) => {
     AppDispatcher.dispatch({
         type: GifConstants.GIF_UPLOAD,

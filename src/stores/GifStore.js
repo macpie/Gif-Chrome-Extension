@@ -159,6 +159,20 @@ const priority = (id, inc) => {
     });
 };
 
+const resetPriority = () => {
+    return new Promise((resolve, reject) => {
+        _gifs = _gifs.map((gif) => {
+            gif.priority = 0;
+
+            return gif;
+        });
+
+        GifAPI.update(_gifs.toArray());
+
+        resolve();
+    });
+};
+
 const remove = (id) => {
     return new Promise((resolve) => {
         let index = findIndexById(id);
@@ -243,6 +257,20 @@ AppDispatcher.register((action) => {
                 })
                 .catch(handleReject);
             break;
+        case GifConstants.GIF_PRIORITY:
+            priority(action.id, action.inc)
+                .then(() => {
+                    GifStore.emitChange();
+                })
+                .catch(handleReject);
+            break;
+        case GifConstants.GIF_RESET_PRIORITY:
+            resetPriority()
+                .then(() => {
+                    GifStore.emitChange();
+                })
+                .catch(handleReject);
+            break;
         case GifConstants.GIF_UPLOAD:
             upload(action.id)
                 .then(() => {
@@ -251,13 +279,7 @@ AppDispatcher.register((action) => {
                 })
                 .catch(handleReject);
             break;
-        case GifConstants.GIF_PRIORITY:
-            priority(action.id, action.inc)
-                .then(() => {
-                    GifStore.emitChange();
-                })
-                .catch(handleReject);
-            break;
+
         case GifConstants.GIF_REMOVE:
             remove(action.id)
                 .then(() => {

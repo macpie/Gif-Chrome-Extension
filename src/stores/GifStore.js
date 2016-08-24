@@ -80,8 +80,6 @@ const create = (url, name = url, still_url) => {
                 .catch((error) => {
                     console.error(error);
 
-                    toastr.warning('Failed to upload to Giphy'); //eslint-disable-line no-undef
-
                     _gifs = _gifs.push(gif);
                     GifAPI.update(_gifs.toArray());
 
@@ -206,8 +204,8 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
     }
 });
 
-const handleReject = (error, title) => {
-    toastr.error(error.msg || error, error.name); //eslint-disable-line no-undef
+const handleReject = (error) => {
+    toastr.error(error.msg, error.name); //eslint-disable-line no-undef
     console.error(error);
 };
 

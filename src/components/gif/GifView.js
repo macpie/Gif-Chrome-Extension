@@ -60,7 +60,7 @@ class GifView extends React.Component {
         const maybeAddUploadBtn = () => {
             if (!GiphyAPI.isGiphyUrl(gif.url)) {
                 return (
-                    <UploadBtn onClick={()=>{this.props.upload(gif)}} />
+                    <UploadBtn click={()=>{this.props.upload(gif)}} />
                 );
             }
         };

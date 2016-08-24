@@ -12,7 +12,8 @@ class GifsRow extends React.Component {
                 copy: this.props.copy,
                 delete: this.props.delete,
                 upload: this.props.upload,
-                edit: this.props.edit
+                edit: this.props.edit,
+                download: this.props.download
             });
         });
 

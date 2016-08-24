@@ -16,9 +16,11 @@ class DownloadLink extends React.Component {
         }
 
         $target.attr({
-            href: this.props.url,
+            href: this.props.gif.url,
             download: 'test.gif'
         });
+
+        this.props.callback();
     }
     render() {
         return (
@@ -30,7 +32,8 @@ class DownloadLink extends React.Component {
 };
 
 DownloadLink.propTypes = {
-    url: PropTypes.string.isRequired
+    gif: PropTypes.object.isRequired,
+    callback: PropTypes.func
 };
 
 export default DownloadLink;

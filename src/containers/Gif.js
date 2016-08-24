@@ -31,6 +31,7 @@ class Gif extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleDownload = this.handleDownload.bind(this);
     }
     componentDidMount() {
         GifStore.addChangeListener(this.onStoreChange);
@@ -82,6 +83,9 @@ class Gif extends React.Component {
     handleEdit(gif, name) {
         GifActions.update(gif.id, name);
     }
+    handleDownload(gif) {
+        GifActions.priority(gif.id, 5);
+    }
     render() {
         return (
             <div id="Gif" className="col-xs-12">
@@ -99,7 +103,8 @@ class Gif extends React.Component {
                         copy={this.handleCopy}
                         delete={this.handleDelete}
                         upload={this.handleUpload}
-                        edit={this.handleEdit} />
+                        edit={this.handleEdit}
+                        download={this.handleDownload} />
                 </div>
                 <BackToTop />
                 <GifAddModal />

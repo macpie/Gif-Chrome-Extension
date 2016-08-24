@@ -77,7 +77,7 @@ class GifView extends React.Component {
                             <button type="button" className="btn btn-success" onClick={()=>{this.props.copy(gif)}}>
                                 <i className="fa fa-files-o" aria-hidden="true"></i>
                             </button>
-                            <DownloadLink url={gif.url} />
+                            <DownloadLink gif={gif} callback={()=>{this.props.download(gif)}}/>
                             {maybeAddUploadBtn()}
                         </div>
                     </div>

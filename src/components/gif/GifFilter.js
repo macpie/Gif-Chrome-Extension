@@ -1,53 +1,40 @@
 import React, {
     PropTypes
 } from 'react';
-import GifAddModal from '../common/GifAddModal';
-import * as GifActions from '../../actions/GifActions';
-import * as Clipboard from '../../utils/Clipboard';
 import '../../css/GifFilter.css';
 
 class GifFilter extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleFilterChange = this.handleFilterChange.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
-    }
     componentDidMount() {
+        var self = this;
+
         $('.typeahead').typeahead({
             source: this.props.gifs,
             afterSelect: function(gif) {
-                GifActions.filter(gif.name);
-                Clipboard.copy(gif.url);
-                toastr.success(gif.name + ' copied to clipboard!'); //eslint-disable-line no-undef
+                self.props.select(gif);
             }
         });
-    }
-    handleFilterChange(e) {
-        GifActions.filter(e.target.value);
-    }
-    handleAdd() {
-        GifAddModal.show();
     }
     render() {
         return (
             <div id="GifFilter" className="col-xs-6 col-xs-offset-3">
                 <div className="input-group">
-                    <input type="text" name="filter" className="form-control typeahead ctrl-f" placeholder="Filter by name" autoComplete="off" onChange={this.handleFilterChange} />
+                    <input type="text" name="filter" className="form-control typeahead ctrl-f" placeholder="Filter by name" autoComplete="off" onChange={this.props.filter} />
                     <div className="input-group-btn">
-                        <button className="btn btn-default" onClick={this.handleAdd}>
+                        <button className="btn btn-default" onClick={this.props.add}>
                             <i className="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
-                <GifAddModal />
             </div>
         );
     }
 };
 
 GifFilter.propTypes = {
-    gifs: PropTypes.array.isRequired
+    gifs: PropTypes.array.isRequired,
+    filter: PropTypes.func.isRequired,
+    select: PropTypes.func.isRequired,
+    add: PropTypes.func.isRequired
 };
 
 export default GifFilter;

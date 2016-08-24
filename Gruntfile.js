@@ -21,10 +21,26 @@ module.exports = function(grunt) {
                 src: 'manifest.json',
                 dest: 'build/manifest.json'
             }
+        },
+        exec: {
+            build: {
+                command: './node_modules/.bin/react-scripts build'
+            }
+        },
+        watch: {
+            scripts: {
+                files: 'src/**',
+                tasks: ['exec', 'copy'],
+                options: {
+                    interrupt: true,
+                },
+            },
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['copy']);
 };

@@ -1,30 +1,33 @@
 {
-    "name": "Gif-Chrome-Extension",
-    "version": "1.0.0",
-    "private": true,
-    "devDependencies": {
-        "grunt": "^1.0.1",
-        "grunt-contrib-copy": "^1.0.0",
-        "react-scripts": "0.2.1"
-    },
-    "dependencies": {
-        "flux": "^2.1.1",
-        "immutable": "^3.8.1",
-        "lodash": "^4.14.2",
-        "node-uuid": "^1.4.7",
-        "promise": "^7.1.1",
-        "react": "^15.2.1",
-        "react-dom": "^15.2.1",
-        "react-infinite": "^0.9.2",
-        "react-router": "^2.6.1",
-        "superagent": "^2.1.0"
-    },
-    "scripts": {
-        "start": "./node_modules/.bin/react-scripts start",
-        "build": "./node_modules/.bin/react-scripts build; ./node_modules/.bin/grunt",
-        "eject": "./node_modules/.bin/react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": "./node_modules/react-scripts/config/eslint.js"
-    }
+  "name": "Gif-Chrome-Extension",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^1.0.0",
+    "react-scripts": "0.2.1"
+  },
+  "dependencies": {
+    "flux": "^2.1.1",
+    "immutable": "^3.8.1",
+    "lodash": "^4.14.2",
+    "node-uuid": "^1.4.7",
+    "promise": "^7.1.1",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-infinite": "^0.9.2",
+    "react-router": "^2.6.1",
+    "superagent": "^2.1.0"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/react-scripts start",
+    "build": "./node_modules/.bin/react-scripts build; ./node_modules/.bin/grunt",
+    "watch": "./node_modules/.bin/grunt watch",
+    "eject": "./node_modules/.bin/react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/react-scripts/config/eslint.js"
+  }
 }

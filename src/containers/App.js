@@ -18,19 +18,19 @@ class App extends React.Component {
         this.onStoreChange = this.onStoreChange.bind(this);
     }
     componentDidMount() {
-        Mousetrap.bind('command+1', function(e) { //eslint-disable-line no-undef
+        Mousetrap.bind('command+1', function(e) {
             browserHistory.push('/gifs');
         });
 
-        Mousetrap.bind('command+2', function(e) { //eslint-disable-line no-undef
+        Mousetrap.bind('command+2', function(e) {
             browserHistory.push('/search');
         });
 
-        Mousetrap.bind('command+3', function(e) { //eslint-disable-line no-undef
+        Mousetrap.bind('command+3', function(e) {
             browserHistory.push('/options');
         });
 
-        Mousetrap.bind('ctrl+f', function(e) { //eslint-disable-line no-undef
+        Mousetrap.bind('ctrl+f', function(e) {
             $('input.ctrl-f').focus();
         });
 

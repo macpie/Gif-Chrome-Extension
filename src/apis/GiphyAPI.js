@@ -18,7 +18,7 @@ export const getStillFromUrl = (url) => {
 };
 
 export const get = (id) => {
-    NProgress.start(); //eslint-disable-line no-undef
+    NProgress.start();
 
     return new Promise((resolve, reject) => {
         request
@@ -27,7 +27,7 @@ export const get = (id) => {
                 api_key: GIPHY_SEARCH_API_KEY
             })
             .end((err, res) => {
-                NProgress.done(); //eslint-disable-line no-undef
+                NProgress.done();
 
                 if (err) {
                     reject(err);
@@ -41,7 +41,7 @@ export const get = (id) => {
 };
 
 export const search = (req) => {
-    NProgress.start(); //eslint-disable-line no-undef
+    NProgress.start();
 
     return new Promise((resolve, reject) => {
         request
@@ -53,7 +53,7 @@ export const search = (req) => {
                 offset: req.offset || 0
             })
             .end((err, res) => {
-                NProgress.done(); //eslint-disable-line no-undef
+                NProgress.done();
 
                 if (err) {
                     reject(err);
@@ -67,7 +67,7 @@ export const search = (req) => {
 };
 
 export const upload = (name, url) => {
-    NProgress.start(); //eslint-disable-line no-undef
+    NProgress.start();
 
     return new Promise((resolve, reject) => {
         request
@@ -78,7 +78,7 @@ export const upload = (name, url) => {
                 tags: name.split(' ').join(',')
             })
             .end((err, res) => {
-                NProgress.done(); //eslint-disable-line no-undef
+                NProgress.done();
 
                 if (err) {
                     reject(err);

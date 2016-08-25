@@ -14,10 +14,10 @@ class Options extends React.Component {
     importSuccess(data) {
         GifActions.importGifs(data);
 
-        toastr.success('GIFs imported!'); //eslint-disable-line no-undef
+        toastr.success('GIFs imported!');
     }
     importFailure() {
-        toastr.warning('Make sure file is proper JSON', 'Failed to import'); //eslint-disable-line no-undef
+        toastr.warning('Make sure file is proper JSON', 'Failed to import');
     }
     render() {
         return (

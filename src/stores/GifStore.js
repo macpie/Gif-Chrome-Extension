@@ -235,7 +235,7 @@ const GifStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 const handleReject = (error) => {
-    toastr.error(error.msg, error.name); //eslint-disable-line no-undef
+    toastr.error(error.msg, error.name);
     console.error(error);
 };
 
@@ -244,7 +244,7 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_CREATE:
             create(action.url, action.name, action.still_url)
                 .then(() => {
-                    toastr.success('GIF added!'); //eslint-disable-line no-undef
+                    toastr.success('GIF added!');
                     GifStore.emitChange();
                 })
                 .catch(handleReject);
@@ -252,7 +252,7 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_UPDATE:
             update(action.id, action.updates)
                 .then(() => {
-                    toastr.success('GIF updated!'); //eslint-disable-line no-undef
+                    toastr.success('GIF updated!');
                     GifStore.emitChange();
                 })
                 .catch(handleReject);
@@ -274,7 +274,7 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_UPLOAD:
             upload(action.id)
                 .then(() => {
-                    toastr.success('GIF uploaded!'); //eslint-disable-line no-undef
+                    toastr.success('GIF uploaded!');
                     GifStore.emitChange();
                 })
                 .catch(handleReject);
@@ -283,7 +283,7 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_REMOVE:
             remove(action.id)
                 .then(() => {
-                    toastr.success('GIF removed!'); //eslint-disable-line no-undef
+                    toastr.success('GIF removed!');
                     GifStore.emitChange();
                 })
                 .catch(handleReject);

@@ -17,11 +17,11 @@ import * as GifAPI from './apis/GifAPI';
 import * as GifActions from './actions/GifActions';
 
 // toastr setup
-toastr.options.preventDuplicates = true; //eslint-disable-line no-undef
-toastr.options.progressBar = true; //eslint-disable-line no-undef
+toastr.options.preventDuplicates = true;
+toastr.options.progressBar = true;
 
 // NProgress setup
-NProgress.configure({ //eslint-disable-line no-undef
+NProgress.configure({
     showSpinner: false
 });
 

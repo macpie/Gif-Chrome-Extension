@@ -58,7 +58,7 @@ class GifAddModal extends React.Component {
             GifAddModal.hide();
             browserHistory.push('/gifs');
         } else {
-            toastr.warning('Please provide a name and URL'); //eslint-disable-line no-undef
+            toastr.warning('Please provide a name and URL');
         }
 
     }

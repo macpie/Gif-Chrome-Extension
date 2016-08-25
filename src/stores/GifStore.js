@@ -25,39 +25,6 @@ const findIndexById = (id) => {
     });
 };
 
-const uploadToGiphy = (name, url) => {
-    return new Promise((resolve, reject) => {
-        GiphyAPI.upload(name, url)
-            .then((body) => {
-                var id = body.data.id;
-
-                GiphyAPI.get(id)
-                    .then((body) => {
-                        let data = body.data;
-
-                        resolve({
-                            url: data.images.downsized.url,
-                            still_url: data.images.downsized_still.url
-                        });
-                    })
-                    .catch((error) => {
-                        reject({
-                            name: 'Giphy',
-                            status: error.status,
-                            msg: error.msg
-                        });
-                    });
-            })
-            .catch((error) => {
-                reject({
-                    name: 'Giphy',
-                    status: error.status,
-                    msg: error.msg
-                });
-            });
-    });
-};
-
 const create = (url, name = url, still_url) => {
     return new Promise((resolve, reject) => {
         let gif = {
@@ -68,7 +35,7 @@ const create = (url, name = url, still_url) => {
         };
 
         if (!still_url && !GiphyAPI.isGiphyUrl(url)) {
-            uploadToGiphy(name, url)
+            GiphyAPI.uploadGet(name, url)
                 .then((data) => {
                     gif = Object.assign({}, gif, data);
 
@@ -120,7 +87,7 @@ const upload = (id) => {
             gif = _gifs.get(index);
 
         if (!GiphyAPI.isGiphyUrl(gif.url)) {
-            uploadToGiphy(gif.name, gif.url)
+            GiphyAPI.uploadGet(gif.name, gif.url)
                 .then((data) => {
 
                     _gifs = _gifs.set(index, Object.assign({}, gif, data));

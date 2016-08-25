@@ -90,3 +90,36 @@ export const upload = (name, url) => {
             });
     });
 };
+
+export const uploadGet = (name, url) => {
+    return new Promise((resolve, reject) => {
+        upload(name, url)
+            .then((body) => {
+                var id = body.data.id;
+
+                get(id)
+                    .then((body) => {
+                        let data = body.data;
+
+                        resolve({
+                            url: data.images.downsized.url,
+                            still_url: data.images.downsized_still.url
+                        });
+                    })
+                    .catch((error) => {
+                        reject({
+                            name: 'Giphy',
+                            status: error.status,
+                            msg: error.msg
+                        });
+                    });
+            })
+            .catch((error) => {
+                reject({
+                    name: 'Giphy',
+                    status: error.status,
+                    msg: error.msg
+                });
+            });
+    });
+};

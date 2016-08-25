@@ -30,31 +30,45 @@ class GifsView extends React.Component {
                     />
                 );
             });
-        }
 
-        let width = $(window).width(),
-            height;
+            let width = $(window).width(),
+                height;
 
-        if (width < 800) {
-            height = 150;
-        } else if (width < 1000) {
-            height = 180;
-        } else if (width < 1000) {
-            height = 200;
+            if (width < 800) {
+                height = 150;
+            } else if (width < 1000) {
+                height = 180;
+            } else if (width < 1000) {
+                height = 200;
+            } else {
+                height = 290;
+            }
+
+            return (
+                <Infinite
+                    className="col-xs-12 gifs-view"
+                    useWindowAsScrollContainer={true}
+                    elementHeight={height}
+                    infiniteLoadBeginEdgeOffset={height*3}
+                    onInfiniteLoad={this.props.loadMoreGifs}>
+                    {children}
+                </Infinite>
+            );
         } else {
-            height = 290;
+            return (
+                <div  className="col-xs-12">
+                    <div className="page-header" style={{textAlign: 'center'}}>
+                        <h1>No GIFs</h1>
+                    </div>
+                    <img
+                        src="http://media3.giphy.com/media/l2SpMSEieNNAFdoSA/giphy.gif"
+                        className="img-thumbnail center-block"
+                        role="presentation"
+                    />
+                </div>
+            );
         }
 
-        return (
-            <Infinite
-                className="col-xs-12 gifs-view"
-                useWindowAsScrollContainer={true}
-                elementHeight={height}
-                infiniteLoadBeginEdgeOffset={height*3}
-                onInfiniteLoad={this.props.loadMoreGifs}>
-                {children}
-            </Infinite>
-        );
     }
 };
 

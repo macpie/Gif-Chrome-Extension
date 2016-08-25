@@ -23,6 +23,7 @@ class GifAddModal extends React.Component {
         this.handleSave = this.handleSave.bind(this);
 
         this.state = {
+            name: '',
             url: ''
         };
     }
@@ -30,9 +31,18 @@ class GifAddModal extends React.Component {
         $('#GifAddModal').modal({
             show: false
         });
+
+        $('#GifAddModal').on('hide.bs.modal', (e) => {
+            this.setState({
+                name: '',
+                url: '',
+                still_url: ''
+            });
+        });
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
+            name: nextProps.name || '',
             url: nextProps.url || '',
             still_url: nextProps.still_url
         });
@@ -80,7 +90,7 @@ class GifAddModal extends React.Component {
                         <div className="modal-body">
                             <form >
                                 <div className="form-group">
-                                    <input type="text" className="form-control" name="name" placeholder="Name" autoComplete="off" onChange={this.handleNameChange}/>
+                                    <input type="text" className="form-control" name="name" placeholder="Name" autoComplete="off" onChange={this.handleNameChange} value={this.state.name} />
                                 </div>
                                 <div className="form-group">
                                     <input type="text" className="form-control" name="url" placeholder="Url" autoComplete="off" onChange={this.handleUrlChange} value={this.state.url} />
@@ -104,6 +114,7 @@ class GifAddModal extends React.Component {
 };
 
 GifAddModal.propTypes = {
+    name: PropTypes.string,
     url: PropTypes.string,
     still_url: PropTypes.string
 };

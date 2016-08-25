@@ -57,14 +57,15 @@
     function clickHandler(info) {
         var name = prompt("Name? "),
             data = getData(),
+            id = uuid.v4(),
             gif = {
-                id: uuid.v4(),
+                id: id,
                 name: name,
                 url: info.srcUrl,
                 still_url: info.srcUrl
             };
 
-        data.push(gif);
+        data[id] = gif;
 
         localStorage.setItem(KEY, JSON.stringify(data));
     }

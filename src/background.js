@@ -40,6 +40,20 @@
         localStorage.setItem(KEY, JSON.stringify(transformed));
     })();
 
+    // Object Migration
+    (function() {
+        var data = getData();
+
+        if (Array.isArray(data)) {
+            transformed = {},
+                data.forEach(function(o) {
+                    transformed[o.id] = o;
+                });
+
+            localStorage.setItem(KEY, JSON.stringify(transformed));
+        }
+    })();
+
     function clickHandler(info) {
         var name = prompt("Name? "),
             data = getData(),

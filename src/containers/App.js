@@ -12,7 +12,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            gifs_number: GifStore.size()
+            gifs_number: GifStore.getGifsSize()
         };
 
         this.onStoreChange = this.onStoreChange.bind(this);
@@ -41,7 +41,7 @@ class App extends React.Component {
     }
     onStoreChange() {
         this.setState({
-            gifs_number: GifStore.size()
+            gifs_number: GifStore.getGifsSize()
         });
     }
     render() {

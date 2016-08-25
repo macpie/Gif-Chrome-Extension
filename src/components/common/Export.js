@@ -10,7 +10,7 @@ class Export extends React.Component {
     handleExport(e) {
         let dataString = 'data:text/json;charset=utf-8,';
 
-        dataString += encodeURIComponent(JSON.stringify(GifStore.getAll(), null, 4));
+        dataString += encodeURIComponent(JSON.stringify(GifStore.getRawGifs().toObject(), null, 4));
 
         $(e.target).attr({
             href: dataString,

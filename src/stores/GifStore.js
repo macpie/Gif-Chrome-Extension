@@ -4,25 +4,38 @@ import {
 import Immutable from 'immutable'
 import Promise from 'promise';
 import UUID from 'node-uuid';
-import * as _ from 'lodash';
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import * as GifConstants from '../constants/GifConstants'
 import * as GifAPI from '../apis/GifAPI';
 import * as GiphyAPI from '../apis/GiphyAPI';
 
 const CHANGE_EVENT = 'change';
+const GIFS = 'gifs';
+const FILTER = 'filter';
 
-var _gifs = new Immutable.List([]),
-    _tmp = null;
+var STATE = new Immutable.Map({
+    [GIFS]: new Immutable.Map(),
+    [FILTER]: ''
+});
 
-const findIndexById = (id) => {
-    return _gifs.findIndex((val) => {
-        if (val.id === id) {
-            return true;
-        } else {
-            return false;
-        }
-    });
+const getGifs = () => {
+    return STATE.get(GIFS);
+};
+
+const setGifs = (data) => {
+    STATE = STATE.set(GIFS, data);
+};
+
+const getGif = (id) => {
+    let gifs = getGifs();
+
+    return gifs.get(id);
+};
+
+const setGif = (id, data) => {
+    let gifs = getGifs();
+
+    setGifs(gifs.set(id, data));
 };
 
 const create = (url, name = url, still_url) => {
@@ -38,32 +51,23 @@ const create = (url, name = url, still_url) => {
             GiphyAPI.uploadGet(name, url)
                 .then((data) => {
                     gif = Object.assign({}, gif, data);
-
-                    _gifs = _gifs.push(gif);
-                    GifAPI.update(_gifs.toArray());
-
+                    setGif(gif.id, gif);
                     resolve();
                 })
                 .catch((error) => {
                     console.error(error);
-
-                    _gifs = _gifs.push(gif);
-                    GifAPI.update(_gifs.toArray());
-
+                    setGif(gif.id, gif);
                     resolve();
                 });
 
         } else if (!still_url && GiphyAPI.isGiphyUrl(url)) {
-            gif.still_url = GiphyAPI.getStillFromUrl(url)
-
-            _gifs = _gifs.push(gif);
-            GifAPI.update(_gifs.toArray());
-
+            gif = Object.assign({}, gif, {
+                still_url: GiphyAPI.getStillFromUrl(url)
+            });
+            setGif(gif.id, gif);
             resolve();
         } else {
-            _gifs = _gifs.push(gif);
-            GifAPI.update(_gifs.toArray());
-
+            setGif(gif.id, gif);
             resolve();
         }
     });
@@ -71,38 +75,28 @@ const create = (url, name = url, still_url) => {
 
 const update = (id, updates) => {
     return new Promise((resolve) => {
-        let index = findIndexById(id),
-            gif = _gifs.get(index);
+        let gif = getGif(id);
 
-        _gifs = _gifs.set(index, Object.assign({}, gif, updates));
-        GifAPI.update(_gifs.toArray());
-
+        setGif(id, Object.assign({}, gif, updates));
         resolve();
     });
 };
 
 const upload = (id) => {
     return new Promise((resolve, reject) => {
-        let index = findIndexById(id),
-            gif = _gifs.get(index);
+        let gif = getGif(id);
 
         if (!GiphyAPI.isGiphyUrl(gif.url)) {
             GiphyAPI.uploadGet(gif.name, gif.url)
-                .then((data) => {
-
-                    _gifs = _gifs.set(index, Object.assign({}, gif, data));
-                    GifAPI.update(_gifs.toArray());
-
+                .then((updates) => {
+                    setGif(id, Object.assign({}, gif, updates));
                     resolve();
                 })
                 .catch(reject);
-
         } else if (!gif.still_url && GiphyAPI.isGiphyUrl(gif.url)) {
-            _gifs = _gifs.set(index, Object.assign({}, gif, {
+            setGif(id, Object.assign({}, gif, {
                 still_url: GiphyAPI.getStillFromUrl(gif.url)
             }));
-            GifAPI.update(_gifs.toArray());
-
             resolve();
         } else {
             resolve();
@@ -110,31 +104,28 @@ const upload = (id) => {
     });
 };
 
-const priority = (id, inc) => {
+const priority = (id, inc = 1) => {
     return new Promise((resolve, reject) => {
-        let index = findIndexById(id),
-            gif = _gifs.get(index),
+        let gif = getGif(id),
             value = gif.priority || 0,
-            update = {
+            updates = {
                 priority: value += inc
             };
 
-        _gifs = _gifs.set(index, Object.assign({}, gif, update));
-        GifAPI.update(_gifs.toArray());
-
+        setGif(id, Object.assign({}, gif, updates));
         resolve();
     });
 };
 
 const resetPriority = () => {
     return new Promise((resolve, reject) => {
-        _gifs = _gifs.map((gif) => {
-            gif.priority = 0;
+        let gifs = getGifs();
 
-            return gif;
-        });
-
-        GifAPI.update(_gifs.toArray());
+        setGifs(gifs.map((gif) => {
+            return Object.assign({}, gif, {
+                priority: 0
+            });
+        }));
 
         resolve();
     });
@@ -142,10 +133,9 @@ const resetPriority = () => {
 
 const remove = (id) => {
     return new Promise((resolve) => {
-        let index = findIndexById(id);
+        let gifs = getGifs();
 
-        _gifs = _gifs.delete(index);
-        GifAPI.update(_gifs.toArray());
+        setGifs(gifs.delete(id));
 
         resolve();
     });
@@ -155,7 +145,7 @@ const loadGifs = () => {
     return new Promise((resolve) => {
         let data = GifAPI.loadData();
 
-        _gifs = new Immutable.List(data);
+        setGifs(new Immutable.Map(data));
 
         resolve();
     });
@@ -163,34 +153,33 @@ const loadGifs = () => {
 
 const importGifs = (data) => {
     return new Promise((resolve) => {
-        _gifs = new Immutable.List(data);
-        GifAPI.update(_gifs.toArray());
+        setGifs(new Immutable.Map(data));
         resolve();
     });
 };
 
 const filter = (text) => {
-    if (text !== '') {
-        if (!_tmp) _tmp = _gifs;
-
-        let re = new RegExp(text, 'gi');
-
-        _gifs = _tmp.filter((val) => {
-            return val.name.match(re);
-        });
-    } else {
-        _gifs = _tmp;
-    }
+    STATE = STATE.set(FILTER, text);
 };
 
 const GifStore = Object.assign({}, EventEmitter.prototype, {
-    getAll: () => {
-        return _.orderBy(_gifs.toArray(), ['priority', 'name'], ['desc', 'asc']);
+    getRawGifs: () => {
+        return getGifs();
     },
-    size: () => {
-        return _gifs.size;
+    getGifs: () => {
+        return getGifs().toArray();
+    },
+    getGifsSize: () => {
+        return getGifs().count();
+    },
+    getFilter: () => {
+        return STATE.get(FILTER);
     },
     emitChange: () => {
+        let gifs = getGifs();
+
+        GifAPI.update(gifs.toObject());
+
         GifStore.emit(CHANGE_EVENT);
     },
     addChangeListener: (callback) => {
@@ -234,6 +223,7 @@ AppDispatcher.register((action) => {
         case GifConstants.GIF_RESET_PRIORITY:
             resetPriority()
                 .then(() => {
+                    toastr.success('GIFs priority reseted!');
                     GifStore.emitChange();
                 })
                 .catch(handleReject);

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as _ from 'lodash';
 import GifStore from '../stores/GifStore';
 import * as GifActions from '../actions/GifActions';
 import * as Clipboard from '../utils/Clipboard';
@@ -9,11 +10,27 @@ import GifAddModal from '../components/common/GifAddModal';
 
 const OFFSET = 30;
 
+const orderBy = (arr) => {
+    return _.orderBy(arr, ['priority', 'name'], ['desc', 'asc']);
+};
+
+const filter = (arr, text) => {
+    if (text !== '') {
+        let re = new RegExp(text, 'gi');
+
+        return arr.filter((val) => {
+            return val.name.match(re);
+        });
+    } else {
+        return arr;
+    }
+}
+
 class Gif extends React.Component {
     constructor(props) {
         super(props);
 
-        let gifs = GifStore.getAll();
+        let gifs = orderBy(GifStore.getGifs());
 
         this.state = {
             _gifs: gifs,
@@ -40,7 +57,8 @@ class Gif extends React.Component {
         GifStore.removeChangeListener(this.onStoreChange);
     }
     onStoreChange() {
-        let gifs = GifStore.getAll();
+        let filtered = filter(GifStore.getGifs(), GifStore.getFilter()),
+            gifs = orderBy(filtered);
 
         this.setState({
             _gifs: gifs,

@@ -1,47 +1,33 @@
 import React, {
     PropTypes
 } from 'react';
+import './css/SearchForm.css';
 
 class SearchForm extends React.Component {
-    constructor(props) {
-        super(props);
+    componentDidMount() {
+        let $input = $('#SearchForm input');
 
-        this.state = {
-            query: ''
-        };
+        $input.tagsinput();
 
-        this.handleSearchChange = this.handleSearchChange.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
-    }
-    handleSearchChange(e) {
-        this.setState({
-            query: e.target.value
-        });
-    }
-    handleSearch() {
-        this.props.handleSearch(this.state.query);
+        $input
+            .on('itemAdded', (e) => {
+                let tags = $input.tagsinput('items');
 
-        this.setState({
-            query: ''
-        });
+                this.props.handleSearch(tags.join('+'));
+            })
+            .on('itemRemoved', (e) => {
+                let tags = $input.tagsinput('items');
+
+                this.props.handleSearch(tags.join('+'));
+            });
     }
-    handleKeyPress(e) {
-        if(e.which === 13) {
-            this.props.handleSearch(this.state.query);
-        }
+    componentWillUnmount() {
+        $('#SearchForm input').tagsinput('destroy');
     }
     render() {
         return (
             <div id="SearchForm" className="col-xs-6 col-xs-offset-3">
-                <div className="input-group">
-                    <input type="text" name="query" className="form-control ctrl-f" placeholder="Search gif" autoComplete="off" onChange={this.handleSearchChange} value={this.state.query} onKeyPress={this.handleKeyPress} />
-                    <div className="input-group-btn">
-                        <button className="btn btn-default" onClick={this.handleSearch}>
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
+                <input type="text" placeholder="Search gif" autoComplete="off" />
             </div>
         );
     }

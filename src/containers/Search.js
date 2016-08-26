@@ -87,7 +87,8 @@ class Search extends React.Component {
                         query={this.state.query}
                         pagination={this.state.pagination}
                         loadMore={this.handleMore}
-                        click={this.handleClick} />
+                        click={this.handleClick}
+                    />
                 </div>
                 <BackToTop />
                 <PowerByGiphy />

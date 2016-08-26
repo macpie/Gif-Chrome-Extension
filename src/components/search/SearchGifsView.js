@@ -4,7 +4,6 @@ import React, {
 import * as _ from 'lodash';
 import Infinite from 'react-infinite';
 import SearchGifsRows from './SearchGifsRows';
-import './css/SearchGifsView.css';
 
 class SearchGifsView extends React.Component {
     render() {
@@ -38,25 +37,15 @@ class SearchGifsView extends React.Component {
         }
 
         return (
-            <div id="SearchGifsView" className="col-xs-12">
-                <div className="row" style={style}>
-                    <div className="page-header">
-                        <h1>Search for "{this.props.query}"
-                            <small>{this.props.pagination.total_count} result(s)</small>
-                        </h1>
-                    </div>
-                </div>
-                <Infinite
-                    key={this.props.query}
-                    id="GifsView"
-                    className="col-xs-12"
-                    useWindowAsScrollContainer={true}
-                    elementHeight={height}
-                    infiniteLoadBeginEdgeOffset={height*3}
-                    onInfiniteLoad={this.props.loadMore}>
-                    {children}
-                </Infinite>
-            </div>
+            <Infinite
+                key={this.props.query}
+                className="col-xs-12"
+                useWindowAsScrollContainer={true}
+                elementHeight={height}
+                infiniteLoadBeginEdgeOffset={height*3}
+                onInfiniteLoad={this.props.loadMore}>
+                {children}
+            </Infinite>
         );
     }
 };

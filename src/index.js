@@ -19,7 +19,7 @@ import Store from './stores';
 import * as GifsActions from './actions/GifsActions';
 import App from './containers/App';
 import Gif from './containers/Gif';
-// import Search from './containers/Search';
+import Search from './containers/Search';
 // import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 
@@ -46,6 +46,7 @@ const router = (
             <Route path="/" component={App}>
                 <IndexRedirect to='/gifs' />
                 <Route path="gifs" component={Gif} />
+                <Route path="search" component={Search} />
                 <Redirect from="*" to="/gifs" />
             </Route>
         </Router>

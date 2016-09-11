@@ -4,17 +4,14 @@ import React, {
 import './css/GifFilter.css';
 
 class GifFilter extends React.Component {
-    componentDidMount() {
-        var self = this;
-
+    render() {
         $('.typeahead').typeahead({
             source: this.props.gifs,
-            afterSelect: function(gif) {
-                self.props.select(gif);
+            afterSelect: (gif) => {
+                this.props.select(gif);
             }
         });
-    }
-    render() {
+
         return (
             <div id="GifFilter" className="col-xs-6 col-xs-offset-3">
                 <div className="input-group">

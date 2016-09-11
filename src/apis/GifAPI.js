@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
     KEY = 'GIFS_TEST';
 }
 
-export const loadData = () => {
+export const get = () => {
     let data = JSON.parse(localStorage.getItem(KEY));
 
     if (_.isEmpty(data)) {
@@ -17,8 +17,21 @@ export const loadData = () => {
     }
 };
 
-export const update = (update) => {
+export const updateAll = (update) => {
     localStorage.setItem(KEY, JSON.stringify(update));
+};
+
+export const update = (update) => {
+    let data = get();
+
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(
+            Object.assign({}, data, {
+                [update.id]: update
+            })
+        )
+    );
 };
 
 export const mock = (max = 10) => {

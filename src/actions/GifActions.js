@@ -1,72 +1,123 @@
-import * as _ from 'lodash'
-import AppDispatcher from '../dispatcher/AppDispatcher'
-import * as GifConstants from '../constants/GifConstants'
+import Promise from 'promise';
+import UUID from 'node-uuid';
+import * as _ from 'lodash';
+import {
+    GIF_CREATE,
+    GIF_UPDATE,
+    GIF_UPLOAD,
+    GIF_REMOVE,
+} from '../constants/Gif';
+import * as GifAPI from '../apis/GifAPI';
+import * as GiphyAPI from '../apis/GiphyAPI';
 
-export const create = (url, name, still_url) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_CREATE,
-        url: url,
-        name: name,
-        still_url: still_url
-    });
+export const create = (name, url, still_url) => {
+    return {
+        type: GIF_CREATE,
+        payload: new Promise((resolve) => {
+            let gif = {
+                id: UUID.v4(),
+                name: name,
+                url: url,
+                still_url: still_url
+            };
+
+            if (!still_url && !GiphyAPI.isGiphyUrl(url)) {
+                GiphyAPI.uploadGet(name, url)
+                    .then((data) => {
+                        let updated = Object.assign({}, gif, data);
+
+                        GifAPI.update(updated);
+                        resolve(updated);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+
+                        GifAPI.update(gif);
+                        resolve(gif);
+                    });
+
+            } else if (!still_url && GiphyAPI.isGiphyUrl(url)) {
+                let updated = Object.assign({}, gif, {
+                    still_url: GiphyAPI.getStillFromUrl(url)
+                });
+
+                GifAPI.update(updated);
+                resolve(updated);
+            } else {
+                GifAPI.update(gif);
+                resolve(gif);
+            }
+        })
+    };
 };
 
-export const update = (id, name, url, still_url) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_UPDATE,
-        id: id,
-        updates: _.omitBy({
-            name: name,
-            url: url,
-            still_url: still_url
-        }, _.isUndefined)
-    });
+export const update = (gif) => {
+    return {
+        type: GIF_UPDATE,
+        payload: new Promise((resolve) => {
+            GifAPI.update(gif);
+            resolve(gif);
+        })
+    };
 };
 
-export const priority = (id, inc = 1) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_PRIORITY,
-        id: id,
-        inc: inc
-    });
+export const priority = (gif, inc) => {
+    return {
+        type: GIF_UPDATE,
+        payload: new Promise((resolve) => {
+            let priority = gif.priority,
+                updated = Object.assign({}, gif, {
+                    priority: priority += inc
+                });
+
+            GifAPI.update(updated);
+            resolve(updated);
+        })
+    };
 };
 
-export const resetPriority = () => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_RESET_PRIORITY
-    });
-};
+export const upload = (gif) => {
+    return {
+        type: GIF_UPLOAD,
+        payload: new Promise((resolve, reject) => {
+            if (!GiphyAPI.isGiphyUrl(gif.url)) {
+                GiphyAPI.uploadGet(gif.name, gif.url)
+                    .then((updates) => {
+                        let updated = Object.assign({}, gif, updates);
 
-export const upload = (id) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_UPLOAD,
-        id: id
-    });
+                        GifAPI.update(updated);
+                        resolve(updated);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        reject(error);
+                    });
+            } else if (!gif.still_url && GiphyAPI.isGiphyUrl(gif.url)) {
+                let updated = Object.assign({}, gif, {
+                    still_url: GiphyAPI.getStillFromUrl(gif.url)
+                })
+
+                GifAPI.update(updated);
+                resolve(updated);
+
+                resolve();
+            } else {
+                resolve(gif);
+            }
+        })
+    };
 };
 
 export const remove = (id) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_REMOVE,
-        id: id
-    });
-};
+    return {
+        type: GIF_REMOVE,
+        payload: new Promise((resolve) => {
+            let data = GifAPI.get();
 
-export const filter = (text) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_FILTER,
-        text: text
-    });
-};
-
-export const loadData = () => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_LOAD
-    });
-};
-
-export const importGifs = (data) => {
-    AppDispatcher.dispatch({
-        type: GifConstants.GIF_IMPORT,
-        data: data
-    });
+            GifAPI.updateAll(_.omit(data, [id]));
+            resolve({
+                id
+            });
+        })
+    };
 };

@@ -28,13 +28,14 @@ class Gif extends React.Component {
     constructor(props) {
         super(props);
 
-        let filtered = filter(props.gifs, ''),
-            gifs = orderBy(filtered);
+        let gifs = _.toArray(props.gifs),
+            filtered = filter(gifs, ''),
+            orderedGifs = orderBy(filtered);
 
         this.state = {
-            _gifs: props.gifs,
-            gifs: gifs.slice(0, OFFSET),
-            total_count: props.gifs.length,
+            _gifs: gifs,
+            gifs: orderedGifs.slice(0, OFFSET),
+            total_count: gifs.length,
             offset: OFFSET
         };
 
@@ -107,7 +108,7 @@ class Gif extends React.Component {
             <div id="Gif" className="col-xs-12">
                 <div className="row">
                     <GifFilter
-                        gifs={this.state._gifs}
+                        gifs={_.toArray(this.state._gifs)}
                         filter={this.handleFilter}
                         select={this.handleSelect}
                         add={this.showModal} />

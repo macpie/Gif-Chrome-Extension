@@ -1,11 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
-import {
-    browserHistory
-} from 'react-router';
 import * as _ from 'lodash';
-import * as GifActions from '../../actions/GifActions';
 import './css/GifAddModal.css';
 
 class GifAddModal extends React.Component {
@@ -58,19 +54,15 @@ class GifAddModal extends React.Component {
         });
     }
     handleSave(e) {
-        let state = this.state,
-            url = state.url,
-            name = state.name,
-            still_url = state.still_url;
-
-        if (!_.isEmpty(url) && !_.isEmpty(name)) {
-            GifActions.create(url, name, still_url);
-            GifAddModal.hide();
-            browserHistory.push('/gifs');
+        if (!_.isEmpty(this.state.url) && !_.isEmpty(this.state.name)) {
+            this.props.onSuccess(
+                this.state.name,
+                this.state.url,
+                this.state.still_url
+            );
         } else {
             toastr.warning('Please provide a name and URL');
         }
-
     }
     render() {
         return (
@@ -114,6 +106,7 @@ class GifAddModal extends React.Component {
 };
 
 GifAddModal.propTypes = {
+    onSuccess: PropTypes.func.isRequired,
     name: PropTypes.string,
     url: PropTypes.string,
     still_url: PropTypes.string

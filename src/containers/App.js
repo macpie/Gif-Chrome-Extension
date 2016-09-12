@@ -1,76 +1,25 @@
-import React from 'react';
 import {
-    IndexLink,
-    browserHistory
-} from 'react-router'
-import GifStore from '../stores/GifStore';
-import Copy from '../components/common/Copy'
-import './css/App.css'
+    bindActionCreators
+} from 'redux';
+import {
+    connect
+} from 'react-redux';
+import * as GifActions from '../actions/GifActions';
+import App from '../components';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            gifs_number: GifStore.getGifsSize()
-        };
-
-        this.onStoreChange = this.onStoreChange.bind(this);
-    }
-    componentDidMount() {
-        Mousetrap.bind('command+1', function(e) {
-            browserHistory.push('/gifs');
-        });
-
-        Mousetrap.bind('command+2', function(e) {
-            browserHistory.push('/search');
-        });
-
-        Mousetrap.bind('command+3', function(e) {
-            browserHistory.push('/options');
-        });
-
-        Mousetrap.bind('ctrl+f', function(e) {
-            $('input.ctrl-f').focus();
-        });
-
-        GifStore.addChangeListener(this.onStoreChange);
-    }
-    componentWillUnmount() {
-        GifStore.removeChangeListener(this.onStoreChange);
-    }
-    onStoreChange() {
-        this.setState({
-            gifs_number: GifStore.getGifsSize()
-        });
-    }
-    render() {
-        return (
-            <div className="container-fluid">
-                <Copy />
-                <div className="row">
-                    <div className="col-xs-12">
-                        <ul className="nav nav-pills">
-                            <li role="presentation">
-                                <IndexLink activeClassName="active" to="/gifs">
-                                    Gifs <span className="badge">{this.state.gifs_number}</span>
-                                </IndexLink>
-                            </li>
-                            <li role="presentation">
-                                <IndexLink activeClassName="active" to="/search">Search</IndexLink>
-                            </li>
-                            <li role="presentation">
-                                <IndexLink activeClassName="active" to="/options">Options</IndexLink>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="row">
-                    {this.props.children}
-                </div>
-            </div>
-        );
-    }
+const mapStateToProps = (state) => {
+    return {
+        gifs: state.gifs
+    };
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(GifActions, dispatch)
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);

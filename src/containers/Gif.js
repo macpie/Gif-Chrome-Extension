@@ -1,134 +1,27 @@
-import React from 'react';
-import * as _ from 'lodash';
-import GifStore from '../stores/GifStore';
+import {
+    bindActionCreators
+} from 'redux';
+import {
+    connect
+} from 'react-redux';
 import * as GifActions from '../actions/GifActions';
-import * as Clipboard from '../utils/Clipboard';
-import GifsView from '../components/gif/GifsView';
-import GifFilter from '../components/gif/GifFilter';
-import BackToTop from '../components/common/BackToTop';
-import GifAddModal from '../components/common/GifAddModal';
+import * as FilterActions from '../actions/FilterActions';
+import Gif from '../components/gif';
 
-const OFFSET = 30;
-
-const orderBy = (arr) => {
-    return _.orderBy(arr, ['priority', 'name'], ['desc', 'asc']);
+const mapStateToProps = (state) => {
+    return {
+        gifs: state.gifs,
+        filter: state.filter
+    };
 };
 
-const filter = (arr, text) => {
-    if (text !== '') {
-        let re = new RegExp(text, 'gi');
-
-        return arr.filter((val) => {
-            return val.name.match(re);
-        });
-    } else {
-        return arr;
-    }
-}
-
-class Gif extends React.Component {
-    constructor(props) {
-        super(props);
-
-        let gifs = orderBy(GifStore.getGifs());
-
-        this.state = {
-            _gifs: gifs,
-            total_count: gifs.length,
-            gifs: gifs.slice(0, OFFSET),
-            offset: OFFSET
-        };
-
-        this.onStoreChange = this.onStoreChange.bind(this);
-        this.loadMoreGifs = this.loadMoreGifs.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
-        this.handleCopy = this.handleCopy.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleUpload = this.handleUpload.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-        this.handleDownload = this.handleDownload.bind(this);
-    }
-    componentDidMount() {
-        GifStore.addChangeListener(this.onStoreChange);
-    }
-    componentWillUnmount() {
-        GifStore.removeChangeListener(this.onStoreChange);
-    }
-    onStoreChange() {
-        let filtered = filter(GifStore.getGifs(), GifStore.getFilter()),
-            gifs = orderBy(filtered);
-
-        this.setState({
-            _gifs: gifs,
-            total_count: gifs.length,
-            gifs: gifs.slice(0, OFFSET),
-            offset: OFFSET
-        });
-    }
-    loadMoreGifs() {
-        if (this.state.offset < this.state.total_count) {
-            let offset = this.state.offset + OFFSET;
-
-            this.setState({
-                gifs: this.state._gifs.slice(0, offset),
-                offset: offset
-            });
-        }
-    }
-    handleAdd() {
-        GifAddModal.show();
-    }
-    handleFilter(e) {
-        GifActions.filter(e.target.value);
-    }
-    handleSelect(gif) {
-        GifActions.filter(gif.name);
-        this.handleCopy(gif);
-    }
-    handleCopy(gif) {
-        Clipboard.copy(gif.url);
-        toastr.success(gif.name + ' copied to clipboard!');
-        GifActions.priority(gif.id);
-    }
-    handleDelete(gif) {
-        GifActions.remove(gif.id);
-    }
-    handleUpload(gif) {
-        GifActions.upload(gif.id);
-    }
-    handleEdit(gif, name) {
-        GifActions.update(gif.id, name);
-    }
-    handleDownload(gif) {
-        GifActions.priority(gif.id, 3);
-    }
-    render() {
-        return (
-            <div id="Gif" className="col-xs-12">
-                <div className="row">
-                    <GifFilter
-                        gifs={this.state._gifs}
-                        filter={this.handleFilter}
-                        select={this.handleSelect}
-                        add={this.handleAdd} />
-                </div>
-                <div className="row">
-                    <GifsView
-                        gifs={this.state.gifs}
-                        loadMoreGifs={this.loadMoreGifs}
-                        copy={this.handleCopy}
-                        delete={this.handleDelete}
-                        upload={this.handleUpload}
-                        edit={this.handleEdit}
-                        download={this.handleDownload} />
-                </div>
-                <BackToTop />
-                <GifAddModal />
-            </div>
-        );
-    }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Object.assign({}, GifActions, FilterActions), dispatch)
+    };
 };
 
-export default Gif;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Gif);

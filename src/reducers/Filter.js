@@ -5,6 +5,8 @@ import {
 export default (state = '', action) => {
     let payload = action.payload;
 
+    if(!payload) payload = '';
+
     switch (action.type) {
         case `${FILTER}_RESOLVED`:
             return payload;

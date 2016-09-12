@@ -34,7 +34,7 @@ NProgress.configure({
 injectTapEventPlugin();
 
 if (process.env.NODE_ENV === 'development') {
-    GifAPI.mock(1);
+    GifAPI.mock(10);
 }
 
 const history = syncHistoryWithStore(browserHistory, Store);

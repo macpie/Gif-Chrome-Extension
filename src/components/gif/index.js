@@ -51,13 +51,14 @@ class Gif extends React.Component {
         this.handleAdd = this.handleAdd.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-        let filtered = filter(nextProps.gifs, nextProps.filter),
-            gifs = orderBy(filtered);
+        let gifs = _.toArray(nextProps.gifs),
+            filtered = filter(gifs, nextProps.filter),
+            orderedGifs = orderBy(filtered);
 
         this.setState({
-            _gifs: nextProps.gifs,
-            total_count: nextProps.gifs.length,
-            gifs: gifs.slice(0, OFFSET),
+            _gifs: gifs,
+            total_count: gifs.length,
+            gifs: orderedGifs.slice(0, OFFSET),
             offset: OFFSET
         });
     }
@@ -74,8 +75,8 @@ class Gif extends React.Component {
     showModal() {
         GifAddModal.show();
     }
-    handleFilter(e) {
-        this.props.actions.filter(e.target.value);
+    handleFilter(str) {
+        this.props.actions.filter(str);
     }
     handleSelect(gif) {
         this.props.actions.filter(gif.name);
@@ -109,9 +110,10 @@ class Gif extends React.Component {
                 <div className="row">
                     <GifFilter
                         gifs={_.toArray(this.state._gifs)}
-                        filter={this.handleFilter}
-                        select={this.handleSelect}
-                        add={this.showModal} />
+                        filter={this.props.filter}
+                        onFilter={this.handleFilter}
+                        onSelect={this.handleSelect}
+                        onAdd={this.showModal} />
                 </div>
                 <div className="row">
                     <GifsView

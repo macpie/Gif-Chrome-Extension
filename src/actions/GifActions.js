@@ -65,7 +65,7 @@ export const priority = (gif, inc) => {
     return {
         type: GIF_UPDATE,
         payload: new Promise((resolve) => {
-            let priority = gif.priority,
+            let priority = gif.priority || 0,
                 updated = Object.assign({}, gif, {
                     priority: priority += inc
                 });

@@ -20,7 +20,7 @@ class Options extends React.Component {
         toastr.warning('Make sure file is proper JSON', 'Failed to import');
     }
     resetPriorities() {
-        this.props.actions.reset_priority(this.props.gifs);
+        this.props.actions.reset_priority();
 
         toastr.success('Priorities reseted');
     }

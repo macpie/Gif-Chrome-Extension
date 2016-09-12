@@ -28,11 +28,12 @@ export const import_data = (data) => {
     };
 };
 
-export const reset_priority = (data) => {
+export const reset_priority = () => {
     return {
         type: GIFS_RESET_PRIORITY,
         payload: new Promise((resolve) => {
-            let updated = _.mapValues(data, function(gif) {
+            let data = GifAPI.get(),
+                updated = _.mapValues(data, function(gif) {
                 return Object.assign({}, gif, {
                     priority: 0
                 });

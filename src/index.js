@@ -33,7 +33,7 @@ NProgress.configure({
 });
 
 if (process.env.NODE_ENV === 'development') {
-    GifAPI.mock(100);
+    GifAPI.mock(1);
 }
 
 const history = syncHistoryWithStore(browserHistory, Store);

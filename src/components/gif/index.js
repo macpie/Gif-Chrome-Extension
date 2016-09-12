@@ -39,7 +39,7 @@ class Gif extends React.Component {
         };
 
         this.loadMoreGifs = this.loadMoreGifs.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
+        this.showModal = this.showModal.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
@@ -47,6 +47,7 @@ class Gif extends React.Component {
         this.handleUpload = this.handleUpload.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDownload = this.handleDownload.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         let filtered = filter(nextProps.gifs, nextProps.filter),
@@ -69,7 +70,7 @@ class Gif extends React.Component {
             });
         }
     }
-    handleAdd() {
+    showModal() {
         GifAddModal.show();
     }
     handleFilter(e) {
@@ -97,6 +98,10 @@ class Gif extends React.Component {
     handleDownload(gif) {
         this.props.actions.priority(gif, 3);
     }
+    handleAdd(name, url, still_url) {
+        this.props.actions.create(name, url, still_url);
+        GifAddModal.hide();
+    }
     render() {
         return (
             <div id="Gif" className="col-xs-12">
@@ -105,7 +110,7 @@ class Gif extends React.Component {
                         gifs={this.state._gifs}
                         filter={this.handleFilter}
                         select={this.handleSelect}
-                        add={this.handleAdd} />
+                        add={this.showModal} />
                 </div>
                 <div className="row">
                     <GifsView
@@ -118,7 +123,7 @@ class Gif extends React.Component {
                         download={this.handleDownload} />
                 </div>
                 <BackToTop />
-                <GifAddModal />
+                <GifAddModal onSuccess={this.handleAdd} />
             </div>
         );
     }

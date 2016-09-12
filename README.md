@@ -14,7 +14,6 @@
 
   globals: {
     toastr: true,
-    NProgress: true,
-    Mousetrap: true
+    NProgress: true
   },
 ````

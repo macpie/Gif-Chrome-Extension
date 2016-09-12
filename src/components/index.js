@@ -1,43 +1,23 @@
 import React from 'react';
-import {
-    IndexLink
-} from 'react-router';
-import * as _ from 'lodash';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Copy from './common/Copy';
+import Header from './header';
 import './css/App.css';
 
 class App extends React.Component {
     render() {
-        const {
-            gifs,
-            children
-        } = this.props;
-
-        let keys = _.keys(gifs);
         return (
-            <div className="container-fluid">
-                <Copy />
-                <div className="row">
-                    <div className="col-xs-12">
-                        <ul className="nav nav-pills">
-                            <li role="presentation">
-                                <IndexLink activeClassName="active" to="/gifs">
-                                    Gifs <span className="badge">{keys.length}</span>
-                                </IndexLink>
-                            </li>
-                            <li role="presentation">
-                                <IndexLink activeClassName="active" to="/search">Search</IndexLink>
-                            </li>
-                            <li role="presentation">
-                                <IndexLink activeClassName="active" to="/options">Options</IndexLink>
-                            </li>
-                        </ul>
+            <MuiThemeProvider>
+                <div className="container-fluid">
+                    <Copy />
+                    <div className="row">
+                        <Header gifs={this.props.gifs} goTo={this.props.goTo} />
+                    </div>
+                    <div className="row">
+                        {this.props.children}
                     </div>
                 </div>
-                <div className="row">
-                    {children}
-                </div>
-            </div>
+            </MuiThemeProvider>
         );
     }
 };

@@ -15,6 +15,7 @@ import {
 import {
     syncHistoryWithStore
 } from 'react-router-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import Store from './stores';
 import * as GifsActions from './actions/GifsActions';
 import App from './containers/App';
@@ -29,6 +30,8 @@ toastr.options.progressBar = true;
 NProgress.configure({
     showSpinner: false
 });
+
+injectTapEventPlugin();
 
 if (process.env.NODE_ENV === 'development') {
     GifAPI.mock(1);

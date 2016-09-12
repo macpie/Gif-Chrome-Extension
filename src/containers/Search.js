@@ -4,6 +4,9 @@ import {
 import {
     connect
 } from 'react-redux';
+import {
+    push
+} from 'react-router-redux';
 import * as GifActions from '../actions/GifActions';
 import * as FilterActions from '../actions/FilterActions';
 import Search from '../components/search';
@@ -16,7 +19,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators(Object.assign({}, GifActions, FilterActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, GifActions, FilterActions), dispatch),
+        goTo: (dest) => {
+            dispatch(push(dest));
+        }
     };
 };
 

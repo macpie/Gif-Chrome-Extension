@@ -15,6 +15,7 @@ class Search extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleMore = this.handleMore.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
 
         this.state = {
             gifs: [],
@@ -75,6 +76,11 @@ class Search extends React.Component {
         });
         GifAddModal.show();
     }
+    handleAdd(name, url, still_url) {
+        this.props.actions.create(name, url, still_url);
+        GifAddModal.hide();
+        this.props.goTo('/gifs');
+    }
     render() {
         return (
             <div id="Search" className="col-xs-12">
@@ -94,7 +100,8 @@ class Search extends React.Component {
                 <PowerByGiphy />
                 <GifAddModal
                     url={this.state.selected.url}
-                    still_url={this.state.selected.still_url} />
+                    still_url={this.state.selected.still_url}
+                    onSuccess={this.handleAdd} />
             </div>
         );
     }

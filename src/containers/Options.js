@@ -4,6 +4,9 @@ import {
 import {
     connect
 } from 'react-redux';
+import {
+    push
+} from 'react-router-redux';
 import * as GifsActions from '../actions/GifsActions';
 import Options from '../components/options';
 
@@ -15,7 +18,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators(Object.assign({}, GifsActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, GifsActions), dispatch),
+        goTo: (dest) => {
+            dispatch(push(dest));
+        }
     };
 };
 

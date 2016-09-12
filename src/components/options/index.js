@@ -15,6 +15,7 @@ class Options extends React.Component {
         this.props.actions.import_data(data);
 
         toastr.success('GIFs imported!');
+        this.props.goTo('/gifs');
     }
     importFailure() {
         toastr.warning('Make sure file is proper JSON', 'Failed to import');
@@ -23,6 +24,7 @@ class Options extends React.Component {
         this.props.actions.reset_priority();
 
         toastr.success('Priorities reseted');
+        this.props.goTo('/gifs');
     }
     render() {
         return (

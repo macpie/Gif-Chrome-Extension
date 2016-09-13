@@ -6,7 +6,6 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import './css/GifAddModal.css';
 
 class GifAddModal extends React.Component {
     constructor(props) {

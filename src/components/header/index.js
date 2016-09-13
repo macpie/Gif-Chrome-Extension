@@ -13,10 +13,12 @@ class Header extends React.Component {
         super(props);
 
         this.handleMenuSelect = this.handleMenuSelect.bind(this);
+        this.openModal = this.openModal.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
 
         this.state = {
-            title: 'Gifs'
+            title: 'Gifs',
+            showModal: false
         };
     }
     handleMenuSelect(ev, item) {
@@ -26,9 +28,19 @@ class Header extends React.Component {
             title: _.capitalize(item.props.value)
         });
     }
+    openModal() {
+        this.setState({
+            showModal: true
+        });
+    }
     handleAdd(name, url, still_url) {
         this.props.actions.create(name, url, still_url);
-        GifAddModal.hide();
+
+        this.setState({
+            showModal: false
+        });
+
+        this.props.goTo('/gifs');
     }
     render() {
         return (
@@ -36,9 +48,9 @@ class Header extends React.Component {
                 <AppBar
                     title={this.state.title}
                     iconElementLeft={<Menu onSelect={this.handleMenuSelect} />}
-                    iconElementRight={<IconButton onClick={GifAddModal.show}><AddIcon /></IconButton>}
+                    iconElementRight={<IconButton onClick={this.openModal}><AddIcon /></IconButton>}
                 />
-                <GifAddModal onSuccess={this.handleAdd}/>
+                <GifAddModal open={this.state.showModal} onSuccess={this.handleAdd}/>
             </div>
         );
     }

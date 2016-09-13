@@ -2,45 +2,38 @@ import React, {
     PropTypes
 } from 'react';
 import * as _ from 'lodash';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import './css/GifAddModal.css';
 
 class GifAddModal extends React.Component {
-    static show() {
-        $('#GifAddModal').modal('show');
-    }
-    static hide() {
-        $('#GifAddModal').modal('hide');
-    }
     constructor(props) {
         super(props);
 
+        this.handleClose = this.handleClose.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
 
         this.state = {
+            open: props.open,
             name: '',
-            url: ''
+            url: props.url
         };
-    }
-    componentDidMount() {
-        $('#GifAddModal').modal({
-            show: false
-        });
-
-        $('#GifAddModal').on('hide.bs.modal', (e) => {
-            this.setState({
-                name: '',
-                url: '',
-                still_url: ''
-            });
-        });
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
+            open: nextProps.open,
             name: nextProps.name || '',
             url: nextProps.url || '',
             still_url: nextProps.still_url
+        });
+    }
+    handleClose() {
+        this.setState({
+            open: false
         });
     }
     handleNameChange(e) {
@@ -53,7 +46,7 @@ class GifAddModal extends React.Component {
             url: e.target.value
         });
     }
-    handleSave(e) {
+    handleAdd() {
         if (!_.isEmpty(this.state.url) && !_.isEmpty(this.state.name)) {
             this.props.onSuccess(
                 this.state.name,
@@ -65,47 +58,59 @@ class GifAddModal extends React.Component {
         }
     }
     render() {
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                onTouchTap={this.handleClose}
+                style={{margin: 10}}
+            />,
+            <RaisedButton
+                label="Add"
+                primary={true}
+                onTouchTap={this.handleAdd}
+                style={{margin: 10}}
+            />
+        ];
+
         return (
-            <div id="GifAddModal" className="modal fade" tabIndex="-1" role="dialog">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">
-                                    &times;
-                                </span>
-                            </button>
-                            <h4 className="modal-title">
-                                Add Gif
-                            </h4>
-                        </div>
-                        <div className="modal-body">
-                            <form >
-                                <div className="form-group">
-                                    <input type="text" className="form-control" name="name" placeholder="Name" autoComplete="off" onChange={this.handleNameChange} value={this.state.name} />
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" className="form-control" name="url" placeholder="Url" autoComplete="off" onChange={this.handleUrlChange} value={this.state.url} />
-                                </div>
-                            </form>
-                            <img src={this.state.url} className="img-thumbnail center-block" role="presentation" />
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-dismiss="modal">
-                                Cancel
-                            </button>
-                            <button type="button" className="btn btn-success" onClick={this.handleSave}>
-                                Save
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Dialog
+                id="GifAddModal"
+                title="Add Gif"
+                actions={actions}
+                modal={true}
+                open={this.state.open}
+                repositionOnUpdate={false}
+                style={{
+                    paddingTop: "15px"
+                }} >
+
+                <TextField
+                  hintText="Test Name"
+                  floatingLabelText="Name"
+                  fullWidth={true}
+                  autoComplete="off"
+                  onChange={this.handleNameChange}
+                  value={this.state.name}
+                  style={{marginBottom: 5}}
+                />
+                <TextField
+                  hintText="http://media2.giphy.com/media/geozuBY5Y6cXm/giphy.gif"
+                  floatingLabelText="Url"
+                  fullWidth={true}
+                  autoComplete="off"
+                  onChange={this.handleUrlChange}
+                  value={this.state.url}
+                  style={{marginBottom: 5}}
+                />
+                <img src={this.state.url} className="img-thumbnail center-block" role="presentation" />
+            </Dialog>
         );
     }
 };
 
 GifAddModal.propTypes = {
+    open: PropTypes.bool.isRequired,
     onSuccess: PropTypes.func.isRequired,
     name: PropTypes.string,
     url: PropTypes.string,

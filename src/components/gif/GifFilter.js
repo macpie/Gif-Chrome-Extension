@@ -2,7 +2,6 @@ import React, {
     PropTypes
 } from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
-import './css/GifFilter.css';
 
 class GifFilter extends React.Component {
     render() {
@@ -30,8 +29,7 @@ class GifFilter extends React.Component {
 GifFilter.propTypes = {
     gifs: PropTypes.array.isRequired,
     onFilter: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onAdd: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired
 };
 
 export default GifFilter;

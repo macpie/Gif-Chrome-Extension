@@ -11,7 +11,10 @@ class App extends React.Component {
                 <div className="container-fluid">
                     <Copy />
                     <div className="row">
-                        <Header gifs={this.props.gifs} goTo={this.props.goTo} />
+                        <Header
+                            gifs={this.props.gifs}
+                            goTo={this.props.goTo}
+                            actions={this.props.actions} />
                     </div>
                     <div className="row">
                         {this.props.children}

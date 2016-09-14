@@ -1,26 +1,26 @@
 import React, {
     PropTypes
 } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Export extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleExport = this.handleExport.bind(this);
-    }
-    handleExport(e) {
-        let dataString = 'data:text/json;charset=utf-8,';
-
-        dataString += encodeURIComponent(JSON.stringify(this.props.gifs, null, 4));
-
-        $(e.target).attr({
-            href: dataString,
-            download: 'gifs.json'
-        });
-    }
     render() {
+        let str = 'data:text/json;charset=utf-8,';
+
+        str += encodeURIComponent(JSON.stringify(this.props.gifs, null, 4));
+
         return (
-            <a className="btn btn-primary" onClick={this.handleExport}>Download as JSON</a>
+            <RaisedButton
+                label="Download as JSON"
+                primary={true}
+                href={str}
+                download="gifs.json"
+                fullWidth={true}
+                style={{
+                    marginTop: 10,
+                    marginBottom: 10
+                }}
+            />
         );
     }
 };

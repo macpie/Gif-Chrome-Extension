@@ -1,13 +1,21 @@
 import React, {
     PropTypes
 } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Export extends React.Component {
     render() {
         return (
-            <button className="btn btn-danger" onClick={this.props.reset}>
-                Reset Priorities
-            </button>
+            <RaisedButton
+                label="Reset Priorities"
+                secondary={true}
+                onClick={this.props.reset}
+                fullWidth={true}
+                style={{
+                    marginTop: 10,
+                    marginBottom: 10
+                }}
+            />
         );
     }
 };

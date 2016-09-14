@@ -1,4 +1,5 @@
 import React from 'react';
+import Divider from 'material-ui/Divider';
 import Import from './Import';
 import Export from './Export';
 import ResetPriority from './ResetPriority';
@@ -28,12 +29,12 @@ class Options extends React.Component {
     }
     render() {
         return (
-            <div id="Options" className="col-xs-12">
-                <div className="btn-group-vertical" role="group" aria-label="...">
-                    <Import onSuccess={this.importSuccess} onFailure={this.importFailure}/>
-                    <Export gifs={this.props.gifs} />
-                    <ResetPriority reset={this.resetPriorities}/>
-                </div>
+            <div id="Options" className="col-xs-6 col-xs-offset-3">
+                <Import onSuccess={this.importSuccess} onFailure={this.importFailure} />
+                <Divider />
+                <Export gifs={this.props.gifs} />
+                <Divider />
+                <ResetPriority reset={this.resetPriorities} />
             </div>
         );
     }

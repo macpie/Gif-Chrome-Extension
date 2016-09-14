@@ -1,6 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Import extends React.Component {
     constructor(props) {
@@ -26,9 +27,18 @@ class Import extends React.Component {
     }
     render() {
         return (
-            <label className="btn btn-primary btn-file">
-                Import <input type="file" onChange={this.handleImport} style={{display: 'none'}} />
-            </label>
+            <RaisedButton
+                label="Import"
+                primary={true}
+                containerElement='label'
+                fullWidth={true}
+                style={{
+                    marginTop: 10,
+                    marginBottom: 10
+                }}
+            >
+                <input type="file" onChange={this.handleImport} style={{display: 'none'}} />
+            </RaisedButton>
         );
     }
 };

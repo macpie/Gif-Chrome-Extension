@@ -1,33 +1,18 @@
 import React, {
     PropTypes
 } from 'react';
-import './css/SearchForm.css';
+import TextField from 'material-ui/TextField';
 
 class SearchForm extends React.Component {
-    componentDidMount() {
-        let $input = $('#SearchForm input');
-
-        $input.tagsinput();
-
-        $input
-            .on('itemAdded', (e) => {
-                let tags = $input.tagsinput('items');
-
-                this.props.handleSearch(tags.join('+'));
-            })
-            .on('itemRemoved', (e) => {
-                let tags = $input.tagsinput('items');
-
-                this.props.handleSearch(tags.join('+'));
-            });
-    }
-    componentWillUnmount() {
-        $('#SearchForm input').tagsinput('destroy');
-    }
     render() {
         return (
             <div id="SearchForm" className="col-xs-6 col-xs-offset-3">
-                <input type="text" placeholder="Search gif" autoComplete="off" />
+                <TextField
+                    hintText="Search gif"
+                    floatingLabelText="Search"
+                    autoComplete="off"
+                    onChange={(e) => {this.props.handleSearch(e.target.value)}}
+                />
             </div>
         );
     }

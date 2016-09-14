@@ -1,7 +1,8 @@
 import React, {
     PropTypes
 } from 'react';
-import './css/BackToTop.css'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import UpIcon from 'material-ui/svg-icons/navigation/arrow-upward';
 
 class BackToTop extends React.Component {
     constructor(props) {
@@ -16,11 +17,13 @@ class BackToTop extends React.Component {
     componentDidMount() {
         let container = this.state.container;
 
+        $('#BackToTop').hide();
+
         $(container).on('scroll', function() {
-            if ($(this).scrollTop() >= 50) {
-                $('#BackToTop').fadeIn(200);
+            if ($(this).scrollTop() >= 150) {
+                $('#BackToTop').fadeIn(500);
             } else {
-                $('#BackToTop').fadeOut(200);
+                $('#BackToTop').fadeOut(500);
             }
         });
     }
@@ -41,14 +44,20 @@ class BackToTop extends React.Component {
                 scrollTop: 0
             }, 500);
         }
-
     }
     render() {
         return (
-            <i id="BackToTop"
-                className="fa fa-arrow-up fa-3x"
-                aria-hidden="true"
-                onClick={this.handleClick} />
+            <FloatingActionButton
+                id="BackToTop"
+                style={{
+                    position: "fixed",
+                    bottom: 20,
+                    right: 20,
+                }}
+                onClick={this.handleClick}
+            >
+                <UpIcon />
+            </FloatingActionButton>
         );
     }
 };

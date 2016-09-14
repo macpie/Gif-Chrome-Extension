@@ -1,85 +1,51 @@
 import React, {
     PropTypes
 } from 'react';
-import * as _ from 'lodash';
-import Infinite from 'react-infinite';
-import GifsRow from './GifsRow';
+import {
+    GridList
+} from 'material-ui/GridList';
+import GifView from './GifView';
 
 class GifsView extends React.Component {
-    render() {
-        let children = [],
-            gifs = _.chunk(this.props.gifs, 3)
+    componentDidMount() {
+        let base = 800,
+            factor = 1;
 
-        if (gifs.length) {
-            children = gifs.map((gifsChunk) => {
-                let key = '';
-
-                gifsChunk.forEach((o) => {
-                    key += o.id.substring(0, 5)
-                });
-
-                return (
-                    <GifsRow
-                        key={key}
-                        gifs={gifsChunk}
-                        copy={this.props.copy}
-                        delete={this.props.delete}
-                        upload={this.props.upload}
-                        edit={this.props.edit}
-                        download={this.props.download}
-                    />
-                );
-            });
-
-            let width = $(window).width(),
-                height;
-
-            if (width < 800) {
-                height = 150;
-            } else if (width < 1000) {
-                height = 180;
-            } else if (width < 1000) {
-                height = 200;
-            } else {
-                height = 290;
+        $(window).on('scroll', () => {
+            if ($(window).scrollTop() > base * factor) {
+                this.props.loadMoreGifs();
+                factor++;
             }
+        });
+    }
+    componentWillUnmount() {
+        $(window).off('scroll');
+    }
+    render() {
+        let gifs = this.props.gifs;
 
-            return (
-                <Infinite
-                    className="col-xs-12 gifs-view"
-                    useWindowAsScrollContainer={true}
-                    elementHeight={height}
-                    infiniteLoadBeginEdgeOffset={height*3}
-                    onInfiniteLoad={this.props.loadMoreGifs}>
-                    {children}
-                </Infinite>
-            );
-        } else {
-            return (
-                <div  className="col-xs-12">
-                    <div className="page-header" style={{textAlign: 'center'}}>
-                        <h1>No GIFs</h1>
-                    </div>
-                    <img
-                        src="http://media3.giphy.com/media/l2SpMSEieNNAFdoSA/giphy.gif"
-                        className="img-thumbnail center-block"
-                        role="presentation"
-                    />
-                </div>
-            );
-        }
-
+        return (
+            <div id="GifsView" className="col-xs-12">
+                <GridList cols={3}>
+                    {gifs.map((gif) => (
+                        <GifView
+                            key={gif.id}
+                            gif={gif}
+                            onCopy={this.props.onCopy}
+                            onSelect={this.props.onSelect}
+                        />
+                    ))}
+                </GridList>
+            </div>
+        );
     }
 };
 
 GifsView.propTypes = {
     gifs: PropTypes.array.isRequired,
     loadMoreGifs: PropTypes.func.isRequired,
-    copy: PropTypes.func.isRequired,
-    delete: PropTypes.func.isRequired,
-    upload: PropTypes.func.isRequired,
-    edit: PropTypes.func.isRequired,
-    download: PropTypes.func.isRequired
+    onCopy: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired
 };
 
 export default GifsView;

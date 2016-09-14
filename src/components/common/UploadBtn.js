@@ -1,19 +1,19 @@
-import React, {
-    PropTypes
-} from 'react';
+import React from 'react';
+import IconButton from 'material-ui/IconButton';
+import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 
 class UploadBtn extends React.Component {
     render() {
         return (
-            <button type="button" className="btn btn-info" onClick={this.props.click}>
-                <i className="fa fa-cloud-upload" aria-hidden="true"></i>
-            </button>
+            <IconButton
+                iconStyle={{color: "rgb(255, 64, 129)"}}
+                tooltipPosition="bottom-center"
+                tooltip="Upload to Giphy"
+                children={<UploadIcon />}
+                onClick={this.props.onClick}
+            />
         );
     }
-};
-
-UploadBtn.propTypes = {
-    click: PropTypes.func.isRequired
 };
 
 export default UploadBtn;

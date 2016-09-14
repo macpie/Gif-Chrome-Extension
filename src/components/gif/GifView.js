@@ -1,10 +1,12 @@
 import React, {
     PropTypes
 } from 'react';
-import * as GiphyAPI from '../../apis/GiphyAPI';
-import DownloadLink from '../common/DownloadLink';
-import UploadBtn from '../common/UploadBtn';
-import './css/GifView.css'
+import {
+    GridTile
+} from 'material-ui/GridList';
+import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import CopyIcon from 'material-ui/svg-icons/content/content-copy';
 
 class GifView extends React.Component {
     constructor(props) {
@@ -15,21 +17,6 @@ class GifView extends React.Component {
 
         this.state = Object.assign({}, props.gif, {
             img_url: props.gif.still_url || props.gif.url
-        });
-    }
-    componentDidMount() {
-        var self = this,
-            gif = this.state;
-
-        $('#' + gif.id).editable({
-            selector: '.gif-name',
-            container: 'body',
-            type: 'text',
-            mode: 'inline',
-            showbuttons: false,
-            success: function(resp, name) {
-                self.props.edit(gif, name);
-            }
         });
     }
     componentWillReceiveProps(nextProps) {
@@ -57,44 +44,47 @@ class GifView extends React.Component {
     render() {
         let gif = this.state;
 
-        const maybeAddUploadBtn = () => {
-            if (!GiphyAPI.isGiphyUrl(gif.url)) {
-                return (
-                    <UploadBtn click={()=>{this.props.upload(gif)}} />
-                );
-            }
-        };
-
         return (
-            <div className="col-xs-4 gif-view" id={gif.id} >
-                <div className="thumbnail" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
-                    <div className="caption">
-                        <h3 className="gif-name">{gif.name}</h3>
-                        <div className="btn-group btn-group-sm" role="group">
-                            <button type="button" className="btn btn-danger" onClick={()=>{this.props.delete(gif)}}>
-                                <i className="fa fa-trash-o" aria-hidden="true"></i>
-                            </button>
-                            <button type="button" className="btn btn-success" onClick={()=>{this.props.copy(gif)}}>
-                                <i className="fa fa-files-o" aria-hidden="true"></i>
-                            </button>
-                            <DownloadLink gif={gif} callback={()=>{this.props.download(gif)}}/>
-                            {maybeAddUploadBtn()}
-                        </div>
-                    </div>
-                    <img src={gif.img_url} alt={gif.name} />
-                </div>
-            </div>
+             <GridTile
+                title={
+                    <FlatButton
+                        style={{
+                            width: "100%"
+                        }}
+                        label={gif.name}
+                        labelStyle={{
+                            color: "white",
+                            textTransform: "none",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "block"
+                        }}
+                        onClick={() => {this.props.onSelect(gif)}}
+                    />
+                }
+                titlePosition="top"
+                actionIcon={
+                    <IconButton onClick={() => {this.props.onCopy(gif)}}>
+                        <CopyIcon color="white" />
+                    </IconButton>
+                }
+                style={{
+                    cursor: "pointer"
+                }}
+                onMouseOver={this.handleMouseOver}
+                onMouseOut={this.handleMouseOut}
+            >
+                <img src={gif.img_url} role="presentation" />
+            </GridTile>
         );
     }
 };
 
 GifView.propTypes = {
     gif: PropTypes.object.isRequired,
-    copy: PropTypes.func.isRequired,
-    delete: PropTypes.func.isRequired,
-    upload: PropTypes.func.isRequired,
-    edit: PropTypes.func.isRequired,
-    download: PropTypes.func.isRequired
+    onCopy: PropTypes.func.isRequired,
+    onSelect: PropTypes.func
 };
 
 export default GifView;

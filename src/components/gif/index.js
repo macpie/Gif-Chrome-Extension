@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as Clipboard from '../../utils/Clipboard';
 import GifsView from './GifsView';
 import GifFilter from './GifFilter';
+import GifEditModal from './GifEditModal';
 import BackToTop from '../common/BackToTop';
 
 const OFFSET = 30;
@@ -35,17 +36,19 @@ class Gif extends React.Component {
             _gifs: gifs,
             gifs: orderedGifs.slice(0, OFFSET),
             total_count: gifs.length,
-            offset: OFFSET
+            offset: OFFSET,
+            openEditModal: false,
+            selectedGif: {}
         };
 
         this.loadMoreGifs = this.loadMoreGifs.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
+        this.handleFilteSelect = this.handleFilteSelect.bind(this);
+        this.handleGifSelect = this.handleGifSelect.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
-        this.handleDownload = this.handleDownload.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         let gifs = _.toArray(nextProps.gifs),
@@ -72,27 +75,41 @@ class Gif extends React.Component {
     handleFilter(str) {
         this.props.actions.filter(str);
     }
-    handleSelect(gif) {
+    handleFilteSelect(gif) {
         this.props.actions.filter(gif.name);
         this.handleCopy(gif);
+    }
+    handleGifSelect(gif) {
+        this.setState({
+            openEditModal: true,
+            selectedGif: gif
+        });
     }
     handleCopy(gif) {
         Clipboard.copy(gif.url);
         toastr.success(gif.name + ' copied to clipboard!');
         this.props.actions.priority(gif, 1);
     }
+    handleEdit(gif) {
+        this.props.actions.update(gif);
+        this.setState({
+            openEditModal: false,
+            selectedGif: {}
+        });
+    }
     handleDelete(gif) {
         this.props.actions.remove(gif.id);
+        this.setState({
+            openEditModal: false,
+            selectedGif: {}
+        });
     }
     handleUpload(gif) {
         this.props.actions.upload(gif);
-    }
-    handleEdit(gif, name) {
-        gif.name = name;
-        this.props.actions.update(gif);
-    }
-    handleDownload(gif) {
-        this.props.actions.priority(gif, 3);
+        this.setState({
+            openEditModal: false,
+            selectedGif: {}
+        });
     }
     render() {
         return (
@@ -102,18 +119,22 @@ class Gif extends React.Component {
                         gifs={_.toArray(this.state._gifs)}
                         filter={this.props.filter}
                         onFilter={this.handleFilter}
-                        onSelect={this.handleSelect} />
+                        onSelect={this.handleFilteSelect} />
                 </div>
                 <div className="row">
                     <GifsView
                         gifs={this.state.gifs}
                         loadMoreGifs={this.loadMoreGifs}
-                        copy={this.handleCopy}
-                        delete={this.handleDelete}
-                        upload={this.handleUpload}
-                        edit={this.handleEdit}
-                        download={this.handleDownload} />
+                        onCopy={this.handleCopy}
+                        onSelect={this.handleGifSelect} />
                 </div>
+                <GifEditModal
+                    open={this.state.openEditModal}
+                    gif={this.state.selectedGif}
+                    onSave={this.handleEdit}
+                    onDelete={this.handleDelete}
+                    onUpload={this.handleUpload}
+                />
                 <BackToTop />
             </div>
         );

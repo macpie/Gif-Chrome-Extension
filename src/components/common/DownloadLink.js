@@ -1,39 +1,29 @@
 import React, {
     PropTypes
 } from 'react';
+import IconButton from 'material-ui/IconButton';
+import DownloadIcon from 'material-ui/svg-icons/file/file-download';
 
 class DownloadLink extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleDownload = this.handleDownload.bind(this);
-    }
-    handleDownload(e) {
-        var $target = $(e.target);
-
-        if($target.is('i')) {
-            $target = $(e.target).parent();
-        }
-
-        $target.attr({
-            href: this.props.gif.url,
-            download: 'test.gif'
-        });
-
-        this.props.callback();
-    }
     render() {
         return (
-            <a className="btn btn-primary" onClick={this.handleDownload}>
-                <i className="fa fa-cloud-download" aria-hidden="true"></i>
-            </a>
+            <IconButton
+                style={{
+                    verticalAlign: "baseline"
+                }}
+                iconStyle={{color: "rgb(0, 188, 212)"}}
+                tooltipPosition="bottom-center"
+                tooltip="Download"
+                children={<DownloadIcon />}
+                href={this.props.gif.url}
+                download="test.gif"
+            />
         );
     }
 };
 
 DownloadLink.propTypes = {
-    gif: PropTypes.object.isRequired,
-    callback: PropTypes.func
+    gif: PropTypes.object.isRequired
 };
 
 export default DownloadLink;

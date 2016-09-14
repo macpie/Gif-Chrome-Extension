@@ -14,6 +14,7 @@ class Header extends React.Component {
 
         this.handleMenuSelect = this.handleMenuSelect.bind(this);
         this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
 
         this.state = {
@@ -33,6 +34,11 @@ class Header extends React.Component {
             showModal: true
         });
     }
+    closeModal() {
+        this.setState({
+            showModal: false
+        });
+    }
     handleAdd(name, url, still_url) {
         this.props.actions.create(name, url, still_url);
 
@@ -50,7 +56,11 @@ class Header extends React.Component {
                     iconElementLeft={<Menu onSelect={this.handleMenuSelect} />}
                     iconElementRight={<IconButton onClick={this.openModal}><AddIcon /></IconButton>}
                 />
-                <GifAddModal open={this.state.showModal} onSuccess={this.handleAdd}/>
+                <GifAddModal
+                    open={this.state.showModal}
+                    onSuccess={this.handleAdd}
+                    onCancel={this.closeModal}
+                />
             </div>
         );
     }

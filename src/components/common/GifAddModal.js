@@ -11,28 +11,20 @@ class GifAddModal extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClose = this.handleClose.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
 
         this.state = {
-            open: props.open,
             name: '',
             url: props.url
         };
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            open: nextProps.open,
             name: nextProps.name || '',
             url: nextProps.url || '',
             still_url: nextProps.still_url
-        });
-    }
-    handleClose() {
-        this.setState({
-            open: false
         });
     }
     handleNameChange(e) {
@@ -61,7 +53,7 @@ class GifAddModal extends React.Component {
             <FlatButton
                 label="Cancel"
                 primary={true}
-                onTouchTap={this.handleClose}
+                onTouchTap={this.props.onCancel}
                 style={{margin: 10}}
             />,
             <RaisedButton
@@ -78,7 +70,7 @@ class GifAddModal extends React.Component {
                 title="Add Gif"
                 actions={actions}
                 modal={true}
-                open={this.state.open}
+                open={this.props.open}
                 repositionOnUpdate={false}
                 style={{
                     paddingTop: "15px"
@@ -110,10 +102,11 @@ class GifAddModal extends React.Component {
 
 GifAddModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    onSuccess: PropTypes.func.isRequired,
     name: PropTypes.string,
     url: PropTypes.string,
-    still_url: PropTypes.string
+    still_url: PropTypes.string,
+    onSuccess: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
 };
 
 export default GifAddModal;

@@ -17,7 +17,8 @@ class Menu extends React.Component {
                     </IconButton>
                 }
                 anchorOrigin={{
-                    horizontal: 'left', vertical: 'bottom'
+                    horizontal: 'left',
+                    vertical: 'bottom'
                 }}
                 onItemTouchTap={this.props.onSelect}
             >

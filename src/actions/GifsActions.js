@@ -27,20 +27,3 @@ export const import_data = (data) => {
         })
     };
 };
-
-export const reset_priority = () => {
-    return {
-        type: GIFS_RESET_PRIORITY,
-        payload: new Promise((resolve) => {
-            let data = GifAPI.get(),
-                updated = _.mapValues(data, function(gif) {
-                return Object.assign({}, gif, {
-                    priority: 0
-                });
-            });
-
-            GifAPI.updateAll(updated);
-            resolve(updated);
-        })
-    };
-};

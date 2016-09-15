@@ -29,12 +29,9 @@
     (function() {
         var data = getData(),
             transformed = data.map(function(o) {
-                if (o.priority >= 0) {
-                    return o;
-                } else {
-                    o.priority = 0;
-                    return o;
-                }
+                delete o.priority;
+
+                return o;
             });
 
         localStorage.setItem(KEY, JSON.stringify(transformed));

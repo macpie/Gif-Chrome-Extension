@@ -46,8 +46,7 @@ export const mock = (max = 10) => {
             id: id,
             name: 'Test ' + i,
             url: 'http://media2.giphy.com/media/geozuBY5Y6cXm/giphy.gif',
-            still_url: 'https://media2.giphy.com/media/geozuBY5Y6cXm/giphy_s.gif',
-            priority: _.random(0, 100)
+            still_url: 'https://media2.giphy.com/media/geozuBY5Y6cXm/giphy_s.gif'
         };
     }
 

@@ -4,5 +4,4 @@ export const GIF_UPLOAD = 'gif.upload';
 export const GIF_REMOVE = 'gif.remove';
 
 export const GIFS_GET = 'gif.get';
-export const GIFS_RESET_PRIORITY = 'gifs.reset.priority';
 export const GIFS_IMPORT = 'gifs.import';

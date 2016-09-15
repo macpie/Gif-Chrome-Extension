@@ -2,7 +2,6 @@ import React from 'react';
 import Divider from 'material-ui/Divider';
 import Import from './Import';
 import Export from './Export';
-import ResetPriority from './ResetPriority';
 
 class Options extends React.Component {
     constructor(props) {
@@ -21,20 +20,12 @@ class Options extends React.Component {
     importFailure() {
         toastr.warning('Make sure file is proper JSON', 'Failed to import');
     }
-    resetPriorities() {
-        this.props.actions.reset_priority();
-
-        toastr.success('Priorities reseted');
-        this.props.goTo('/gifs');
-    }
     render() {
         return (
             <div id="Options" className="col-xs-6 col-xs-offset-3">
                 <Import onSuccess={this.importSuccess} onFailure={this.importFailure} />
                 <Divider />
                 <Export gifs={this.props.gifs} />
-                <Divider />
-                <ResetPriority reset={this.resetPriorities} />
             </div>
         );
     }

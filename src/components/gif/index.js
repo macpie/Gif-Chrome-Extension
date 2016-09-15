@@ -8,7 +8,7 @@ import GifEditModal from './GifEditModal';
 const OFFSET = 30;
 
 const orderBy = (arr) => {
-    return _.orderBy(arr, ['priority', 'name'], ['desc', 'asc']);
+    return _.orderBy(arr, ['name'], ['asc']);
 };
 
 const filter = (arr, text) => {
@@ -87,7 +87,6 @@ class Gif extends React.Component {
     handleCopy(gif) {
         Clipboard.copy(gif.url);
         toastr.success(gif.name + ' copied to clipboard!');
-        this.props.actions.priority(gif, 1);
     }
     handleEdit(gif) {
         this.props.actions.update(gif);

@@ -24,8 +24,11 @@ import Search from './containers/Search';
 import Options from './containers/Options';
 import * as GifAPI from './apis/GifAPI';
 
-toastr.options.preventDuplicates = true;
-toastr.options.progressBar = true;
+toastr.options = {
+    preventDuplicates: true,
+    progressBar: true,
+    newestOnTop: true
+};
 
 NProgress.configure({
     showSpinner: false

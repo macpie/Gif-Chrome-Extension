@@ -2,3 +2,11 @@ html {
     width: 600px;
     min-height: 500px;
 }
+
+#toast-container {
+    top: 77px;
+}
+
+#toast-container > div.toast {
+    width: auto;
+}

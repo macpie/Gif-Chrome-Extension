@@ -10,7 +10,6 @@ class Options extends React.Component {
 
         this.importSuccess = this.importSuccess.bind(this);
         this.importFailure = this.importFailure.bind(this);
-        this.resetPriorities = this.resetPriorities.bind(this);
     }
     importSuccess(data) {
         this.props.actions.import_data(data);

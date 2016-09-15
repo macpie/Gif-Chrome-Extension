@@ -2,11 +2,8 @@ import React, {
     PropTypes
 } from 'react';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
-import DeleteIcon from 'material-ui/svg-icons/action/delete-forever';
 import * as GiphyAPI from '../../apis/GiphyAPI';
 import DownloadLink from '../common/DownloadLink';
 import UploadBtn from '../common/UploadBtn';
@@ -43,10 +40,18 @@ class GifEditModal extends React.Component {
     }
     render() {
         const actions = [
-            <FlatButton
+            <RaisedButton
+                label="Delete"
+                secondary={true}
+                style={{margin: 5}}
+                onClick={() => {
+                    this.props.onDelete(this.state.gif);
+                }}
+            />,
+            <RaisedButton
                 label="Cancel"
                 style={{margin: 5}}
-                onTouchTap={this.handleClose}
+                onClick={this.handleClose}
             />,
             <RaisedButton
                 label="Save"
@@ -72,8 +77,9 @@ class GifEditModal extends React.Component {
                 id="GifEditModal"
                 title={"Edit \"" + this.props.gif.name + "\""}
                 actions={actions}
-                modal={true}
+                modal={false}
                 open={this.state.open}
+                onRequestClose={this.handleClose}
                 repositionOnUpdate={false}
                 style={{
                     paddingTop: "15px"
@@ -91,15 +97,6 @@ class GifEditModal extends React.Component {
                 <div style={{textAlign: "center"}}>
                     <DownloadLink gif={this.state.gif}/>
                     {maybeAddUploadBtn()}
-                    <IconButton
-                        iconStyle={{color: "red"}}
-                        tooltipPosition="bottom-center"
-                        tooltip="Delete"
-                        children={<DeleteIcon />}
-                        onClick={() => {
-                            this.props.onDelete(this.state.gif);
-                        }}
-                    />
                 </div>
             </Dialog>
         );

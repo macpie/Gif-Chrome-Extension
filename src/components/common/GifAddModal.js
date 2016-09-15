@@ -84,24 +84,21 @@ class GifAddModal extends React.Component {
                 style={{
                     paddingTop: "15px"
                 }} >
-
                 <TextField
-                  hintText="Test Name"
-                  floatingLabelText="Name"
-                  fullWidth={true}
-                  autoComplete="off"
-                  onChange={this.handleNameChange}
-                  value={this.state.name}
-                  style={{marginBottom: 5}}
+                    hintText="Test Name"
+                    floatingLabelText="Name"
+                    fullWidth={true}
+                    autoComplete="off"
+                    onChange={this.handleNameChange}
+                    value={this.state.name}
                 />
                 <TextField
-                  hintText="http://media2.giphy.com/media/geozuBY5Y6cXm/giphy.gif"
-                  floatingLabelText="Url"
-                  fullWidth={true}
-                  autoComplete="off"
-                  onChange={this.handleUrlChange}
-                  value={this.state.url}
-                  style={{marginBottom: 5}}
+                    hintText="http://media2.giphy.com/media/geozuBY5Y6cXm/giphy.gif"
+                    floatingLabelText="Url"
+                    fullWidth={true}
+                    autoComplete="off"
+                    onChange={this.handleUrlChange}
+                    value={this.state.url}
                 />
                 <Card style={style}>
                     <CardMedia>

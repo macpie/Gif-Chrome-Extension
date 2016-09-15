@@ -1,10 +1,8 @@
 import Promise from 'promise';
 import {
     GIFS_GET,
-    GIFS_IMPORT,
-    GIFS_RESET_PRIORITY
+    GIFS_IMPORT
 } from '../constants/Gif';
-import * as _ from 'lodash';
 import * as GifAPI from '../apis/GifAPI';
 
 export const get = () => {

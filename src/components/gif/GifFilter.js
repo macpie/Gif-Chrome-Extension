@@ -1,12 +1,13 @@
 import React, {
     PropTypes
 } from 'react';
+import {Col} from 'react-flexbox-grid/lib';
 import AutoComplete from 'material-ui/AutoComplete';
 
 class GifFilter extends React.Component {
     render() {
         return (
-            <div id="GifFilter" className="col-xs-6 col-xs-offset-3">
+            <Col id="GifFilter" xs={6} xsOffset={3}>
                 <AutoComplete
                     hintText="Filter"
                     floatingLabelText="Filter"
@@ -22,7 +23,7 @@ class GifFilter extends React.Component {
                     onUpdateInput={this.props.onFilter}
                     onNewRequest={this.props.onSelect}
                 />
-            </div>
+            </Col>
         );
     }
 };

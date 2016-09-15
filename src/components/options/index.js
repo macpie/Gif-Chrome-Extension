@@ -1,4 +1,5 @@
 import React from 'react';
+import {Col} from 'react-flexbox-grid/lib';
 import Divider from 'material-ui/Divider';
 import Import from './Import';
 import Export from './Export';
@@ -22,11 +23,11 @@ class Options extends React.Component {
     }
     render() {
         return (
-            <div id="Options" className="col-xs-6 col-xs-offset-3">
+            <Col id="Options" xs={6}  xsOffset={3}>
                 <Import onSuccess={this.importSuccess} onFailure={this.importFailure} />
                 <Divider />
                 <Export gifs={this.props.gifs} />
-            </div>
+            </Col>
         );
     }
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import * as _ from 'lodash';
+import {Row, Col} from 'react-flexbox-grid/lib';
 import * as Clipboard from '../../utils/Clipboard';
 import GifsView from './GifsView';
 import GifFilter from './GifFilter';
@@ -111,21 +112,21 @@ class Gif extends React.Component {
     }
     render() {
         return (
-            <div id="Gif" className="col-xs-12">
-                <div className="row">
+            <Col id="Gif" xs={12}>
+                <Row style={{marginBottom: 10}}>
                     <GifFilter
                         gifs={_.toArray(this.state._gifs)}
                         filter={this.props.filter}
                         onFilter={this.handleFilter}
                         onSelect={this.handleFilteSelect} />
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <GifsView
                         gifs={this.state.gifs}
                         loadMoreGifs={this.loadMoreGifs}
                         onCopy={this.handleCopy}
                         onSelect={this.handleGifSelect} />
-                </div>
+                </Row>
                 <GifEditModal
                     open={this.state.openEditModal}
                     gif={this.state.selectedGif}
@@ -133,7 +134,7 @@ class Gif extends React.Component {
                     onDelete={this.handleDelete}
                     onUpload={this.handleUpload}
                 />
-            </div>
+            </Col>
         );
     }
 };

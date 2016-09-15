@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {
     GridList
 } from 'material-ui/GridList';
+import {Col} from 'react-flexbox-grid/lib';
 import Subheader from 'material-ui/Subheader';
 import SearchGifView from './SearchGifView';
 import BackToTop from '../common/BackToTop';
@@ -28,20 +29,22 @@ class SearchGifsView extends React.Component {
         let gifs = _.uniqBy(this.props.gifs, 'id');
 
         return (
-            <GridList cols={3}>
-                <Subheader style={{
-                    textAlign: "center"
-                }}>
-                    Found {this.props.pagination.total_count} GIFs
-                </Subheader>
-                {gifs.map((gif) => (
-                    <SearchGifView
-                        key={gif.id}
-                        gif={gif}
-                        onSelect={this.props.onSelect}/>
-                ))}
-                <BackToTop />
-            </GridList>
+            <Col id="SearchGifsView" xs={12}>
+                <GridList cols={3}>
+                    <Subheader style={{
+                        textAlign: "center"
+                    }}>
+                        Found {this.props.pagination.total_count} GIFs
+                    </Subheader>
+                    {gifs.map((gif) => (
+                        <SearchGifView
+                            key={gif.id}
+                            gif={gif}
+                            onSelect={this.props.onSelect}/>
+                    ))}
+                    <BackToTop />
+                </GridList>
+            </Col>
         );
     }
 };

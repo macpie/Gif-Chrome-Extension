@@ -1,6 +1,7 @@
 import React, {
     PropTypes
 } from 'react';
+import {Col} from 'react-flexbox-grid/lib';
 import TextField from 'material-ui/TextField';
 
 class SearchForm extends React.Component {
@@ -16,14 +17,14 @@ class SearchForm extends React.Component {
         };
 
         return (
-            <div id="SearchForm" className="col-xs-6 col-xs-offset-3">
+            <Col id="GifFilter" xs={6} xsOffset={3}>
                 <TextField
                     hintText="Search gif"
                     floatingLabelText="Search"
                     autoComplete="off"
                     onChange={(e) => {req(e.target.value)}}
                 />
-            </div>
+            </Col>
         );
     }
 };

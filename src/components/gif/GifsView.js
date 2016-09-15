@@ -4,6 +4,7 @@ import React, {
 import {
     GridList
 } from 'material-ui/GridList';
+import {Col} from 'react-flexbox-grid/lib';
 import BackToTop from '../common/BackToTop';
 import GifView from './GifView';
 
@@ -26,7 +27,7 @@ class GifsView extends React.Component {
         let gifs = this.props.gifs;
 
         return (
-            <div id="GifsView" className="col-xs-12">
+            <Col id="GifsView" xs={12}>
                 <GridList cols={3}>
                     {gifs.map((gif) => (
                         <GifView
@@ -38,7 +39,7 @@ class GifsView extends React.Component {
                     ))}
                 </GridList>
                 <BackToTop />
-            </div>
+            </Col>
         );
     }
 };

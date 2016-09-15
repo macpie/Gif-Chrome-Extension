@@ -1,5 +1,6 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Grid, Row} from 'react-flexbox-grid/lib';
 import Copy from './common/Copy';
 import Header from './header';
 import './css/App.css';
@@ -8,18 +9,24 @@ class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-                <div className="container-fluid">
+                <Grid
+                    fluid={true}
+                    style={{
+                        paddingLeft: 5,
+                        paddingRight: 5
+                    }}
+                >
                     <Copy />
-                    <div className="row">
+                    <Row>
                         <Header
                             gifs={this.props.gifs}
                             goTo={this.props.goTo}
                             actions={this.props.actions} />
-                    </div>
-                    <div className="row">
+                    </Row>
+                    <Row>
                         {this.props.children}
-                    </div>
-                </div>
+                    </Row>
+                </Grid>
             </MuiThemeProvider>
         );
     }

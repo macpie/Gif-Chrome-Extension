@@ -1,4 +1,5 @@
 import React from 'react';
+import {Row, Col} from 'react-flexbox-grid/lib';
 import * as GiphyAPI from '../../apis/GiphyAPI';
 import SearchForm from './SearchForm';
 import SearchGifsView from './SearchGifsView';
@@ -93,11 +94,11 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <div id="Search" className="col-xs-12">
-                <div className="row">
+            <Col id="Search" xs={12}>
+                <Row>
                     <SearchForm handleSearch={this.handleSearch} />
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <SearchGifsView
                         gifs={this.state.gifs}
                         query={this.state.query}
@@ -105,7 +106,7 @@ class Search extends React.Component {
                         loadMore={this.handleMore}
                         onSelect={this.handleSelect}
                     />
-                </div>
+                </Row>
                 <PowerByGiphy />
                 <GifAddModal
                     open={this.state.showModal}
@@ -114,7 +115,7 @@ class Search extends React.Component {
                     onSuccess={this.handleAdd}
                     onCancel={this.closeModal}
                 />
-            </div>
+            </Col>
         );
     }
 };

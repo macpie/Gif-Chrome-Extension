@@ -2,6 +2,7 @@ import React, {
     PropTypes
 } from 'react';
 import * as _ from 'lodash';
+import {Col} from 'react-flexbox-grid/lib';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import AddIcon from 'material-ui/svg-icons/content/add-circle';
@@ -50,7 +51,7 @@ class Header extends React.Component {
     }
     render() {
         return (
-            <div className="col-xs-12">
+            <Col xs={12}>
                 <AppBar
                     title={this.state.title}
                     iconElementLeft={<Menu onSelect={this.handleMenuSelect} />}
@@ -61,7 +62,7 @@ class Header extends React.Component {
                     onSuccess={this.handleAdd}
                     onCancel={this.closeModal}
                 />
-            </div>
+            </Col>
         );
     }
 };

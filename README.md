@@ -17,3 +17,14 @@
     NProgress: true
   },
 ````
+
+## Webpack add
+```
+        exclude: /flexboxgrid/
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css?modules',
+        include: /flexboxgrid/,
+      },
+```

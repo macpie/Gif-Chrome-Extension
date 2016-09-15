@@ -2,21 +2,3 @@ html {
     width: 600px;
     min-height: 500px;
 }
-
-body {
-    padding: 10px;
-}
-
-.row {
-    margin-bottom: 10px;
-}
-
-a.active {
-    color: #fff;
-    background-color: #337ab7;
-}
-
-.nav > li > a:focus, .nav > li > a:hover {
-    color: #fff;
-    background-color: #337ab7;
-}

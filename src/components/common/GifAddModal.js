@@ -6,6 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {Card, CardMedia} from 'material-ui/Card';
 
 class GifAddModal extends React.Component {
     constructor(props) {
@@ -94,7 +95,11 @@ class GifAddModal extends React.Component {
                   value={this.state.url}
                   style={{marginBottom: 5}}
                 />
-                <img src={this.state.url} className="img-thumbnail center-block" role="presentation" />
+                <Card>
+                    <CardMedia>
+                        <img src={this.state.url} role="presentation" />
+                    </CardMedia>
+                </Card>
             </Dialog>
         );
     }

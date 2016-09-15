@@ -47,14 +47,24 @@ class Header extends React.Component {
     render() {
         const title = this.props.location.pathname;
 
+
         return (
             <Col xs={12}>
                 <AppBar
                     title={
                         _.capitalize(title.replace(/\//, ''))
                     }
-                    iconElementLeft={<Menu onSelect={this.handleMenuSelect} />}
-                    iconElementRight={<IconButton onClick={this.openModal}><AddIcon /></IconButton>}
+                    iconElementLeft={
+                        <Menu
+                            onSelect={this.handleMenuSelect}
+                            number={_.size(this.props.gifs)}
+                        />
+                    }
+                    iconElementRight={
+                        <IconButton onClick={this.openModal}>
+                            <AddIcon />
+                        </IconButton>
+                    }
                 />
                 <GifAddModal
                     open={this.state.showModal}

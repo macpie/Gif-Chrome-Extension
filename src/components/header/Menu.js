@@ -10,12 +10,20 @@ class Menu extends React.Component {
     render() {
         return (
             <IconMenu
-                iconButtonElement={<IconButton><AppsIcon color="white" /></IconButton>}
-                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                onItemTouchTap={this.props.onSelect}>
-                <MenuItem primaryText="Gifs" value="gifs" />
+                autoWidth={true}
+                iconButtonElement={
+                    <IconButton>
+                        <AppsIcon color="white" />
+                    </IconButton>
+                }
+                anchorOrigin={{
+                    horizontal: 'left', vertical: 'bottom'
+                }}
+                onItemTouchTap={this.props.onSelect}
+            >
+                <MenuItem primaryText="Gifs " secondaryText={this.props.number} value="gifs" />
                 <MenuItem primaryText="Search" value="search" />
-                <MenuItem primaryText="Options" value="options" />
+                <MenuItem primaryText="Options"  value="options" />
             </IconMenu>
         );
     }

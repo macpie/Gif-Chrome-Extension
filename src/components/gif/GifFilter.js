@@ -11,6 +11,7 @@ class GifFilter extends React.Component {
                     hintText="Filter"
                     floatingLabelText="Filter"
                     fullWidth={true}
+                    filter={AutoComplete.caseInsensitiveFilter}
                     maxSearchResults={10}
                     searchText={this.props.filter}
                     dataSource={this.props.gifs}

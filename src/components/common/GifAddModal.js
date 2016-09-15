@@ -65,14 +65,22 @@ class GifAddModal extends React.Component {
             />
         ];
 
+        let style = {};
+
+        if(!this.state.url) {
+            style.display = "none";
+        }
+
         return (
             <Dialog
                 id="GifAddModal"
                 title="Add Gif"
                 actions={actions}
-                modal={true}
+                modal={false}
                 open={this.props.open}
                 repositionOnUpdate={false}
+                autoScrollBodyContent={true}
+                onRequestClose={this.props.onCancel}
                 style={{
                     paddingTop: "15px"
                 }} >
@@ -95,7 +103,7 @@ class GifAddModal extends React.Component {
                   value={this.state.url}
                   style={{marginBottom: 5}}
                 />
-                <Card>
+                <Card style={style}>
                     <CardMedia>
                         <img src={this.state.url} role="presentation" />
                     </CardMedia>

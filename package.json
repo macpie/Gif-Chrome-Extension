@@ -1,6 +1,6 @@
 {
   "name": "Gif-Chrome-Extension",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "private": true,
   "devDependencies": {
     "grunt": "^1.0.1",

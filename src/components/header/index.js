@@ -19,16 +19,11 @@ class Header extends React.Component {
         this.handleAdd = this.handleAdd.bind(this);
 
         this.state = {
-            title: 'Gifs',
             showModal: false
         };
     }
     handleMenuSelect(ev, item) {
         this.props.goTo(item.props.value);
-
-        this.setState({
-            title: _.capitalize(item.props.value)
-        });
     }
     openModal() {
         this.setState({
@@ -50,10 +45,14 @@ class Header extends React.Component {
         this.props.goTo('/gifs');
     }
     render() {
+        const title = this.props.location.pathname;
+
         return (
             <Col xs={12}>
                 <AppBar
-                    title={this.state.title}
+                    title={
+                        _.capitalize(title.replace(/\//, ''))
+                    }
                     iconElementLeft={<Menu onSelect={this.handleMenuSelect} />}
                     iconElementRight={<IconButton onClick={this.openModal}><AddIcon /></IconButton>}
                 />
@@ -69,7 +68,8 @@ class Header extends React.Component {
 
 Header.propTypes = {
     goTo: PropTypes.func.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
 };
 
 export default Header;

@@ -21,7 +21,9 @@ class App extends React.Component {
                         <Header
                             gifs={this.props.gifs}
                             goTo={this.props.goTo}
-                            actions={this.props.actions} />
+                            actions={this.props.actions}
+                            location={this.props.location}
+                        />
                     </Row>
                     <Row>
                         {this.props.children}

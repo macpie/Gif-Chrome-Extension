@@ -4,6 +4,7 @@ import React, {
 import {
     GridList
 } from 'material-ui/GridList';
+import BackToTop from '../common/BackToTop';
 import GifView from './GifView';
 
 class GifsView extends React.Component {
@@ -36,6 +37,7 @@ class GifsView extends React.Component {
                         />
                     ))}
                 </GridList>
+                <BackToTop />
             </div>
         );
     }

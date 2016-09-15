@@ -2,50 +2,46 @@ import React, {
     PropTypes
 } from 'react';
 import * as _ from 'lodash';
-import Infinite from 'react-infinite';
-import SearchGifsRows from './SearchGifsRows';
+import {
+    GridList
+} from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
+import SearchGifView from './SearchGifView';
+import BackToTop from '../common/BackToTop';
 
 class SearchGifsView extends React.Component {
+    componentDidMount() {
+        let base = 800,
+            factor = 1;
+
+        $(window).on('scroll', () => {
+            if ($(window).scrollTop() > base * factor) {
+                this.props.loadMore();
+                factor++;
+            }
+        });
+    }
+    componentWillUnmount() {
+        $(window).off('scroll');
+    }
     render() {
-        let gifs = _.chunk(this.props.gifs, 3),
-            children = [];
-
-        if (gifs.length) {
-            children = gifs.map((gifsChunk, i) => {
-                return <SearchGifsRows key={i} gifs={gifsChunk} click={this.props.click}/>;
-            });
-        }
-
-        let width = $(window).width(),
-            height = 150
-
-        if (width < 800) {
-            height = 150;
-        } else if (width < 1000) {
-            height = 180;
-        } else if (width < 1000) {
-            height = 200;
-        } else {
-            height = 290;
-        }
-
-        let style = {};
-
-        if (this.props.gifs.length === 0 &&
-            !this.props.query) {
-            style.display = 'none';
-        }
+        let gifs = _.uniqBy(this.props.gifs, 'id');
 
         return (
-            <Infinite
-                key={this.props.query}
-                className="col-xs-12"
-                useWindowAsScrollContainer={true}
-                elementHeight={height}
-                infiniteLoadBeginEdgeOffset={height*3}
-                onInfiniteLoad={this.props.loadMore}>
-                {children}
-            </Infinite>
+            <GridList cols={3}>
+                <Subheader style={{
+                    textAlign: "center"
+                }}>
+                    Found {this.props.pagination.total_count} GIFs
+                </Subheader>
+                {gifs.map((gif) => (
+                    <SearchGifView
+                        key={gif.id}
+                        gif={gif}
+                        onSelect={this.props.onSelect}/>
+                ))}
+                <BackToTop />
+            </GridList>
         );
     }
 };
@@ -55,7 +51,7 @@ SearchGifsView.propTypes = {
     query: PropTypes.string.isRequired,
     pagination: PropTypes.object.isRequired,
     loadMore: PropTypes.func.isRequired,
-    click: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired
 };
 
 export default SearchGifsView;

@@ -45,7 +45,7 @@ class GifView extends React.Component {
         let gif = this.state;
 
         return (
-             <GridTile
+            <GridTile
                 title={
                     <FlatButton
                         style={{

@@ -2,9 +2,8 @@ import React from 'react';
 import * as GiphyAPI from '../../apis/GiphyAPI';
 import SearchForm from './SearchForm';
 import SearchGifsView from './SearchGifsView';
-import BackToTop from '../common/BackToTop';
-import PowerByGiphy from '../common/PowerByGiphy';
 import GifAddModal from '../common/GifAddModal';
+import PowerByGiphy from '../common/PowerByGiphy';
 
 const LIMIT = 30;
 
@@ -14,17 +13,19 @@ class Search extends React.Component {
 
         this.handleSearch = this.handleSearch.bind(this);
         this.handleMore = this.handleMore.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
+        this.closeModal = this.closeModal.bind(this);
 
         this.state = {
             gifs: [],
             pagination: {
                 offset: 0,
-                total_count: 1
+                total_count: 0
             },
             query: '',
-            selected: {}
+            selected: {},
+            showModal: false
         };
     }
     handleSearch(val = 'nothing') {
@@ -48,7 +49,7 @@ class Search extends React.Component {
         let pagination = this.state.pagination,
             query = this.state.query;
 
-        if (pagination.offset < pagination.total_count && query !== '') {
+        if (pagination.offset <= pagination.total_count && query !== '') {
             GiphyAPI
                 .search({
                     query: query,
@@ -67,19 +68,28 @@ class Search extends React.Component {
                 });
         }
     }
-    handleClick(gif) {
+    handleSelect(gif) {
         this.setState({
             selected: {
                 url: gif.images.downsized.url,
                 still_url: gif.images.downsized_still.url
-            }
+            },
+            showModal: true
         });
-        GifAddModal.show();
     }
     handleAdd(name, url, still_url) {
         this.props.actions.create(name, url, still_url);
-        GifAddModal.hide();
+
+        this.setState({
+            showModal: false
+        });
+
         this.props.goTo('/gifs');
+    }
+    closeModal(gif) {
+        this.setState({
+            showModal: false
+        });
     }
     render() {
         return (
@@ -93,15 +103,17 @@ class Search extends React.Component {
                         query={this.state.query}
                         pagination={this.state.pagination}
                         loadMore={this.handleMore}
-                        click={this.handleClick}
+                        onSelect={this.handleSelect}
                     />
                 </div>
-                <BackToTop />
                 <PowerByGiphy />
                 <GifAddModal
+                    open={this.state.showModal}
                     url={this.state.selected.url}
-                    still_url={this.state.selected.still_url}
-                    onSuccess={this.handleAdd} />
+                    stillUrl={this.state.selected.still_url}
+                    onSuccess={this.handleAdd}
+                    onCancel={this.closeModal}
+                />
             </div>
         );
     }

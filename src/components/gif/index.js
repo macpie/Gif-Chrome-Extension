@@ -4,7 +4,6 @@ import * as Clipboard from '../../utils/Clipboard';
 import GifsView from './GifsView';
 import GifFilter from './GifFilter';
 import GifEditModal from './GifEditModal';
-import BackToTop from '../common/BackToTop';
 
 const OFFSET = 30;
 
@@ -135,7 +134,6 @@ class Gif extends React.Component {
                     onDelete={this.handleDelete}
                     onUpload={this.handleUpload}
                 />
-                <BackToTop />
             </div>
         );
     }

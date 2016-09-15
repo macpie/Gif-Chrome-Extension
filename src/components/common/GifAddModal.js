@@ -24,7 +24,7 @@ class GifAddModal extends React.Component {
         this.setState({
             name: nextProps.name || '',
             url: nextProps.url || '',
-            still_url: nextProps.still_url
+            stillUrl: nextProps.stillUrl
         });
     }
     handleNameChange(e) {
@@ -42,7 +42,7 @@ class GifAddModal extends React.Component {
             this.props.onSuccess(
                 this.state.name,
                 this.state.url,
-                this.state.still_url
+                this.state.stillUrl
             );
         } else {
             toastr.warning('Please provide a name and URL');
@@ -104,7 +104,7 @@ GifAddModal.propTypes = {
     open: PropTypes.bool.isRequired,
     name: PropTypes.string,
     url: PropTypes.string,
-    still_url: PropTypes.string,
+    stillUrl: PropTypes.string,
     onSuccess: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
 };
